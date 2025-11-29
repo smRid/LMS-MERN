@@ -8,13 +8,13 @@ export const signUp = async (req,res) => {
         const {name , email , password , role} = req.body
         let existUser = await User.findOne({email})
         if(existUser){
-            return res.status(400).json({message:"User is already exist"})
+            return res.status(400).json({message:"User already exists"}) // improved message
         }
 
         if(!validator.isEmail(email)){
             return res.status(400).json({message:"Invalid email"})
         }
-        if(password.length < 8){
+        if(!password || password.length < 8){
             return res.status(400).json({message:"Password must be at least 8 characters"})
         }
         let hashPassword = await bcrypt.hash(password,10)
@@ -33,6 +33,7 @@ export const signUp = async (req,res) => {
         })
         return res.status(201).json(user)
     } catch (error) {
+        console.error("Signup error:", error); // log error for debugging
         return res.status(500).json({message:`Signup error ${error}`})
     }
 }
