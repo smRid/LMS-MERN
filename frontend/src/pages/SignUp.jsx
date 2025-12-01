@@ -26,7 +26,7 @@ function SignUp() {
             console.log(result.data)
             setLoading(false)
             navigate("/")
-            toast.done("Signup Successfully")
+            toast.success("Signup Successfully")
 
         } catch (error) {
             console.log(error)

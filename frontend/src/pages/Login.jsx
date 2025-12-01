@@ -4,13 +4,35 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEye } from "react-icons/io5";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import axios from 'axios';
+import { serverUrl } from '../App';
+import { toast } from 'react-toastify';
 
 function Login() {
    const [show, setShow] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [loading,setLoading] = useState(false)
    const navigate = useNavigate()
+
+   const handleLogin = async () => {
+      setLoading(true)
+      try {
+          const result = await axios.post(serverUrl + "/api/auth/login", {email, password}, {withCredentials:true})
+          console.log(result.data)
+          setLoading(false)
+          toast.success("Login Successfully")
+          navigate("/")
+      } catch (error) {
+          console.log(error)
+          setLoading(false)
+          toast.error(error.response.data.message)
+      }
+  }
     return (
       <div className='bg-[#dddbdb] w-full h-screen flex items-center justify-center '>
-        <form className='w-[90%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex'>
+        <form className='w-[90%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex' onSubmit={(e)=>e.preventDefault()}>
           {/* left div  */}
   
           <div className='md:w-[50%] w-full h-full flex flex-col items-center justify-center gap-3 '>
@@ -20,14 +42,14 @@ function Login() {
                   </div>
               <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3'>
                   <label htmlFor="email"       className='font-semibold'>Email</label>
-                  <input id='email' type="email" className='border w-full h-[35px] border-[#e7e6e6] text-[15px] px-5 ' placeholder='Your email' />
+                  <input id='email' type="text" className='border w-full h-[35px] border-[#e7e6e6] text-[15px] px-5' placeholder='Your Email' onChange={(e) => setEmail(e.target.value)} value={email}/>
               </div>
               <div className='flex flex-col gap-1 w-[80%] items-start justify-center px-3 relative'>
                   <label htmlFor="password"       className='font-semibold'>Password</label>
-                  <input id='password' type={show ? "text" : "password"} className='border w-full h-[35px] border-[#e7e6e6] text-[15px] px-5 ' placeholder='Your password' />
+                  <input id='password' type={show ? "text" : "password"} className='border w-full h-[35px] border-[#e7e6e6] text-[15px] px-5' placeholder='Your password' onChange={(e) => setPassword(e.target.value)} value={password} />
                   { !show ? <IoEyeOutline className='absolute w-5 h-5 cursor-pointer right-[5%] bottom-[10%]' onClick={() => setShow(prev => !prev)} /> : <IoEye className='absolute w-5 h-5 cursor-pointer right-[5%] bottom-[10%]' onClick={() => setShow(prev => !prev)} />}
               </div>
-              <button className='w-[75%] h-10 bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]'>Login</button>
+              <button className='w-[80%] h-10 bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]' disabled={loading} onClick={handleLogin}>{loading ? <ClipLoader size={30} color='white'/> : "Login"}</button>
               <span className='text-[13px] cursor-pointer text-[#585757]'>Forget password ?</span>
               <div className='w-[70%] flex items-center gap-2'>
                   <div className='w-[30%] h-[0.5px] bg-[#c4c4c4]'></div>
