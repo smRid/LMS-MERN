@@ -53,7 +53,9 @@ function Login() {
                   { !show ? <IoEyeOutline className='absolute w-5 h-5 cursor-pointer right-[5%] bottom-[10%]' onClick={() => setShow(prev => !prev)} /> : <IoEye className='absolute w-5 h-5 cursor-pointer right-[5%] bottom-[10%]' onClick={() => setShow(prev => !prev)} />}
               </div>
               <button className='w-[80%] h-10 bg-black text-white cursor-pointer flex items-center justify-center rounded-[5px]' disabled={loading} onClick={handleLogin}>{loading ? <ClipLoader size={30} color='white'/> : "Login"}</button>
-              <span className='text-[13px] cursor-pointer text-[#585757]'>Forget password ?</span>
+
+              <span className='text-[13px] cursor-pointer text-[#585757]' onClick={() => navigate("/forget")}>Forget password?</span>
+              
               <div className='w-[70%] flex items-center gap-2'>
                   <div className='w-[30%] h-[0.5px] bg-[#c4c4c4]'></div>
                   <div className='w-[50%] text-[15px] text-[#6f6f6f]

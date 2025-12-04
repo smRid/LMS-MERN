@@ -50,7 +50,7 @@ function Nav() {
           items-center flex-col justify-center gap-2 text-[16px]
           rounded-md bg-[white] px-[15px] py-2.5 border-2 border-black hover:border-white hover:text-white
           cursor-pointer hover:bg-black'>
-          <span className='bg-[black] text-white px-[30px] py-2.5 rounded-2xl hover:bg-gray-600'>My Profile</span>
+          <span className='bg-[black] text-white px-[30px] py-2.5 rounded-2xl hover:bg-gray-600' onClick={() => navigate("/profile")}>My Profile</span>
           <span className='bg-[black] text-white px-[30px] py-2.5 rounded-2xl hover:bg-gray-600'>My Courses</span>
           </div>}         
         </div>
@@ -64,7 +64,7 @@ function Nav() {
           {userData && <div className='w-[50px] h-[50px] rounded-full text-white flex items-center justify-center text-[20px] border-2 bg-black border-white cursor-pointer'>
           {userData?.name.slice(0,1).toUpperCase()}</div>}
 
-          <div className='w-[200px] h-16 flex items-center justify-center border-2 border-white text-white bg-[black] rounded-[10px] text-[18px] font-light cursor-pointer'>My Profile</div>
+          <div className='w-[200px] h-16 flex items-center justify-center border-2 border-white text-white bg-[black] rounded-[10px] text-[18px] font-light cursor-pointer' onClick={() => navigate("/profile")}>My Profile</div>
           <div className='w-[200px] h-16 flex items-center justify-center border-2 border-white text-white bg-[black] rounded-[10px] text-[18px] font-light cursor-pointer'>My Courses</div>
           {userData?.role === "educator" &&<div className='w-[200px] h-16 flex items-center justify-center border-2 border-white text-white bg-[black] rounded-[10px] text-[18px] font-light cursor-pointer'>Dashboard</div>}
 
