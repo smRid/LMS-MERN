@@ -1,4 +1,4 @@
-import homeCoursesStyles from "../assets/dummyStyles";
+import { homeCoursesStyles } from "../assets/dummyStyles";
 import { coursesData } from "../assets/dummyHData";
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
