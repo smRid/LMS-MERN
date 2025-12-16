@@ -173,12 +173,41 @@ const HomeCourses = () => {
                         </>
                     )}
                     </div>
-                    
+
                     </div>
 
                     </div>
                     );
                 })}
+                </div>
+
+                {/* CTA BTN */}
+                <div className={homeCoursesStyles.ctaContainer}>
+                <div className={homeCoursesStyles.ctaWrapper}>
+                    <span className={homeCoursesStyles.ctaGlow}
+                    style={{
+                        zIndex: 0,
+                        background:
+                        "conic-gradient(from 0deg, rgba(236,72,153,0.9), rgba(99,102,241,0.9), rgba(139,92,246,0.9), rgba(236,72,153,0.9))",
+                        filter: "blur(5px)",
+                        opacity: 0.8,
+                    }}/>
+                <button
+                    onClick={handleBrowseClick}
+                    className={homeCoursesStyles.ctaButton}
+                    style={{
+                        background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
+                    }}
+                    >
+                        <span className={homeCoursesStyles.ctaButtonContent}>
+                        <span className={homeCoursesStyles.ctaText}>
+                            Discover Courses
+                        </span>
+                        </span>
+                </button>
+
+                </div>
                 </div>
             </div>
         </div>
