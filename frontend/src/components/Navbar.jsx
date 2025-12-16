@@ -150,7 +150,7 @@ const Navbar = () => {
                 <button type="button" onClick={() => openSignUp({})} className={
                 navbarStyles.createAccountButton ?? navbarStyles.loginButton
                 }>
-                <span>Create Account</span>
+                <span className='cursor-pointer'>Sign up</span>
                 </button>
             ) : (
                 <div className="flex items-center">
@@ -204,7 +204,7 @@ const Navbar = () => {
                 }} className={
                     navbarStyles.mobileCreateAccountButton ?? navbarStyles.mobileLoginButton
                 }>
-                    <span>Create Account</span>
+                    <span className='cursor-pointer'>Sign up</span>
                 </button>
                 ) : (
                 <div className="px-4 py-2">

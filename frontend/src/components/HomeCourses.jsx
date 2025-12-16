@@ -1,9 +1,9 @@
 import { homeCoursesStyles } from "../assets/dummyStyles";
 import { coursesData } from "../assets/dummyHData";
 import { useNavigate } from "react-router-dom";
-import { Star, User } from "lucide-react";
+import { ArrowRight, Star, User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast, Slide } from "react-toastify";
+import { toast, Slide, ToastContainer } from "react-toastify";
 
 const HomeCourses = () => {
     const navigate = useNavigate();
@@ -131,7 +131,7 @@ const HomeCourses = () => {
                     <div
                         key={course.id}
                         onClick={() => handleCourseClick(course.id)}
-                        className={homeCoursesStyles.coursesGrid}
+                        className={homeCoursesStyles.coursesCard}
                     >
                     <div className={homeCoursesStyles.imageContainer}>
                     <img
@@ -204,13 +204,26 @@ const HomeCourses = () => {
                         <span className={homeCoursesStyles.ctaText}>
                             Discover Courses
                         </span>
+                        <ArrowRight className={homeCoursesStyles.ctaIcon} />
                         </span>
                 </button>
 
                 </div>
                 </div>
             </div>
+
+
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                theme="dark"
+                transition={Slide}
+            />
+
+            <style jsx>{homeCoursesStyles.animations}</style>
         </div>
+
+        
     );
 };
 
