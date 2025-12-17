@@ -119,6 +119,7 @@ const HomeCourses = () => {
                         <Star className={homeCoursesStyles.titleIcon} />
                         Explore Top Courses
                         <Star className={homeCoursesStyles.titleIcon} />
+                        <Star className={homeCoursesStyles.titleIcon} />
                     </h2>
                 </div>
 
