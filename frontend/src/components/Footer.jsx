@@ -78,7 +78,7 @@ const Footer = () => {
 
                 <div className="relative font-serif flex items-center gap-3">
                     <img src={Logo} alt="logo" className="w-12 h-12" />
-                    <h3 className={footerStyles.brandTitle}>SkillForge</h3>
+                    <h3 className={footerStyles.brandTitle}>ShikhoHub</h3>
                 </div>
                 </div>
                 <p className={footerStyles.brandDescription}>
