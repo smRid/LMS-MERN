@@ -262,7 +262,7 @@ const Footer = () => {
         <div className={footerStyles.designCreditContainer}>
             <div className={footerStyles.designCreditGradient}></div>
             <p className={footerStyles.designCreditText}>
-            Designed by{" "}
+            Developed By{" "}
             <a
                 href={contactInfo.website}
                 target="_blank"

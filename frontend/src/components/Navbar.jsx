@@ -117,7 +117,7 @@ const Navbar = () => {
               className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r 
               from-sky-700 to-cyan-600 font-serif leading-[0.95]"
             >
-              LMS BD
+              ShikhoHub
             </div>
           </div>
 
