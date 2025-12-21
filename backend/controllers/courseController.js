@@ -386,3 +386,37 @@ export const rateCourse = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server error" });
       }
 }
+
+
+
+// get myRating
+export const getMyRating = async (req, res) => {
+  try {
+    const { userId } = getAuth(req) || {};
+    if (!userId) return res.status(401).json({
+      success: false,
+      message: 'Authentication required.'
+    });
+
+    const { courseId } = req.params;
+    const course = await Course.findById(courseId).lean();
+    if (!course) return res.status(404).json({
+        success: false,
+        message: "Course not found"
+    });
+
+    const my = (course.ratings || []).find(r => String(r.userId) === String(userId)) || null;
+    return res.json({
+        success: true,
+        myRating: my ? { rating: my.rating, comment: my.comment } : null
+    });
+        
+  } 
+    catch (err) {
+        console.error('getmyRating errpr:', err);
+        return res.status(500).json({
+            success: false,
+            error: 'Server Error'
+        })
+    }
+}
