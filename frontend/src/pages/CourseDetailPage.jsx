@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { courseDetailStyles } from '../assets/dummyStyles'
 import coursesData from '../assets/dummyData'
-import { ArrowLeft, ArrowRight, Award, BookOpen, ChevronDown, Clock, Play, Target, User, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Award, BookOpen, CheckCircle, ChevronDown, Circle, Clock, Play, Sparkles, Target, User, X } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
