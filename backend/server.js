@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { clerkMiddleware } from '@clerk/express'
 import connectDB from './config/db.js';
 import courseRouter from './routes/courseRouter.js';
+import bookingRouter from './routes/bookingRouter.js';
 
 const app = express();
 const port = 4000;
@@ -19,6 +20,7 @@ app.use('/uploads', express.static('uploads'));
 
 // ROUTES
 app.use('/api/course', courseRouter);
+app.use('/api/booking', bookingRouter);
 
 //Database Connection
 connectDB();
