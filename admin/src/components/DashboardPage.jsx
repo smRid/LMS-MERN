@@ -229,25 +229,27 @@ const DashboardPage = () => {
             })}
             </div>
             {/* Course Section */}
-            <div className={dashboardStyles.coursesContainer}>
-            <div className={dashboardStyles.coursesHeader}>
-                <div className={dashboardStyles.coursesTitleContainer}>
-                <BookOpenText className={dashboardStyles.coursesIcon} />
-                <h2 className={dashboardStyles.coursesTitle}>
+            <div className={dashboardStyles.tableContainer}>
+            <div className={dashboardStyles.tableHeader}>
+                <div className="flex items-center gap-3 mb-4">
+                <BookOpenText className="w-6 h-6 text-gray-900" />
+                <h2 className={dashboardStyles.tableTitle}>
                     Course Performance
                 </h2>
                 </div>
-            </div>
-            <div className={dashboardStyles.searchContainer}>
-                <Search className={dashboardStyles.searchIcon} />
-                <input
-                    type="text"
-                    placeholder="Search Courses..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={dashboardStyles.searchInput}
-                />
+                <div className={dashboardStyles.searchContainer}>
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Search Courses..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className={`${dashboardStyles.searchInput} pl-10`}
+                        />
+                    </div>
                 </div>
+            </div>
             </div>
         </div>
         </div>

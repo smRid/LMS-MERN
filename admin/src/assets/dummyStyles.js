@@ -1735,7 +1735,7 @@ export const dashboardStyles = {
   // Stats Cards
   statsGrid: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
   statCard: "bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300 animate-fade-in",
-  statIconContainer: "w-12 h-12 rounded-lg flex items-center justify-center mb-4",
+  statIconContainer: "w-12 h-12 rounded-lg flex items-center justify-center",
   statLabel: "text-gray-600 text-sm font-medium mb-1",
   statTitle: "text-gray-600 text-sm font-medium mb-1",
   statValue: "text-2xl sm:text-3xl font-bold text-gray-900",
@@ -1745,7 +1745,7 @@ export const dashboardStyles = {
   // Error Banner
   errorBanner: "bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-red-800",
   
-  // Courses Table
+  // Table Container
   tableContainer: "bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden",
   tableHeader: "bg-gray-50 px-6 py-4 border-b border-gray-200",
   tableTitle: "text-lg font-semibold text-gray-900",
@@ -1761,8 +1761,9 @@ export const dashboardStyles = {
   statusInactive: "bg-gray-100 text-gray-800",
   
   // Search Bar
-  searchContainer: "mb-6",
-  searchInput: "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  searchContainer: "w-full",
+  searchInput: "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+  searchIcon: "absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
 };
 
 // Dashboard Custom Styles
