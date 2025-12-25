@@ -309,9 +309,11 @@ const DashboardPage = () => {
               <p className={dashboardStyles.emptyText}>
                 No courses found matching your search.
               </p>
+              <button 
+                onClick={() => setSearchTerm("")} 
+                className={dashboardStyles.clearButton}
+              >
                 Clear search
-              <button onClick={() => setSearchTerm("")} 
-              className={dashboardStyles.clearButton}>
               </button>
             </div>
           )}
