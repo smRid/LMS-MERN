@@ -1723,6 +1723,75 @@ export const loginIconColors = {
   purple600: "text-purple-600"
 };
 
+// Dashboard Styles
+export const dashboardStyles = {
+  pageContainer: "relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pt-24 pb-10",
+  backgroundPattern: "absolute inset-0 -z-10 opacity-20 pointer-events-none",
+  contentContainer: "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8",
+  headerContainer: "mb-8 animate-fade-in",
+  headerTitle: "text-3xl sm:text-4xl font-bold text-gray-900 mb-2",
+  headerSubtitle: "text-gray-600 text-lg",
+  
+  // Stats Cards
+  statsGrid: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
+  statCard: "bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300 animate-fade-in",
+  statIconContainer: "w-12 h-12 rounded-lg flex items-center justify-center mb-4",
+  statLabel: "text-gray-600 text-sm font-medium mb-1",
+  statTitle: "text-gray-600 text-sm font-medium mb-1",
+  statValue: "text-2xl sm:text-3xl font-bold text-gray-900",
+  statIcon: "w-6 h-6",
+  statChange: "text-xs text-gray-500 mt-2",
+  
+  // Error Banner
+  errorBanner: "bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-red-800",
+  
+  // Courses Table
+  tableContainer: "bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden",
+  tableHeader: "bg-gray-50 px-6 py-4 border-b border-gray-200",
+  tableTitle: "text-lg font-semibold text-gray-900",
+  table: "w-full divide-y divide-gray-200",
+  tableRow: "hover:bg-gray-50 transition-colors duration-200",
+  tableCell: "px-6 py-4 text-sm",
+  tableCellHeader: "text-xs font-medium text-gray-700 uppercase tracking-wider",
+  courseName: "font-medium text-gray-900",
+  coursePrice: "text-gray-600",
+  courseInstructor: "text-gray-600",
+  courseStatus: "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium",
+  statusActive: "bg-green-100 text-green-800",
+  statusInactive: "bg-gray-100 text-gray-800",
+  
+  // Search Bar
+  searchContainer: "mb-6",
+  searchInput: "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+};
+
+// Dashboard Custom Styles
+export const dashboardCustomStyles = `
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+  
+  .dashboard-stat-card {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+  
+  .dashboard-stat-card:nth-child(1) { animation-delay: 0ms; }
+  .dashboard-stat-card:nth-child(2) { animation-delay: 100ms; }
+  .dashboard-stat-card:nth-child(3) { animation-delay: 200ms; }
+  .dashboard-stat-card:nth-child(4) { animation-delay: 300ms; }
+`;
+
 // Custom styles for LoginPage
 export const loginPageCustomStyles = `
   @keyframes fade-in-up {
