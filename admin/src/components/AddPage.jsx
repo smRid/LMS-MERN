@@ -3,7 +3,7 @@ import { addPageStyles } from "../assets/dummyStyles";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Toaster } from "react-hot-toast";
-import { BookOpenText, Clock, HandCoins, ImageIcon, ListOrdered, PenLine, Plus, Star, Upload, UserPen, Video } from "lucide-react";
+import { BookOpenText, ChevronUp, Clock, X, HandCoins, ImageIcon, ListOrdered, PenLine, Plus, Star, Upload, UserPen, Video } from "lucide-react";
 
 const API_BASE = "http://localhost:4000";
 
@@ -765,7 +765,7 @@ const AddPage = () => {
                 <>
                   <div className={addPageStyles.inputContainer}>
                     <label className={addPageStyles.inputLabel}>
-                      <BadgeIndianRupee
+                      <HandCoins
                         size={16}
                         className={addPageStyles.inputIcon}
                       />{" "}
@@ -785,7 +785,7 @@ const AddPage = () => {
                   </div>
                   <div className={addPageStyles.inputContainer}>
                     <label className={addPageStyles.inputLabel}>
-                      <BadgeIndianRupee
+                      <HandCoins
                         size={16}
                         className={addPageStyles.inputIcon}
                       />{" "}
@@ -998,6 +998,115 @@ const AddPage = () => {
             </button>
           </div>
         </form>
+        {/* for adding of lectures */}
+            {showLectureForm && (
+            <div className={addPageStyles.modalOverlay}>
+                <div className={addPageStyles.modal}>
+                <div className={addPageStyles.modalHeader}>
+                    <div className={addPageStyles.modalIconContainer("bg-sky-300")}>
+                    <Video className="text-white" size={20} />
+                    </div>
+                    <h3 className={addPageStyles.modalTitle}>Add New Lecture</h3>
+                </div>
+
+                <div className={addPageStyles.modalContent}>
+                <div>
+                    <label className={addPageStyles.inputLabel}>
+                    Lecture Title *
+                    </label>
+                    <input
+                    type="text"
+                    name="title"
+                    value={currentLecture.title}
+                    onChange={handleLectureChange}
+                    placeholder="e.g., Introduction to React"
+                    className={addPageStyles.input}
+                    />
+                </div>
+
+                <div>
+                <label className={addPageStyles.inputLabel}>Duration *</label>
+                <div className={addPageStyles.durationGrid}>
+                  <div>
+                    <input
+                      type="number"
+                      name="duration.hours"
+                      value={currentLecture.duration.hours}
+                      onChange={handleLectureChange}
+                      placeholder="Hours"
+                      min="0"
+                      className={addPageStyles.input}
+                    />
+                    <span className={addPageStyles.durationHelper}>
+                      Hours
+                    </span>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      name="duration.minutes"
+                      value={currentLecture.duration.minutes}
+                      onChange={handleLectureChange}
+                      placeholder="Minutes"
+                      min="0"
+                      max="59"
+                      className={addPageStyles.input}
+                    />
+                    <span className={addPageStyles.durationHelper}>
+                      Minutes
+                    </span>
+                  </div>
+                </div>
+                </div>
+                {currentLecture.chapters.length > 0 && (
+                <div>
+                    <label className={addPageStyles.inputLabel}>
+                    Chapters in this lecture:
+                    </label>
+                    <div className={addPageStyles.chaptersList}>
+                    {currentLecture.chapters.map((chapter) => (
+                        <div key={chapter.id} className={addPageStyles.chapterPreview}>
+                        <div className={addPageStyles.chapterPreviewTitle}>
+                            {chapter.name}
+                        </div>
+
+                        <div className={addPageStyles.chapterPreviewDuration}>
+                            {formatDuration(chapter.duration)}
+                        </div>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+                )}
+                </div>
+                <div className={addPageStyles.modalActions}>
+                <button
+                    type="button"
+                    onClick={() => openAddChapter()}
+                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
+                >
+                    <Plus size={14} /> Add Chapter
+                </button>
+                </div>
+                <div className=" flex gap-2 sm:gap-3 pt-2">
+                <button
+                    type="button"
+                    onClick={addLecture}
+                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
+                >
+                    Add Lecture
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setShowLectureForm(false)}
+                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonSecondary}`}
+                >
+                    Cancel
+                </button>
+                </div>
+                </div>
+            </div>
+            )}
 
 
 
@@ -1078,6 +1187,16 @@ const AddPage = () => {
                     </div>
                   </div>
                 </div>
+                <div className={addPageStyles.modalActions}>
+                <button
+                    type="button"
+                    onClick={() => openAddChapter()}
+                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
+                >
+                    <Plus size={14} /> Add Chapter
+                </button>
+                </div>
+
 
                 <div>
                   <label className={addPageStyles.inputLabel}>
@@ -1116,6 +1235,8 @@ const AddPage = () => {
             </div>
           </div>
         )}
+
+        
         </div>
          </div>
     );
