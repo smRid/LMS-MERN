@@ -1,17 +1,14 @@
-
-import { navbarStyles } from '../assets/dummyStyles.js';
+import React, { useEffect, useRef, useState } from 'react'
+import {navbarStyles} from '../assets/dummyStyles';
 import Logo from '../assets/Logo.png';
-import { useState, useRef } from 'react';
-import { LayoutDashboard, PlusCircle, ListChecks, Menu, X } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { LayoutDashboard, ListChecks, Menu, PlusCircle, X } from 'lucide-react';
 
-
-
-const Navbar = () => {
+const DashboardPage = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const location = useLocation();
   const menuRef = useRef(null);
 
   const menuItems = [
@@ -31,9 +28,9 @@ const Navbar = () => {
     { id: "bookings", label: "Bookings", icon: ListChecks, path: "/bookings" },
   ];
 
-  //hide navbar on scroll down, show on scroll up
+  // Hide navbar on scroll down
     useEffect(() => {
-    let lastScrollY = window.scrollY;
+      let lastScrollY = window.scrollY;
       const handleScroll = () => {
         if (window.scrollY > lastScrollY && window.scrollY > 80) {
           setIsVisible(false);
@@ -47,9 +44,8 @@ const Navbar = () => {
       return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-
-    //close mobile menu on outside click
-     useEffect(() => {
+    //close menu on outside click
+    useEffect(() => {
       const handleClickOutside = (event) => {
         if (menuRef.current && !menuRef.current.contains(event.target)) {
           setIsMenuOpen(false);
@@ -65,90 +61,81 @@ const Navbar = () => {
       return () => document.removeEventListener("click", handleClickOutside);
     }, [isMenuOpen]);
 
-  const desktopLinkClass = (isActive) =>
-    `${navbarStyles.desktopNavItem} ${
-        isActive ? navbarStyles.desktopNavItemActive : ""
-    }`;
-
   return (
     <>
-      <nav className={`${navbarStyles.navbar} ${navbarStyles.navbarDefault} ${isVisible ? navbarStyles.navbarVisible : navbarStyles.navbarHidden}`}>
-        <div className={navbarStyles.container}>
-          <div ref={menuRef} className={navbarStyles.innerContainer}>
-            {/* LOGO */}
-            <div className="flex items-center gap-3 select-none">
-              <img src={Logo} alt="logo" className='w-18 h-12' />
-              <div
-                className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r 
-                from-sky-700 to-cyan-600 font-serif leading-[0.95]"
-              >
-                ShikhoHub
-              </div>
-            </div>
+      <nav className={navbarStyles.nav(isVisible)}>
+        <div className={navbarStyles.navContainer}>
+          <div ref={menuRef} className={navbarStyles.navInner(isMenuOpen)}>
+            <div className={navbarStyles.glowEffect}></div>
 
-            {/* Desktop Navigation */}
-            <div className={navbarStyles.desktopNav}>
-              <div className={navbarStyles.desktopNavContainer}>
-                {menuItems.map(({id, label, icon: Icon, path}) => {
+            <div className={navbarStyles.navbarContent}>
+              <div className={navbarStyles.logoContainer}>
+                <img src={Logo} alt="Logo" className={navbarStyles.logoImage} />
+                <div className=" leading-[0.95]">
+                  <div className={navbarStyles.logoText}>ShikhoHub</div>
+                </div>
+              </div>
+              {/* desktop links */}
+                <div className={navbarStyles.desktopNav}>
+                  <div className={navbarStyles.desktopNavInner}>
+                    {menuItems.map(({id, label, icon: Icon, path}) => {
+                      const isActive = location.pathname === path;
+                      
+                      return (
+                        <Link
+                          key={id}
+                          to={path}
+                          className={navbarStyles.desktopNavItem(isActive)}
+                        >
+                          <Icon className=" w-4 h-4" />
+                          <span className=" lg:text-md xl:text-lg md:text-xs">
+                            {label}
+                          </span>
+                          {isActive && (
+                            <span className={navbarStyles.desktopActiveGlow} />
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* mobile toggle */}
+                <div className={navbarStyles.mobileToggleContainer}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMenuOpen(!isMenuOpen);
+                    }}
+                    className={navbarStyles.mobileToggleButton}
+                  >
+                    {isMenuOpen ? (
+                      <X className={navbarStyles.mobileToggleIcon} />
+                    ) : (
+                      <Menu className={navbarStyles.mobileToggleIcon} />
+                    )}
+                  </button>
+                </div>
+            </div>
+            {/* mobile navigations */}
+            <div className={navbarStyles.mobileMenu(isMenuOpen)}>
+              <div className={navbarStyles.mobileMenuInner}>
+                {menuItems.map(({ id, label, icon: Icon, path }) => {
+                  const isActive = location.pathname === path;
                   return (
-                    <NavLink
+                    <Link
                       key={id}
                       to={path}
-                      end={path === "/"}
-                      className={({ isActive }) => desktopLinkClass(isActive)}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={navbarStyles.mobileMenuItem(isActive)}
                     >
-                      <div className="flex items-center space-x-2">
-                        <Icon size={16} className={navbarStyles.desktopNavIcon} />
-                        <span className={navbarStyles.desktopNavText}>
-                          {label}
-                        </span>
-                      </div>
-                    </NavLink>
-                  )
+                      <Icon className={navbarStyles.mobileMenuIcon} />
+                      <span className={navbarStyles.mobileMenuText}>
+                        {label}
+                      </span>
+                    </Link>
+                  );
                 })}
               </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsMenuOpen(!isMenuOpen);
-              }}
-              className={navbarStyles.mobileMenuButton}
-            >
-              {isMenuOpen ? (
-                <X size={20} />
-              ) : (
-                <Menu size={20} />
-              )}
-            </button>
-          </div>
-        </div>
-        
-        {/* Mobile Menu */}
-        <div className={`${navbarStyles.mobileMenu} ${isMenuOpen ? navbarStyles.mobileMenuOpen : navbarStyles.mobileMenuClosed}`}>
-          <div className={navbarStyles.mobileMenuContainer}>
-            <div className={navbarStyles.mobileMenuItems}>
-              {menuItems.map(({ id, label, icon: Icon, path }) => {
-                return (
-                  <NavLink
-                    key={id}
-                    to={path}
-                    end={path === "/"}
-                    className={({ isActive }) =>
-                      `${navbarStyles.mobileMenuItem} ${
-                        isActive ? navbarStyles.mobileMenuItemActive : ""
-                      }`
-                    }
-                  >
-                    <div className={navbarStyles.mobileMenuIconContainer}>
-                      <Icon size={18} className={navbarStyles.mobileMenuIcon} />
-                    </div>
-                    <span className={navbarStyles.mobileMenuText}>{label}</span>
-                  </NavLink>
-                );
-              })}
             </div>
           </div>
         </div>
@@ -157,4 +144,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default DashboardPage

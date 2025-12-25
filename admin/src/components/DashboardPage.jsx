@@ -1,10 +1,8 @@
-import React from 'react'
-import { dashboardStyles, dashboardCustomStyles } from '../assets/dummyStyles.js';
-import { useState } from 'react';
-import { Users, ShoppingCart, BookMarked,HandCoins, BookOpenText, Search } from 'lucide-react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
+import { dashboardStyles } from "../assets/dummyStyles";
+import { BookMarked, BookOpenText, HandCoins, Search, ShoppingCart, Users } from "lucide-react";
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = "http://localhost:4000";
 const fmtCurrency = (n) => {
   if (n == null) return "৳0";
   const num = Number(n);
@@ -12,8 +10,8 @@ const fmtCurrency = (n) => {
   return `৳${num}`;
 };
 
-
 const DashboardPage = () => {
+
     const [searchTerm, setSearchTerm] = useState("");
 
     const [statsData, setStatsData] = useState(null);
@@ -22,10 +20,10 @@ const DashboardPage = () => {
     const [error, setError] = useState(null);
 
     const iconMap = {
-        Users,
-        ShoppingCart,
-        BookMarked,
-        HandCoins
+      Users,
+      ShoppingCart,
+      BookMarked,
+      HandCoins,
     };
 
      const buildStats = (backendStats) => {
@@ -44,7 +42,7 @@ const DashboardPage = () => {
       {
         title: "Revenue",
         value: fmtCurrency(totalRevenue),
-        icon: iconMap.HandCoins,
+        icon: iconMap.BadgeIndianRupee,
         color: "green",
       },
       {
@@ -174,87 +172,159 @@ const DashboardPage = () => {
       course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (course.instructor || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
-  return (
-        <>
-        <style>{dashboardCustomStyles}</style>
-        <div className={dashboardStyles.pageContainer}>
-        <div className={dashboardStyles.backgroundPattern}></div>
 
+  return (
+    <div className={dashboardStyles.pageContainer}>
+      <div className={dashboardStyles.backgroundPattern}></div>
+
+      <div className={dashboardStyles.contentContainer}>
         <div className={dashboardStyles.contentContainer}>
-            {/* Header */}
-            <div className={dashboardStyles.headerContainer}>
+          {/* Header */}
+          <div className={dashboardStyles.headerContainer}>
             <h1 className={dashboardStyles.headerTitle}>Dashboard Overview</h1>
             <p className={dashboardStyles.headerSubtitle}>
-                Welcome back! Here's what's happening with your courses today.
+              Welcome back! Here's what's happening with your courses today.
             </p>
-            </div>
+          </div>
+        </div>
+        {error && (
+        <div className={dashboardStyles.errorBanner} role="alert">
+        {error}
+          </div>
+        )}
 
-            {error && (
-            <div className={dashboardStyles.errorBanner} role="alert">
-                {error}
+        {/* Stats Section */}
+        <div className={dashboardStyles.statsGrid}>
+          {stats.map((stat, index) => {
+            const Icon = stat.icon || Users;
+            return (
+              <div
+                key={stat.title}
+                className={dashboardStyles.statCard}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <div className=" flex items-center justify-between">
+                  <div>
+                    <p className={dashboardStyles.statTitle}>{stat.title}</p>
+                    <p className={dashboardStyles.statValue}>{stat.value}</p>
+                  </div>
+                  <div className={dashboardStyles.statIconContainer?.(stat.color)}>
+                    <Icon className={dashboardStyles.statIcon}/>
+                  </div>
+                </div>
+              </div>
+            );
+        })}
+    </div>
+      {/* Course Section */}
+      <div className={dashboardStyles.coursesContainer}>
+        <div className={dashboardStyles.coursesHeader}>
+          <div className={dashboardStyles.coursesTitleContainer}>
+            <BookOpenText className={dashboardStyles.coursesIcon} />
+            <h2 className={dashboardStyles.coursesTitle}>
+              Course Performance
+            </h2>
+          </div>
+          <div className={dashboardStyles.searchContainer}>
+            <Search className={dashboardStyles.searchIcon} />
+            <input
+              type="text"
+              placeholder="Search Courses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={dashboardStyles.searchInput}
+            />
+          </div>
+        </div>
+        {/* tAble */}
+        <div className={dashboardStyles.tableContainer}>
+          <table className={dashboardStyles.table}>
+            <thead className={dashboardStyles.tableHead}>
+              <tr>
+                <th className={dashboardStyles.tableHeader}>Course</th>
+                <th className={dashboardStyles.tableHeader}>Students</th>
+                <th className={dashboardStyles.tableHeader}>Price</th>
+                <th className={dashboardStyles.tableHeader}>Purchases</th>
+                <th className={dashboardStyles.tableHeader}>Earnings</th>
+              </tr>
+            </thead>
+            <tbody className={dashboardStyles.tableBody}>
+              {filteredCourses.map((course, index) => (
+                <tr
+                  key={course.id || `${index}`}
+                  className={dashboardStyles.tableRow}
+                  style={{
+                    animationDelay: `${index * 50 + 400}ms`,
+                  }}
+                >
+                  <td className="px-4 sm:px-6 py-3 sm:py-4">
+                    <div className="flex items-center">
+                      <img
+                        src={course.image}
+                        alt={course.name}
+                        className={dashboardStyles.courseImage}
+                      />
+                      <div>
+                        <p className={dashboardStyles.courseName}>
+                          {course.name}
+                        </p>
+                        <p className={dashboardStyles.courseInstructor}>
+                          {course.instructor}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className={dashboardStyles.studentsCell}>
+                    <div className=" flex items-center text-gray-700">
+                      <span className={dashboardStyles.studentsText}>
+                        {course.students}
+                      </span>
+                    </div>
+                  </td>
+                  <td className={dashboardStyles.priceCell}>
+                    {course.price}
+                  </td>
+                  <td className="px-4 sm:px-6 py-3 sm:py-4">
+                    <div className={dashboardStyles.purchasesContainer}>
+                      <ShoppingCart 
+                        className={dashboardStyles.purchasesIcon} 
+                      />
+                      <span className={dashboardStyles.purchasesText}>
+                        {course.purchases}
+                      </span>
+                    </div>
+                  </td>
+                  <td className={dashboardStyles.earningsCell}>
+                    {course.earnings}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {filteredCourses.length === 0 && !loading && (
+            <div className={dashboardStyles.emptyState}>
+              <Search className={dashboardStyles.emptyIcon} />
+              <p className={dashboardStyles.emptyText}>
+                No courses found matching your search.
+              </p>
+                Clear search
+              <button onClick={() => setSearchTerm("")} 
+              className={dashboardStyles.clearButton}>
+              </button>
             </div>
+          )}
+          {loading && (
+              <div className={dashboardStyles.loadingOverlay}>
+                <div className={dashboardStyles.loadingSpinner} />
+              </div>
             )}
-
-            {/* Stats Section */}
-            <div className={dashboardStyles.statsGrid}>
-            {stats.map((stat, index) => {
-                const Icon = stat.icon || Users
-                return (
-                    <div
-                        key={stat.title}
-                        className={`${dashboardStyles.statCard} dashboard-stat-card`}
-                        style={{
-                        animationDelay: `${index * 100}ms`,
-                        }}
-                    >
-                        <div className=" flex items-center justify-between">
-                        <div>
-                            <p className={dashboardStyles.statTitle}>{stat.title}</p>
-                            <p className={dashboardStyles.statValue}>{stat.value}</p>
-                        </div>
-                        <div
-                            className={`${dashboardStyles.statIconContainer} ${
-                              stat.color === 'indigo' ? 'bg-indigo-100 text-indigo-600' :
-                              stat.color === 'green' ? 'bg-green-100 text-green-600' :
-                              stat.color === 'yellow' ? 'bg-yellow-100 text-yellow-600' :
-                              stat.color === 'purple' ? 'bg-purple-100 text-purple-600' :
-                              'bg-blue-100 text-blue-600'
-                            }`}
-                        >
-                            <Icon className={dashboardStyles.statIcon} />
-                        </div>
-                        </div>
-                    </div>
-                );
-            })}
-            </div>
-            {/* Course Section */}
-            <div className={dashboardStyles.tableContainer}>
-            <div className={dashboardStyles.tableHeader}>
-                <div className="flex items-center gap-3 mb-4">
-                <BookOpenText className="w-6 h-6 text-gray-900" />
-                <h2 className={dashboardStyles.tableTitle}>
-                    Course Performance
-                </h2>
-                </div>
-                <div className={dashboardStyles.searchContainer}>
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                            type="text"
-                            placeholder="Search Courses..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className={`${dashboardStyles.searchInput} pl-10`}
-                        />
-                    </div>
-                </div>
-            </div>
-            </div>
         </div>
-        </div>
-        </>
+      </div>
+      </div>
+    </div>
   )
-}
+};
 
-export default DashboardPage
+export default DashboardPage;
