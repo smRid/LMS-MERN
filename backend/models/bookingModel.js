@@ -41,13 +41,16 @@ const bookingSchema = new mongoose.Schema({
 
     // make orderStatus values consistent + include "Confirmed"
     orderStatus: {
-      type: String,
-      enum: ["Pending", "Confirmed", "Cancelled", "Completed", "Failed"],
-      default: "Pending",
+        type: String,
+        enum: ["Pending", "Confirmed", "Cancelled", "Completed", "Failed"],
+        default: "Pending",
     },
 
     notes: { type: String, default: "" },
-},{
+
+    // to track completed chapters
+    progress: { type: [String], default: [] }
+}, {
     timestamps: true,
 })
 

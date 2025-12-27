@@ -2,7 +2,7 @@ import A1 from "../assets/A1.png"
 import A2 from "../assets/A2.png"
 import A3 from "../assets/A3.png"
 import A4 from "../assets/A4.png"
-import AT1   from "../assets/AT1.png"
+import AT1 from "../assets/AT1.png"
 import AT2 from "../assets/AT2.png"
 import AT3 from "../assets/AT3.png"
 
@@ -130,28 +130,28 @@ export const teamMembers = [
   {
     name: "Sarah Johnson",
     role: "Founder & CEO",
-    image:A1,
+    image: A1,
     bio: "15+ years in education technology",
     social: ["twitter", "linkedin", "github"],
   },
   {
     name: "Michael Chen",
     role: "Chief Learning Officer",
-    image:A2,
+    image: A2,
     bio: "Former university professor and curriculum expert",
     social: ["twitter", "linkedin"],
   },
   {
     name: "Emily Rodriguez",
     role: "Product Director",
-    image:A3,
+    image: A3,
     bio: "Specialized in user experience and learning design",
     social: ["twitter", "linkedin", "dribbble"],
   },
   {
     name: "David Kim",
     role: "Tech Lead",
-    image:A4,
+    image: A4,
     bio: "Full-stack developer and system architect",
     social: ["twitter", "linkedin", "github"],
   },
@@ -191,7 +191,7 @@ export const values = [
 export const milestones = [
   {
     year: "2018",
-    event: "LearnHub Founded",
+    event: "ShikhoHub Founded",
     description: "Started with 10 courses and 500 students",
   },
   {
@@ -225,21 +225,21 @@ export const testimonials = [
   {
     name: "Alex Thompson",
     role: "Software Developer",
-    image:AT1,
-    text: "LearnHub transformed my career. The courses are comprehensive and the support is exceptional.",
+    image: AT1,
+    text: "ShikhoHub transformed my career. The courses are comprehensive and the support is exceptional.",
     rating: 5,
   },
   {
     name: "Maria Garcia",
     role: "Data Scientist",
-    image:AT2,
+    image: AT2,
     text: "The quality of instruction and hands-on projects helped me land my dream job.",
     rating: 5,
   },
   {
     name: "James Wilson",
     role: "UX Designer",
-    image:AT3,
+    image: AT3,
     text: "Best investment I've made in my professional development. Highly recommended!",
     rating: 5,
   },

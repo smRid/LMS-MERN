@@ -4,6 +4,7 @@ import Logo from '../assets/Logo.png';
 import { Home, BookOpen, BookMarked, Users, Contact, Menu, X, BookOpenText, } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth, useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { useTranslation } from 'react-i18next';
 
 const baseNav = [
   { name: "Home", icon: Home, href: "/" },
@@ -14,47 +15,61 @@ const baseNav = [
 ];
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation();
 
-    // for clerk
-    const { openSignUp } = useClerk();
-    const { isSignedIn } = useUser();
-    const { getToken } = useAuth();
+  const changeLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'bn' : 'en';
+    i18n.changeLanguage(newLang);
+  };
 
-    // for mobile toggle
-    const [isOpen, setIsOpen] = useState(false);
-    const [lastScrollY, setLastScrollY] = useState(0);
+  const navItemsList = [
+    { name: t('navbar.home'), icon: Home, href: "/" },
+    { name: t('navbar.courses'), icon: BookOpen, href: "/courses" },
+    { name: t('navbar.about'), icon: BookMarked, href: "/about" },
+    { name: t('navbar.faculty'), icon: Users, href: "/faculty" },
+    { name: t('navbar.contact'), icon: Contact, href: "/contact" },
+  ];
 
-    const menuRef = useRef(null);
-    const isloggedin = isSignedIn && Boolean(localStorage.getItem("token"));
+  // for clerk
+  const { openSignUp } = useClerk();
+  const { isSignedIn, isLoaded } = useUser();
+  const { getToken } = useAuth();
 
-    const navItems = isSignedIn
-      ? [
-          ...baseNav,
-          { name: "My Courses", icon: BookOpenText, href: "/mycourses" },
-        ]
-      : baseNav;
+  // for mobile toggle
+  const [isOpen, setIsOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-    // fetch token
-    useEffect(() => {
+  const menuRef = useRef(null);
+  const isloggedin = isSignedIn && Boolean(localStorage.getItem("token"));
+
+  const navItems = isSignedIn
+    ? [
+      ...navItemsList,
+      { name: t('navbar.my_courses'), icon: BookOpenText, href: "/mycourses" },
+    ]
+    : navItemsList;
+
+  // fetch token
+  useEffect(() => {
     const loadToken = async () => {
-        if (isSignedIn) {
+      if (isSignedIn) {
         const token = await getToken();
         localStorage.setItem("token", token);
         console.log("Clerk Login Token:", token);
-        }
+      }
     };
     loadToken();
-    }, [isSignedIn, getToken]);
+  }, [isSignedIn, getToken]);
 
-    // remove token when signout
-    useEffect(() => {
+  // remove token when signout
+  useEffect(() => {
     if (!isSignedIn) {
-        localStorage.removeItem("token");
-        console.log("Clerk Token Removed");
+      localStorage.removeItem("token");
+      console.log("Clerk Token Removed");
     }
-    }, [isSignedIn]);
+  }, [isSignedIn]);
 
-     // INSTANT token removal using Clerk logout event
+  // INSTANT token removal using Clerk logout event
   useEffect(() => {
     const handleLogout = () => {
       localStorage.removeItem("token");
@@ -98,22 +113,19 @@ const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
 
   const desktopLinkClass = (isActive) =>
-    `${navbarStyles.desktopNavItem} ${
-        isActive ? navbarStyles.desktopNavItemActive : ""
+    `${navbarStyles.desktopNavItem} ${isActive ? navbarStyles.desktopNavItemActive : ""
     }`;
 
   const mobileLinkClass = (isActive) =>
-    `${navbarStyles.mobileMenuItem} ${
-        isActive
-        ? navbarStyles.mobileMenuItemActive
-        : navbarStyles.mobileMenuItemHover
+    `${navbarStyles.mobileMenuItem} ${isActive
+      ? navbarStyles.mobileMenuItemActive
+      : navbarStyles.mobileMenuItemHover
     }`;
 
   return (
     <nav
-      className={`${navbarStyles.navbar} ${
-        showNavbar ? navbarStyles.navbarVisible : navbarStyles.navbarHidden
-      } ${isScrolled ? navbarStyles.navbarScrolled : navbarStyles.navbarDefault}`}
+      className={`${navbarStyles.navbar} ${showNavbar ? navbarStyles.navbarVisible : navbarStyles.navbarHidden
+        } ${isScrolled ? navbarStyles.navbarScrolled : navbarStyles.navbarDefault}`}
     >
       <div className={navbarStyles.container}>
         <div className={navbarStyles.innerContainer}>
@@ -126,105 +138,115 @@ const Navbar = () => {
             >
               ShikhoHub
             </div>
+            {/* Language Toggle Desktop */}
+            <button
+              onClick={changeLanguage}
+              className="ml-2 px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 transition-colors cursor-pointer"
+            >
+              {i18n.language === 'en' ? 'BN' : 'EN'}
+            </button>
           </div>
 
           <div className={navbarStyles.desktopNav}>
             <div className={navbarStyles.desktopNavContainer}>
-                {navItems.map((item) => {
+              {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                    <NavLink
-                        key={item.name}
-                        to={item.href}
-                        end={item.href === "/"}
-                        className={({ isActive }) => desktopLinkClass(isActive)}
-                        >
-                        <div className="flex items-center space-x-2">
-                            <Icon size={16} className={navbarStyles.desktopNavIcon} />
-                            <span className={navbarStyles.desktopNavText}>
-                                {item.name}
-                            </span>
-                        </div>
-                        </NavLink>
-                    );
-                })}
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    end={item.href === "/"}
+                    className={({ isActive }) => desktopLinkClass(isActive)}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Icon size={16} className={navbarStyles.desktopNavIcon} />
+                      <span className={navbarStyles.desktopNavText}>
+                        {item.name}
+                      </span>
+                    </div>
+                  </NavLink>
+                );
+              })}
             </div>
-            </div>
+          </div>
 
-            {/* Right Side */}
-            <div className={navbarStyles.authContainer}>
-            {!isSignedIn ? (
-                <button type="button" onClick={() => openSignUp({})} className={
+          {/* Right Side */}
+          <div className={navbarStyles.authContainer}>
+            {!isLoaded ? (
+              <div className="w-10"></div>
+            ) : !isSignedIn ? (
+              <button type="button" onClick={() => openSignUp({})} className={
                 navbarStyles.createAccountButton ?? navbarStyles.loginButton
-                }>
-                <span className='cursor-pointer'>Sign up</span>
-                </button>
+              }>
+                <span className='cursor-pointer'>{t('navbar.sign_up')}</span>
+              </button>
             ) : (
-                <div className="flex items-center">
-                <UserButton afterSignOutUrl="/"/>
-                </div>
+              <div className="flex items-center">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             )}
 
             {/* toggle */}
             <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={navbarStyles.mobileMenuButton}
+              onClick={() => setIsOpen(!isOpen)}
+              className={navbarStyles.mobileMenuButton}
             >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            </div>
+          </div>
         </div>
 
         {/* mobile nav */}
         <div
-        ref={menuRef}
-        className={`${navbarStyles.mobileMenu} ${
-            isOpen ? navbarStyles.mobileMenuOpen : navbarStyles.mobileMenuClosed
-        }`}
+          ref={menuRef}
+          className={`${navbarStyles.mobileMenu} ${isOpen ? navbarStyles.mobileMenuOpen : navbarStyles.mobileMenuClosed
+            }`}
         >
-        <div className={navbarStyles.mobileMenuContainer}>
+          <div className={navbarStyles.mobileMenuContainer}>
             <div className={navbarStyles.mobileMenuItems}>
-            {navItems.map((item) => {
+              {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                <NavLink
+                  <NavLink
                     key={item.name}
                     to={item.href}
                     end={item.href === "/"}
                     className={({ isActive }) => mobileLinkClass(isActive)}
                     onClick={() => setIsOpen(false)}
-                >
+                  >
                     <div className={navbarStyles.mobileMenuIconContainer}>
-                    <Icon size={18} className={navbarStyles.mobileMenuIcon} />
+                      <Icon size={18} className={navbarStyles.mobileMenuIcon} />
                     </div>
                     <span className={navbarStyles.mobileMenuText}>
-                        {item.name}
+                      {item.name}
                     </span>
-                </NavLink>
+                  </NavLink>
                 );
-            })}
+              })}
 
-            {!isSignedIn ? (
+              {!isLoaded ? (
+                <div className="w-10"></div>
+              ) : !isSignedIn ? (
                 <button type="button" onClick={() => {
-                    openSignUp({});
-                    setIsOpen(false)
+                  openSignUp({});
+                  setIsOpen(false)
                 }} className={
-                    navbarStyles.mobileCreateAccountButton ?? navbarStyles.mobileLoginButton
+                  navbarStyles.mobileCreateAccountButton ?? navbarStyles.mobileLoginButton
                 }>
-                    <span className='cursor-pointer'>Sign up</span>
+                  <span className='cursor-pointer'>{t('navbar.sign_up')}</span>
                 </button>
-                ) : (
+              ) : (
                 <div className="px-4 py-2">
-                    <UserButton afterSignOutUrl='/'/>
+                  <UserButton afterSignOutUrl='/' />
                 </div>
-            )}
+              )}
             </div>
-        </div>
+          </div>
         </div>
       </div>
       <div className={navbarStyles.backgroundPattern}>
-            <div className={navbarStyles.pattern}></div>
-        </div>
+        <div className={navbarStyles.pattern}></div>
+      </div>
     </nav>
   );
 };

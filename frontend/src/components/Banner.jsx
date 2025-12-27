@@ -7,79 +7,78 @@ import video from '../assets/BannerVideo.mp4';
 
 const Banner = () => {
 
-  const [showVideo, setShowVideo] = useState(false);
+    const [showVideo, setShowVideo] = useState(false);
 
-  return (
-    <div className={bannerStyles.container}>
+    return (
+        <div className={bannerStyles.container}>
 
-      {/* Floating Icons Wrapper */}
-      <div className={bannerStyles.floatingIconsWrapper}>
-        {floatingIcons.map((icon, i) => (
-          <img
-            key={i}
-            src={icon.src}
-            alt={icon.alt || ""}
-            className={`${bannerStyles.floatingIcon} ${icon.pos}`}
-            style={{
-              animationDelay: `${i * 0.35}s`,
-              willChange: "transform, opacity",
-            }}
-          />
-        ))}
-      </div>
-            <div className={bannerStyles.mainContent}>
-            <div className={bannerStyles.grid}>
-                <div className={bannerStyles.leftContent}>
-                <span className={bannerStyles.badge}>
-                    <Sparkle className={bannerStyles.badgeIcon} />
-                    New Features Available
-                </span>
-
-                <h1 className={bannerStyles.heading}>
-                    <span className={bannerStyles.headingSpan1}>Build Amazing</span>
-                    <span className={bannerStyles.headingSpan2}>Digital Product</span>
-                </h1>
-
-                <p className={bannerStyles.description}>
-                Create beautiful, responsive web applications with our powerful
-                tools and components. Start building your next project today.
-                </p>
-
-
-                {/* Features */}
-                <div className={bannerStyles.featuresGrid}>
-                {features.map((feature, i) => (
-                    <div key={i} className={bannerStyles.featureItem}>
-                    <div className={bannerStyles.featureIconContainer}>
-                        <span
-                        className={`${bannerStyles.featureIcon} text-${feature.color}-500`}
-                        >
-                        <CircleCheckBig size={16} />
-                        </span>
-                    </div>
-
-                    <span className={bannerStyles.featureText}>
-                        {feature.text}
-                    </span>
-
-                    </div>
+            {/* Floating Icons Wrapper */}
+            <div className={bannerStyles.floatingIconsWrapper}>
+                {floatingIcons.map((icon, i) => (
+                    <img
+                        key={i}
+                        src={icon.src}
+                        alt={icon.alt || ""}
+                        className={`${bannerStyles.floatingIcon} ${icon.pos}`}
+                        style={{
+                            animationDelay: `${i * 0.35}s`,
+                            willChange: "transform, opacity",
+                        }}
+                    />
                 ))}
-                </div>
-
-                {/* btns */}
-                <div className={bannerStyles.buttonsContainer}>  
-                    <a href="/courses" className={bannerStyles.buttonGetStarted}>
-                    Get Started
-                    </a>
-                <button className={bannerStyles.buttonViewDemo} onClick={() => setShowVideo(true)}>
-                    View Demo
-                </button>
-                </div>
-                </div>
-                <div className={bannerStyles.imageContainer}>
-                    <img src={bannerImg} alt="bannering" className={bannerStyles.image} />
-                </div>
             </div>
+            <div className={bannerStyles.mainContent}>
+                <div className={bannerStyles.grid}>
+                    <div className={bannerStyles.leftContent}>
+                        <span className={bannerStyles.badge}>
+                            <Sparkle className={bannerStyles.badgeIcon} />
+                            New Features Available
+                        </span>
+
+                        <h1 className={bannerStyles.heading}>
+                            <span className={bannerStyles.headingSpan1}>Learn Skils</span>
+                            <span className={bannerStyles.headingSpan2}>That Matter</span>
+                        </h1>
+
+                        <p className={bannerStyles.description}>
+                            Master in-demand digital skills through AI-powered paths tailored to your unique goals
+                        </p>
+
+
+                        {/* Features */}
+                        <div className={bannerStyles.featuresGrid}>
+                            {features.map((feature, i) => (
+                                <div key={i} className={bannerStyles.featureItem}>
+                                    <div className={bannerStyles.featureIconContainer}>
+                                        <span
+                                            className={`${bannerStyles.featureIcon} text-${feature.color}-500`}
+                                        >
+                                            <CircleCheckBig size={16} />
+                                        </span>
+                                    </div>
+
+                                    <span className={bannerStyles.featureText}>
+                                        {feature.text}
+                                    </span>
+
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* btns */}
+                        <div className={bannerStyles.buttonsContainer}>
+                            <a href="/courses" className={bannerStyles.buttonGetStarted}>
+                                Get Started
+                            </a>
+                            <button className={bannerStyles.buttonViewDemo} onClick={() => setShowVideo(true)}>
+                                View Demo
+                            </button>
+                        </div>
+                    </div>
+                    <div className={bannerStyles.imageContainer}>
+                        <img src={bannerImg} alt="bannering" className={bannerStyles.image} />
+                    </div>
+                </div>
             </div>
 
 
@@ -98,7 +97,7 @@ const Banner = () => {
                     </div>
                     <button onClick={() => setShowVideo(false)} className={bannerStyles.videoModal.closeButton}>
                         <span>
-                            <X className={bannerStyles.videoModal.closeIcon}/>
+                            <X className={bannerStyles.videoModal.closeIcon} />
                         </span>
                     </button>
                 </div>
@@ -114,8 +113,8 @@ const Banner = () => {
                 .animate-fadeIn {
                 animation: fadeIn 0.3s ease-out forwards;
                 }`}</style>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Banner

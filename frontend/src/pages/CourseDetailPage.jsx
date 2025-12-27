@@ -35,11 +35,10 @@ const Toast = ({ message, type = "info", onClose }) => {
 
   return (
     <div
-      className={`${courseDetailStyles.toast} ${
-        type === "error"
+      className={`${courseDetailStyles.toast} ${type === "error"
           ? courseDetailStyles.toastError
           : courseDetailStyles.toastInfo
-      }`}
+        }`}
     >
       <div className={courseDetailStyles.toastContent}>
         <span>{message}</span>
@@ -100,25 +99,25 @@ const normalizeCourse = (c) => {
   const course = { ...c };
   course.lectures = Array.isArray(course.lectures)
     ? course.lectures.map((l) => {
-        const lecture = { ...l };
-        lecture.durationMin =
-          lecture.durationMin ??
-          lecture.totalMinutes ??
-          (lecture.duration?.hours || 0) * 60 +
-            (lecture.duration?.minutes || 0);
-        lecture.chapters = Array.isArray(lecture.chapters)
-          ? lecture.chapters.map((ch) => {
-              const chapter = { ...ch };
-              chapter.durationMin =
-                chapter.durationMin ??
-                chapter.totalMinutes ??
-                (chapter.duration?.hours || 0) * 60 +
-                  (chapter.duration?.minutes || 0);
-              return chapter;
-            })
-          : [];
-        return lecture;
-      })
+      const lecture = { ...l };
+      lecture.durationMin =
+        lecture.durationMin ??
+        lecture.totalMinutes ??
+        (lecture.duration?.hours || 0) * 60 +
+        (lecture.duration?.minutes || 0);
+      lecture.chapters = Array.isArray(lecture.chapters)
+        ? lecture.chapters.map((ch) => {
+          const chapter = { ...ch };
+          chapter.durationMin =
+            chapter.durationMin ??
+            chapter.totalMinutes ??
+            (chapter.duration?.hours || 0) * 60 +
+            (chapter.duration?.minutes || 0);
+          return chapter;
+        })
+        : [];
+      return lecture;
+    })
     : [];
   return course;
 };
@@ -353,12 +352,12 @@ const CourseDetailPage = () => {
     hasPriceObj && priceObj.sale != null ? Number(priceObj.sale) : null;
   const originalPrice =
     hasPriceObj && priceObj.original != null ? Number(priceObj.original) : null;
-  const formatCurrency = (n) => (n == null || Number.isNaN(n) ? "" : `₹${n}`);
+  const formatCurrency = (n) => (n == null || Number.isNaN(n) ? "" : `৳${n}`);
   const courseIsFree = course
     ? !!course.isFree ||
-      !course.price ||
-      (!course.price.sale && !course.price.original) ||
-      course.pricingType === "free"
+    !course.price ||
+    (!course.price.sale && !course.price.original) ||
+    course.pricingType === "free"
     : true;
   const hasDiscount =
     originalPrice != null && salePrice != null && originalPrice > salePrice;
@@ -504,8 +503,8 @@ const CourseDetailPage = () => {
         salePrice != null
           ? salePrice
           : originalPrice != null
-          ? originalPrice
-          : 0;
+            ? originalPrice
+            : 0;
       const payload = {
         courseId: course._id ?? course.id ?? courseId,
         courseName: course.name,
@@ -529,7 +528,7 @@ const CourseDetailPage = () => {
             headers.Authorization = `Bearer ${token}`;
             opts = { method: "POST", headers, body: JSON.stringify(payload) };
           }
-        } catch (e) {}
+        } catch (e) { }
       }
 
       const res = await fetch(`${API_BASE}/api/booking/create`, opts);
@@ -659,11 +658,10 @@ const CourseDetailPage = () => {
       )}
 
       <div
-        className={`${courseDetailStyles.mainContainer} ${
-          isPageLoaded
+        className={`${courseDetailStyles.mainContainer} ${isPageLoaded
             ? courseDetailStyles.containerVisible
             : courseDetailStyles.containerHidden
-        }`}
+          }`}
       >
         <div className="flex items-center justify-between">
           <button
@@ -720,9 +718,8 @@ const CourseDetailPage = () => {
             </div>
 
             <div
-              className={`${courseDetailStyles.teacherStat} ${
-                isTeacherAnimating ? courseDetailStyles.teacherAnimating : ""
-              }`}
+              className={`${courseDetailStyles.teacherStat} ${isTeacherAnimating ? courseDetailStyles.teacherAnimating : ""
+                }`}
             >
               <User className={courseDetailStyles.statIcon} />
               <span className={courseDetailStyles.statText}>
@@ -782,8 +779,8 @@ const CourseDetailPage = () => {
                         {!isLoggedIn
                           ? "Login required"
                           : bookingPendingPayment
-                          ? "Payment pending"
-                          : "Enrollment required"}
+                            ? "Payment pending"
+                            : "Enrollment required"}
                       </p>
                     )}
                   </div>
@@ -827,11 +824,10 @@ const CourseDetailPage = () => {
                       onClick={() =>
                         toggleChapterCompletion(selectedContent.chapterId)
                       }
-                      className={`${courseDetailStyles.completionButton} ${
-                        completedChapters.has(selectedContent.chapterId)
+                      className={`${courseDetailStyles.completionButton} ${completedChapters.has(selectedContent.chapterId)
                           ? courseDetailStyles.completionButtonCompleted
                           : courseDetailStyles.completionButtonIncomplete
-                      }`}
+                        }`}
                     >
                       {completedChapters.has(selectedContent.chapterId) ? (
                         <>
@@ -882,11 +878,10 @@ const CourseDetailPage = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div
-                      className={`${courseDetailStyles.lectureHeader} ${
-                        expandedLectures.has(lecture.id ?? lecture._id)
+                      className={`${courseDetailStyles.lectureHeader} ${expandedLectures.has(lecture.id ?? lecture._id)
                           ? courseDetailStyles.lectureHeaderExpanded
                           : courseDetailStyles.lectureHeaderCollapsed
-                      }`}
+                        }`}
                       onClick={() =>
                         onLectureHeaderClick(lecture.id ?? lecture._id)
                       }
@@ -894,11 +889,10 @@ const CourseDetailPage = () => {
                       <div className={courseDetailStyles.lectureHeaderContent}>
                         <div className={courseDetailStyles.lectureLeftSection}>
                           <div
-                            className={`${courseDetailStyles.lectureChevron} ${
-                              expandedLectures.has(lecture.id ?? lecture._id)
+                            className={`${courseDetailStyles.lectureChevron} ${expandedLectures.has(lecture.id ?? lecture._id)
                                 ? courseDetailStyles.lectureChevronExpanded
                                 : courseDetailStyles.lectureChevronCollapsed
-                            }`}
+                              }`}
                           >
                             <ChevronDown className="w-5 h-5" />
                           </div>
@@ -934,19 +928,17 @@ const CourseDetailPage = () => {
                           const isSelected =
                             selectedContent.chapterId === chapId &&
                             selectedContent.lectureId ===
-                              (lecture.id ?? lecture._id);
+                            (lecture.id ?? lecture._id);
                           return (
                             <div
                               key={chapId}
-                              className={`${courseDetailStyles.chapterItem} ${
-                                isSelected
+                              className={`${courseDetailStyles.chapterItem} ${isSelected
                                   ? courseDetailStyles.chapterSelected
                                   : courseDetailStyles.chapterNotSelected
-                              } ${
-                                !isEnrolled
+                                } ${!isEnrolled
                                   ? courseDetailStyles.chapterDisabled
                                   : ""
-                              }`}
+                                }`}
                               onClick={() =>
                                 handleContentSelect(
                                   lecture.id ?? lecture._id,
@@ -968,13 +960,11 @@ const CourseDetailPage = () => {
                                       if (isEnrolled)
                                         toggleChapterCompletion(chapId, e);
                                     }}
-                                    className={`${
-                                      courseDetailStyles.completionToggle
-                                    } ${
-                                      isCompleted
+                                    className={`${courseDetailStyles.completionToggle
+                                      } ${isCompleted
                                         ? courseDetailStyles.completionToggleCompleted
                                         : courseDetailStyles.completionToggleIncomplete
-                                    }`}
+                                      }`}
                                     disabled={!isEnrolled}
                                   >
                                     {isCompleted ? (
@@ -995,13 +985,11 @@ const CourseDetailPage = () => {
                                     className={courseDetailStyles.chapterText}
                                   >
                                     <div
-                                      className={`${
-                                        courseDetailStyles.chapterName
-                                      } ${
-                                        isSelected
+                                      className={`${courseDetailStyles.chapterName
+                                        } ${isSelected
                                           ? courseDetailStyles.chapterNameSelected
                                           : courseDetailStyles.chapterNameNotSelected
-                                      }`}
+                                        }`}
                                     >
                                       {chapter.name}
                                     </div>
@@ -1046,10 +1034,10 @@ const CourseDetailPage = () => {
                   {courseIsFree
                     ? "Free"
                     : salePrice != null
-                    ? formatCurrency(salePrice)
-                    : originalPrice != null
-                    ? formatCurrency(originalPrice)
-                    : "Free"}
+                      ? formatCurrency(salePrice)
+                      : originalPrice != null
+                        ? formatCurrency(originalPrice)
+                        : "Free"}
                 </div>
 
                 {!courseIsFree && hasDiscount && (
@@ -1167,7 +1155,7 @@ const CourseDetailPage = () => {
                         (completedChapters.size /
                           (course.lectures?.flatMap((l) => l.chapters || [])
                             .length || 1)) *
-                          100
+                        100
                       )}
                       %
                     </span>
@@ -1176,12 +1164,11 @@ const CourseDetailPage = () => {
                     <div
                       className={courseDetailStyles.progressFill}
                       style={{
-                        width: `${
-                          (completedChapters.size /
+                        width: `${(completedChapters.size /
                             (course.lectures?.flatMap((l) => l.chapters || [])
                               .length || 1)) *
                           100
-                        }%`,
+                          }%`,
                       }}
                     />
                   </div>

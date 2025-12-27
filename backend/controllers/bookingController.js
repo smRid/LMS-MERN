@@ -32,85 +32,106 @@ function buildFrontendBase(req) {
 
 // get bookings
 export const getBookings = async (req, res) => {
-    try {
-        const { search = "", status, limit: limitRaw = 50, page: pageRaw = 1 } = req.query;
-        const limit = Math.min(200, Math.max(1, parseInt(limitRaw, 10) || 50));
-        const page = Math.max(1, parseInt(pageRaw, 10) || 1);
-        const skip = (page - 1) * limit;
+  try {
+    const { search = "", status, limit: limitRaw = 50, page: pageRaw = 1 } = req.query;
+    const limit = Math.min(200, Math.max(1, parseInt(limitRaw, 10) || 50));
+    const page = Math.max(1, parseInt(pageRaw, 10) || 1);
+    const skip = (page - 1) * limit;
 
-        const filter = {};
+    const filter = {};
 
-        if(status) filter.orderStatus = status;
+    if (status) filter.orderStatus = status;
 
-        if (search) {
-        const re = new RegExp(search, "i");
-        filter.$or = [
-            { bookingId: re },
-            { courseName: re },
-            { teacherName: re },
-            { clerkUserId: re },
-            { studentName: re },
-        ];
-        }
-
-
+    if (search) {
+      const re = new RegExp(search, "i");
+      filter.$or = [
+        { bookingId: re },
+        { courseName: re },
+        { teacherName: re },
+        { clerkUserId: re },
+        { studentName: re },
+      ];
     }
 
-        catch (err) {
-        console.error('getBookings error:', err);
-        return res.status(500).json({
-            success: false,
-            message: "Server Error"
-        })
-        }
+
+  }
+
+  catch (err) {
+    console.error('getBookings error:', err);
+    return res.status(500).json({
+      success: false,
+      message: "Server Error"
+    })
+  }
 }
 
 
 // we also need to check for the booking as a user has already enrolled in that course or not
-export const checkBooking = async (req,res) => {
-    try {
-        const { userId } = getAuth(req) || {};
-        if (!userId) {
-            return res.status(200).json({
-                success: true,
-                enrolled: false,
-                booking: null
-            });
-        }
-        const { courseId } = req.query;
-        if (!courseId) return res.status(400).json({
-            success: false,
-            message: "CourseId required"
-        });
+export const checkBooking = async (req, res) => {
+  try {
+    const { userId } = getAuth(req) || {};
+    if (!userId) {
+      return res.status(200).json({
+        success: true,
+        enrolled: false,
+        booking: null
+      });
+    }
+    const { courseId } = req.query;
+    if (!courseId) return res.status(400).json({
+      success: false,
+      message: "CourseId required"
+    });
 
-        const booking = await Booking.findOne({course: courseId, clerkUserId:userId}).sort({createdAt: -1}).lean();
-        if (!booking) {
-            return res.status(200).json({
-                success: true,
-                enrolled: false,
-                booking: null
-            });
-        }
+    // Fix: prioritize finding a PAID/CONFIRMED booking. 
+    // If we just take the latest, an accidental re-enrollment (Unpaid) would hide the Paid one.
+    let booking = await Booking.findOne({
+      course: courseId,
+      clerkUserId: userId,
+      $or: [
+        { paymentStatus: 'Paid' },
+        { paymentStatus: 'paid' },
+        { orderStatus: 'Confirmed' },
+        { orderStatus: 'confirmed' },
+        { paidAt: { $exists: true, $ne: null } }
+      ]
+    }).lean();
 
-        // to check enrollment
-        const paid = booking.paymentStatus === 'Paid' || booking.paymentStatus === 'paid' || 
-            booking.orderStatus === 'Confirmed' || booking.orderStatus === 'confirmed' || 
-            !!booking.paidAt;
-
-        return res.status(200).json({
-            success: true,
-            enrolled: !!paid,
-            booking
-        });
+    // If no paid booking is found, fall back to the absolute latest (which might be pending/unpaid)
+    if (!booking) {
+      booking = await Booking.findOne({ course: courseId, clerkUserId: userId })
+        .sort({ createdAt: -1 })
+        .lean();
     }
 
-    catch (err) {
-        console.error('checkBooking error:', err);
-        return res.status(500).json({
-            success: false,
-            message: "Server Error"
-        })
+    if (!booking) {
+      return res.status(200).json({
+        success: true,
+        enrolled: false,
+        booking: null
+      });
     }
+
+    // to check enrollment
+    const paid = booking.paymentStatus === 'Paid' || booking.paymentStatus === 'paid' ||
+      booking.orderStatus === 'Confirmed' || booking.orderStatus === 'confirmed' ||
+      !!booking.paidAt;
+
+    return res.status(200).json({
+      success: true,
+      enrolled: !!paid,
+      booking,
+      progress: booking.progress || []
+    });
+  }
+
+  catch (err) {
+    console.error('checkBooking error:', err);
+    return res.status(500).json({
+      success: false,
+      message: "Server Error"
+    })
+  }
 }
 
 
@@ -286,49 +307,131 @@ export const getUserBookings = async (req, res) => {
       bookings
     });
 
-  } 
-    catch (err) {
-        console.error("getUserBookings:", err);
-        return res.status(500).json({ success: false, message: "Server error" });
-    }
+  }
+  catch (err) {
+    console.error("getUserBookings:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
 }
 
 
 
 // get Stats
 export const getStats = async (req, res) => {
-    try {
-        const totalBookings = await Booking.countDocuments();
-        const totalRevenueAgg = await Booking.aggregate([
-            { $match: { paymentStatus: 'Paid' } },
-            { $group: { _id: null, total: { $sum: "$price" } } }
-        ])
+  try {
+    const totalBookings = await Booking.countDocuments();
+    const totalRevenueAgg = await Booking.aggregate([
+      { $match: { paymentStatus: 'Paid' } },
+      { $group: { _id: null, total: { $sum: "$price" } } }
+    ])
 
-        const totalRevenue = (totalRevenueAgg[0] && totalRevenueAgg[0].total) || 0;
+    const totalRevenue = (totalRevenueAgg[0] && totalRevenueAgg[0].total) || 0;
 
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-        const bookingsLast7Days = await Booking.countDocuments({
-        createdAt: { $gte: sevenDaysAgo }
-        });
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const bookingsLast7Days = await Booking.countDocuments({
+      createdAt: { $gte: sevenDaysAgo }
+    });
 
-        const topCourses = await Booking.aggregate([
-        { $group: { _id: "$courseName", count: { $sum: 1 }, revenue: { $sum: "$price" } } },
-        { $sort: { count: -1 } },
-        { $limit: 6 },
-        { $project: { courseName: "$_id", count: 1, revenue: 1, _id: 0 } },
-        ]);
+    const topCourses = await Booking.aggregate([
+      { $group: { _id: "$courseName", count: { $sum: 1 }, revenue: { $sum: "$price" } } },
+      { $sort: { count: -1 } },
+      { $limit: 6 },
+      { $project: { courseName: "$_id", count: 1, revenue: 1, _id: 0 } },
+    ]);
 
-        return res.json({
-            success: true,
-            stats: {
-                totalBookings, totalRevenue, bookingsLast7Days, topCourses
-            }
-        });
+    return res.json({
+      success: true,
+      stats: {
+        totalBookings, totalRevenue, bookingsLast7Days, topCourses
+      }
+    });
+  }
+
+  catch (err) {
+    console.error("getStats:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+}
+
+// to toggle chapter progress
+export const toggleProgress = async (req, res) => {
+  try {
+    const { userId } = getAuth(req) || {};
+    if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+
+    const { bookingId, chapterId, completed } = req.body;
+    // completed is boolean: true=add, false=remove
+
+    if (!bookingId) {
+      // Backend fallback: if frontend doesn't send bookingId, try to find it via courseId
+      const { courseId } = req.body;
+      if (!courseId) return res.status(400).json({ success: false, message: "bookingId or courseId required" });
+
+      // find latest paid booking
+      const booking = await Booking.findOne({
+        course: courseId,
+        clerkUserId: userId,
+        $or: [
+          { paymentStatus: 'Paid' },
+          { paymentStatus: 'paid' },
+          { orderStatus: 'Confirmed' },
+          { orderStatus: 'confirmed' },
+          { paidAt: { $exists: true, $ne: null } }
+        ]
+      });
+
+      if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
+
+      return handleProgressUpdate(booking, chapterId, completed, res);
     }
 
-    catch (err) {
-        console.error("getStats:", err);
-        return res.status(500).json({ success: false, message: "Server error" });
+    // Try to find by _id first (if valid ObjectId)
+    let booking = null;
+    if (bookingId.match(/^[0-9a-fA-F]{24}$/)) {
+      booking = await Booking.findOne({
+        _id: bookingId,
+        clerkUserId: userId
+      });
     }
+
+    // If not found, try by custom bookingId string
+    if (!booking) {
+      booking = await Booking.findOne({
+        bookingId: bookingId,
+        clerkUserId: userId
+      });
+    }
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found" });
+    }
+
+    return handleProgressUpdate(booking, chapterId, completed, res);
+
+  } catch (err) {
+    console.error("toggleProgress error:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+}
+
+async function handleProgressUpdate(booking, chapterId, completed, res) {
+  let prog = booking.progress || [];
+  const strId = String(chapterId);
+
+  if (completed) {
+    if (!prog.some(x => String(x) === strId)) {
+      prog.push(strId);
+    }
+  } else {
+    prog = prog.filter(id => id !== strId);
+  }
+
+  booking.progress = prog;
+  await booking.save();
+
+  return res.json({
+    success: true,
+    progress: booking.progress
+  });
 }

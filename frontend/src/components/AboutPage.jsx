@@ -11,11 +11,11 @@ import {
 
 import AboutBanner from '../assets/AboutBannerImage.png'
 import { BadgeCheck, MessageCircleCode, ShieldUser, Star } from "lucide-react";
-import {DotLottieReact} from "@lottiefiles/dotlottie-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const AboutPage = () => {
 
-    const [counterValues, setCounterValues] = useState({
+  const [counterValues, setCounterValues] = useState({
     students: 0,
     courses: 0,
     successRate: 0,
@@ -54,15 +54,15 @@ const AboutPage = () => {
     return () => timers.forEach((t) => clearInterval(t));
   }, []);
 
-    // Helper to format display number per stat key
-    const formatStatNumber = (key) => {
-      if (key === "support") return "24/7";
-      if (key === "successRate") return `${counterValues.successRate}%`;
-      const val = counterValues[key] ?? 0;
-      // certificates might be large -> show with commas and plus
-      if (key === "certificates") return `${val.toLocaleString()}+`;
-      return `${val.toLocaleString()}+`;
-    };
+  // Helper to format display number per stat key
+  const formatStatNumber = (key) => {
+    if (key === "support") return "24/7";
+    if (key === "successRate") return `${counterValues.successRate}%`;
+    const val = counterValues[key] ?? 0;
+    // certificates might be large -> show with commas and plus
+    if (key === "certificates") return `${val.toLocaleString()}+`;
+    return `${val.toLocaleString()}+`;
+  };
 
 
   return (
@@ -70,10 +70,10 @@ const AboutPage = () => {
       <section className={aboutUsStyles.heroSection}>
         <div className={aboutUsStyles.heroBackground}>
           <div style={{
-              backgroundImage: `url(${AboutBanner})`,
-              opacity: 0.85,
+            backgroundImage: `url(${AboutBanner})`,
+            opacity: 0.85,
 
-          }} className={aboutUsStyles.heroImageContainer}/>
+          }} className={aboutUsStyles.heroImageContainer} />
 
           {/* Top-and-bottom vignette */}
           <div
@@ -92,7 +92,7 @@ const AboutPage = () => {
             Trusted by 50,000+ students worldwide
           </div>
 
-          <h1 className={aboutUsStyles.mainHeading}>About LearnHub</h1>
+          <h1 className={aboutUsStyles.mainHeading}>About ShikhoHub</h1>
 
           <p className={aboutUsStyles.subHeading}>
             Empowering millions to achieve dreams through
@@ -104,40 +104,37 @@ const AboutPage = () => {
 
 
           <div className={aboutUsStyles.statsGrid}>
-          {statsMeta.slice(0,4).map((stat, index) => (
-            <div key={index} className={aboutUsStyles.statCard} style={{
-              minWidth: 120
-            }}>
-              <div className={aboutUsStyles.statNumber}>
-                {formatStatNumber(stat.key)}
+            {statsMeta.slice(0, 4).map((stat, index) => (
+              <div key={index} className={aboutUsStyles.statCard} style={{
+                minWidth: 120
+              }}>
+                <div className={aboutUsStyles.statNumber}>
+                  {formatStatNumber(stat.key)}
+                </div>
+                <div className={aboutUsStyles.statLabel}>{stat.label}</div>
               </div>
-              <div className={aboutUsStyles.statLabel}>{stat.label}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {missionVisionValues.map((section, index) => (
-      <section
+        <section
           key={section.type}
           className={`${aboutUsStyles.sectionContainer}
           ${section.bgColor} ${index % 2 === 1 ? "bg-white" : ""}
           `}
         >
-            <div className={aboutUsStyles.sectionGrid}>
-              <div className={`${aboutUsStyles.sectionContentGrid} ${
-                  index % 2 === 1 ? "lg:grid-flow-dense" : "" }`}>
+          <div className={aboutUsStyles.sectionGrid}>
+            <div className={`${aboutUsStyles.sectionContentGrid} ${index % 2 === 1 ? "lg:grid-flow-dense" : ""}`}>
 
-                <div className={`${aboutUsStyles.sectionImageContainer} ${
-                    index % 2 === 1 ? "lg:col-start-2" : ""}`}>
-                      <div className={aboutUsStyles.sectionImage}>
-                        <DotLottieReact src={section.dotLottie} loop autoplay />
-                      </div>
+              <div className={`${aboutUsStyles.sectionImageContainer} ${index % 2 === 1 ? "lg:col-start-2" : ""}`}>
+                <div className={aboutUsStyles.sectionImage}>
+                  <DotLottieReact src={section.dotLottie} loop autoplay />
                 </div>
+              </div>
 
-                <div className={`${aboutUsStyles.sectionContent} ${
-                  index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
+              <div className={`${aboutUsStyles.sectionContent} ${index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
                 }`}>
                 <div className={aboutUsStyles.sectionBadge}>
                   <section.icon
@@ -147,27 +144,27 @@ const AboutPage = () => {
                     {section.subtitle}
                   </span>
                 </div>
-                  <h2 className={aboutUsStyles.sectionTitle}>{section.title}</h2>
-                  <p className={aboutUsStyles.sectionDescription}>
-                    {section.description}
-                  </p>
+                <h2 className={aboutUsStyles.sectionTitle}>{section.title}</h2>
+                <p className={aboutUsStyles.sectionDescription}>
+                  {section.description}
+                </p>
 
-                  <div className={aboutUsStyles.featuresContainer}>
-                    {section.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className={aboutUsStyles.featureItem}>
-                        <div className={`${aboutUsStyles.featureIcon} ${section.color}`}>
-                          <BadgeCheck className={aboutUsStyles.featureIconSvg} />
-                        </div>
-                        <span className={aboutUsStyles.featureText}>
-                          {feature}
-                        </span>
+                <div className={aboutUsStyles.featuresContainer}>
+                  {section.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className={aboutUsStyles.featureItem}>
+                      <div className={`${aboutUsStyles.featureIcon} ${section.color}`}>
+                        <BadgeCheck className={aboutUsStyles.featureIconSvg} />
                       </div>
-                    ))}
-                  </div>
+                      <span className={aboutUsStyles.featureText}>
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              </div>
+            </div>
           </div>
-      </section>
+        </section>
       ))}
 
 
@@ -185,7 +182,7 @@ const AboutPage = () => {
               Core Values That Define Us
             </h2>
             <p className={aboutUsStyles.valuesSubtitle}>
-              The foundation of everything we do at LearnHub
+              The foundation of everything we do at ShikhoHub
             </p>
           </div>
 
@@ -235,7 +232,7 @@ const AboutPage = () => {
           <div className={aboutUsStyles.teamHeader}>
             <h2 className={aboutUsStyles.teamTitle}>Meet Our Leadership</h2>
             <p className={aboutUsStyles.teamSubtitle}>
-              Passionate educators, innovators, and visionaries dedicated to 
+              Passionate educators, innovators, and visionaries dedicated to
               your success
             </p>
           </div>
@@ -257,7 +254,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-       {/* Testimonials Section */}
+      {/* Testimonials Section */}
       <section className={aboutUsStyles.testimonialsSection}>
         <div className={aboutUsStyles.sectionGrid}>
           <div className={aboutUsStyles.testimonialsHeader}>
@@ -313,7 +310,7 @@ const AboutPage = () => {
           </h2>
           <p className={aboutUsStyles.ctaDescription}>
             Join thousands of learners who have transformed their lives with
-            LearnHub.
+            ShikhoHub.
           </p>
           <div className={aboutUsStyles.ctaButtons}>
             <a href="/contact" className={aboutUsStyles.ctaButton}>

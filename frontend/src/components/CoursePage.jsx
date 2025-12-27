@@ -24,8 +24,8 @@ const StarIcon = ({ filled = false, half = false, className = "" }) => {
   );
 };
 
-const UserIcon = () => <User className={coursePageStyles.teacherIcon}/>
-const SearchIcon = () => <Search className={coursePageStyles.searchIcon}/>
+const UserIcon = () => <User className={coursePageStyles.teacherIcon} />
+const SearchIcon = () => <Search className={coursePageStyles.searchIcon} />
 
 // show 5 interactive stars
 const RatingStars = ({
@@ -89,33 +89,33 @@ const RatingStars = ({
 
 
 const CoursePage = () => {
-    const navigate = useNavigate();
-    const { isSignedIn } = useUser();
-    const { getToken } = useAuth();
-    const [ratings, setRatings] = useState(() => {
-        try {
-        const raw = localStorage.getItem("userCourseRatings");
-        return raw ? JSON.parse(raw) : {};
-        } catch {
-        return {};
-        }
-    });
-
-
-    const [searchQuery, setSearchQuery] = useState("");
-    const [showAll, setShowAll] = useState(false);
-    const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    // persist rating when changed
-    useEffect(() => {
+  const navigate = useNavigate();
+  const { isSignedIn } = useUser();
+  const { getToken } = useAuth();
+  const [ratings, setRatings] = useState(() => {
     try {
-        localStorage.setItem("userCourseRatings", JSON.stringify(ratings));
+      const raw = localStorage.getItem("userCourseRatings");
+      return raw ? JSON.parse(raw) : {};
     } catch {
-        // ignore
+      return {};
     }
-    }, [ratings]);
+  });
+
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // persist rating when changed
+  useEffect(() => {
+    try {
+      localStorage.setItem("userCourseRatings", JSON.stringify(ratings));
+    } catch {
+      // ignore
+    }
+  }, [ratings]);
 
   // Fetch public courses
   useEffect(() => {
@@ -134,12 +134,8 @@ const CoursePage = () => {
       .then(async (json) => {
         if (!mounted) return;
         const raw = json.items || json.courses || [];
-        // filter non-top (existing behavior)
-        const regular = raw.filter((c) =>
-          c.courseType ? c.courseType !== "top" : true
-        );
-
-        const mapped = regular.map((c) => ({
+        // Show ALL courses (do not filter out 'top' courses)
+        const mapped = raw.map((c) => ({
           id: String(c._id || c.id || ""),
           name: c.name,
           teacher: c.teacher || c.instructor || "",
@@ -158,8 +154,8 @@ const CoursePage = () => {
             typeof c.avgRating === "number"
               ? c.avgRating
               : typeof c.rating === "number"
-              ? c.rating
-              : parseFloat(c.rating) || 0,
+                ? c.rating
+                : parseFloat(c.rating) || 0,
           totalRatings:
             typeof c.totalRatings === "number"
               ? c.totalRatings
@@ -178,7 +174,7 @@ const CoursePage = () => {
               try {
                 const token = await getToken().catch(() => null);
                 if (token) headers.Authorization = `Bearer ${token}`;
-              } catch (err) {}
+              } catch (err) { }
               const r = await fetch(
                 `${API_BASE}/api/course/${encodeURIComponent(
                   course.id
@@ -221,37 +217,37 @@ const CoursePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn]);
 
-    // to send the rating to server
-    const submitRatingToServer = async (courseId, ratingValue) => {
+  // to send the rating to server
+  const submitRatingToServer = async (courseId, ratingValue) => {
+    try {
+      const headers = { "Content-Type": "application/json" };
       try {
-        const headers = { "Content-Type": "application/json" };
-        try {
-          const token = await getToken().catch(() => null);
-          if (token) headers.Authorization = `Bearer ${token}`;
-        } catch (err) {
-          // ignore any error
+        const token = await getToken().catch(() => null);
+        if (token) headers.Authorization = `Bearer ${token}`;
+      } catch (err) {
+        // ignore any error
+      }
+
+      const res = await fetch(
+        `${API_BASE}/api/course/${encodeURIComponent(courseId)}/rate`,
+        {
+          method: "POST",
+          headers,
+          credentials: "include",
+          body: JSON.stringify({ rating: ratingValue }),
         }
+      );
 
-        const res = await fetch(
-          `${API_BASE}/api/course/${encodeURIComponent(courseId)}/rate`,
-          {
-            method: "POST",
-            headers,
-            credentials: "include",
-            body: JSON.stringify({ rating: ratingValue }),
-          }
-        );
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok && !data.success) {
+        const msg =
+          (data && (data.message || data.error)) ||
+          `Failed to rate (${res.status})`;
+        if (res.status === 401) toast.error('Please sign in to submit the rating');
+        throw new Error(msg);
+      }
 
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok && !data.success) {
-          const msg =
-            (data && (data.message || data.error)) ||
-            `Failed to rate (${res.status})`;
-          if(res.status === 401) toast.error('Please sign in to submit the rating');
-          throw new Error(msg);
-        }
-
-              // update course aggregates from server response if provided
+      // update course aggregates from server response if provided
       const avg = data.avgRating ?? data.course?.avgRating ?? data.avg ?? null;
       const total =
         data.totalRatings ?? data.course?.totalRatings ?? data.count ?? null;
@@ -261,11 +257,11 @@ const CoursePage = () => {
           prev.map((c) =>
             String(c.id) === String(courseId)
               ? {
-                  ...c,
-                  avgRating: typeof avg === "number" ? avg : c.avgRating,
-                  totalRatings:
-                    typeof total === "number" ? total : c.totalRatings,
-                }
+                ...c,
+                avgRating: typeof avg === "number" ? avg : c.avgRating,
+                totalRatings:
+                  typeof total === "number" ? total : c.totalRatings,
+              }
               : c
           )
         );
@@ -275,105 +271,105 @@ const CoursePage = () => {
       setRatings((prev) => ({ ...prev, [courseId]: ratingValue }));
       toast.success("Thanks for rating!");
       return true;
-      } 
-      catch (err) {
+    }
+    catch (err) {
       console.error("SubmitRating Error:", err);
       toast.error(err.message || "Failed to submit rating");
       return false;
-      }
-    };
+    }
+  };
 
 
-    const handleRating = async (courseId, newRating, e) => {
-      if (e && e.stopPropagation) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      if (!isSignedIn) {
-        toast("Please sign in to submit the rating", { icon: "⭐" });
-        return;
-      }
-      setRatings((prev) => ({
-        ...prev,
-        [courseId]: newRating,
-      }));
-      await submitRatingToServer(courseId, newRating);
-    };
+  const handleRating = async (courseId, newRating, e) => {
+    if (e && e.stopPropagation) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!isSignedIn) {
+      toast("Please sign in to submit the rating", { icon: "⭐" });
+      return;
+    }
+    setRatings((prev) => ({
+      ...prev,
+      [courseId]: newRating,
+    }));
+    await submitRatingToServer(courseId, newRating);
+  };
 
-    const filteredCourses = courses.filter(
-        (course) =>
-            course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.teacher.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredCourses = courses.filter(
+    (course) =>
+      course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.teacher.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
 
-    // Decide which courses to show (8 by default)
-    const VISIBLE_COUNT = 8;
-    const visibleCourses = showAll
-        ? filteredCourses
-        : filteredCourses.slice(0, VISIBLE_COUNT);
-    const remainingCount = Math.max(0, filteredCourses.length - VISIBLE_COUNT);
+  // Decide which courses to show (8 by default)
+  const VISIBLE_COUNT = 8;
+  const visibleCourses = showAll
+    ? filteredCourses
+    : filteredCourses.slice(0, VISIBLE_COUNT);
+  const remainingCount = Math.max(0, filteredCourses.length - VISIBLE_COUNT);
 
-    // Small, animated top-right toast — only shown when user clicks a course and token missing
-    const showLoginToast = () => {
-        toast.error("Please login to access this course", {
-        position: "top-right",
-        transition: Slide,
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-        });
-    };
+  // Small, animated top-right toast — only shown when user clicks a course and token missing
+  const showLoginToast = () => {
+    toast.error("Please login to access this course", {
+      position: "top-right",
+      transition: Slide,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+    });
+  };
 
-    // navigate to course details if logged in else
-    const openCourse = (courseId) => {
+  // navigate to course details if logged in else
+  const openCourse = (courseId) => {
     const token = localStorage.getItem('token');
-    if(!token) {
-        showLoginToast();
-        return;
+    if (!token) {
+      showLoginToast();
+      return;
     }
-        navigate(`/courses/${courseId}`)
+    navigate(`/courses/${courseId}`)
+  }
+
+  const isCourseFree = (course) => {
+    return course.isFree || !course.price;
+  };
+
+  // Helper function to get price display
+  const getPriceDisplay = (course) => {
+    if (isCourseFree(course)) {
+      return "Free";
+    }
+    const price = course.price || {};
+
+    if (price.sale != null && price.sale !== 0) {
+      return {
+        current: `৳${price.sale}`,
+        original:
+          price.original && price.original > course.price.sale
+            ? `৳${price.original}`
+            : null,
+      };
     }
 
-    const isCourseFree = (course) => {
-        return course.isFree || !course.price;
-    };
+    if (price.original != null) {
+      return {
+        current: `৳${price.original}`,
+        original: null,
+      };
+    }
 
-    // Helper function to get price display
-    const getPriceDisplay = (course) => {
-        if (isCourseFree(course)) {
-        return "Free";
-        }
-        const price = course.price || {};
+    return "Free";
+  };
 
-        if (price.sale != null && price.sale !== 0) {
-          return {
-            current: `৳${price.sale}`,
-            original:
-              price.original && price.original > course.price.sale
-                ? `৳${price.original}`
-                : null,
-          };
-        }
-
-        if (price.original != null) {
-        return {
-            current: `৳${price.original}`,
-            original: null,
-        };
-        }
-
-        return "Free";
-    };
-
-    if (loading)
-      return <div className="p-6 text-center">Loading courses...</div>;
-    if (error)
-      return <div className="p-6 text-center text-red-500">{error}</div>;
+  if (loading)
+    return <div className="p-6 text-center">Loading courses...</div>;
+  if (error)
+    return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
     <div className={coursePageStyles.pageContainer}>
@@ -383,50 +379,50 @@ const CoursePage = () => {
           <h1 className={coursePageStyles.headerTitle}>LEARN & GROW</h1>
         </div>
         <p className={coursePageStyles.headerSubtitle}>
-            Master New Skills with Expert-Led Courses
+          Master New Skills with Expert-Led Courses
         </p>
 
         <div className={coursePageStyles.searchContainer}>
-        <div className={coursePageStyles.searchGradient} />
-        <div className={coursePageStyles.searchInputContainer}>
+          <div className={coursePageStyles.searchGradient} />
+          <div className={coursePageStyles.searchInputContainer}>
             <div className={coursePageStyles.searchIconContainer}>
-            <SearchIcon />
+              <SearchIcon />
             </div>
 
             <input
-                type="text"
-                placeholder="Search courses by name, instructor, or category..."
-                value={searchQuery}
-                onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowAll(false);
-                }}
-                className={coursePageStyles.searchInput}
+              type="text"
+              placeholder="Search courses by name, instructor, or category..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowAll(false);
+              }}
+              className={coursePageStyles.searchInput}
             />
             {searchQuery && (
-            <button
+              <button
                 onClick={() => {
-                setSearchQuery("");
-                setShowAll(false);
+                  setSearchQuery("");
+                  setShowAll(false);
                 }}
                 className={coursePageStyles.clearButton}
-            >
+              >
                 <X className=" w-5 h-5" />
-            </button>
+              </button>
             )}
-        </div>
+          </div>
         </div>
         {/* results count */}
         {searchQuery && (
-        <div className=" text-center">
+          <div className=" text-center">
             <p className={coursePageStyles.resultsCount}>
-            Found {filteredCourses.length} course
-            {filteredCourses.length !== 1 ? "s" : ""} matching "{searchQuery}"
+              Found {filteredCourses.length} course
+              {filteredCourses.length !== 1 ? "s" : ""} matching "{searchQuery}"
             </p>
-        </div>
+          </div>
         )}
       </div>
-            {/* Courses Grid */}
+      {/* Courses Grid */}
       <div className={coursePageStyles.coursesGrid}>
         {filteredCourses.length === 0 ? (
           <div className={coursePageStyles.noCoursesContainer}>
@@ -495,13 +491,13 @@ const CoursePage = () => {
                               <div
                                 className={coursePageStyles.ratingStarsInner}
                               >
-                              <RatingStars
-                                courseId={course.id}
-                                userRating={userRating}
-                                avgRating={course.avgRating}
-                                totalRatings={course.totalRatings}
-                                onRate={handleRating}
-                              />     
+                                <RatingStars
+                                  courseId={course.id}
+                                  userRating={userRating}
+                                  avgRating={course.avgRating}
+                                  totalRatings={course.totalRatings}
+                                  onRate={handleRating}
+                                />
                               </div>
                             </div>
                           </div>
@@ -550,9 +546,9 @@ const CoursePage = () => {
         autoClose={3000}
         transition={Slide}
         theme="dark"
-        />
+      />
 
-        <style>{coursePageCustomStyles}</style>
+      <style>{coursePageCustomStyles}</style>
     </div>
   );
 };

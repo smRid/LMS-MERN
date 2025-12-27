@@ -41,9 +41,8 @@ const Toast = ({ message, type = "info", onClose }) => {
 
   return (
     <div
-      className={`${toastStyles.toast} ${
-        type === "error" ? toastStyles.toastError : toastStyles.toastInfo
-      }`}
+      className={`${toastStyles.toast} ${type === "error" ? toastStyles.toastError : toastStyles.toastInfo
+        }`}
     >
       <div className={toastStyles.toastContent}>
         <span>{message}</span>
@@ -89,25 +88,25 @@ const normalizeCourse = (c) => {
   const course = { ...c };
   course.lectures = Array.isArray(course.lectures)
     ? course.lectures.map((l) => {
-        const lecture = { ...l };
-        lecture.durationMin =
-          lecture.durationMin ??
-          lecture.totalMinutes ??
-          (lecture.duration?.hours || 0) * 60 +
-            (lecture.duration?.minutes || 0);
-        lecture.chapters = Array.isArray(lecture.chapters)
-          ? lecture.chapters.map((ch) => {
-              const chapter = { ...ch };
-              chapter.durationMin =
-                chapter.durationMin ??
-                chapter.totalMinutes ??
-                (chapter.duration?.hours || 0) * 60 +
-                  (chapter.duration?.minutes || 0);
-              return chapter;
-            })
-          : [];
-        return lecture;
-      })
+      const lecture = { ...l };
+      lecture.durationMin =
+        lecture.durationMin ??
+        lecture.totalMinutes ??
+        (lecture.duration?.hours || 0) * 60 +
+        (lecture.duration?.minutes || 0);
+      lecture.chapters = Array.isArray(lecture.chapters)
+        ? lecture.chapters.map((ch) => {
+          const chapter = { ...ch };
+          chapter.durationMin =
+            chapter.durationMin ??
+            chapter.totalMinutes ??
+            (chapter.duration?.hours || 0) * 60 +
+            (chapter.duration?.minutes || 0);
+          return chapter;
+        })
+        : [];
+      return lecture;
+    })
     : [];
   return course;
 };
@@ -125,7 +124,7 @@ const CourseDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [isEnrolled, setIsEnrolled] = useState(false); 
+  const [isEnrolled, setIsEnrolled] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [bookingInfo, setBookingInfo] = useState(null);
 
@@ -242,12 +241,20 @@ const CourseDetail = () => {
         if (mounted && bookingPaidOrConfirmed) {
           setBookingInfo(serverBooking || null);
           setIsEnrolled(true);
+          // NEW: load progress
+          if (data.progress && Array.isArray(data.progress)) {
+            setCompletedChapters(new Set(data.progress));
+          }
           return;
         }
 
         if (mounted && serverBooking) {
           setBookingInfo(serverBooking);
           setIsEnrolled(false);
+          // still load progress if exists (e.g. they viewed some chapters before payment expired? unlikely case but safe)
+          if (data.progress && Array.isArray(data.progress)) {
+            setCompletedChapters(new Set(data.progress));
+          }
           return;
         }
 
@@ -327,14 +334,14 @@ const CourseDetail = () => {
     hasPriceObj && priceObj.sale != null ? Number(priceObj.sale) : null;
   const originalPrice =
     hasPriceObj && priceObj.original != null ? Number(priceObj.original) : null;
-  const formatCurrency = (n) => (n == null || Number.isNaN(n) ? "" : `₹${n}`);
+  const formatCurrency = (n) => (n == null || Number.isNaN(n) ? "" : `৳${n}`);
   const hasDiscount =
     originalPrice != null && salePrice != null && originalPrice > salePrice;
   const courseIsFree = course
     ? !!course.isFree ||
-      !course.price ||
-      (!course.price.sale && !course.price.original) ||
-      course.pricingType === "free"
+    !course.price ||
+    (!course.price.sale && !course.price.original) ||
+    course.pricingType === "free"
     : true;
 
   const toggleLecture = (lectureId) => {
@@ -420,7 +427,7 @@ const CourseDetail = () => {
     handleContentSelect(lectureId, null);
   };
 
-  const toggleChapterCompletion = (chapterId, e) => {
+  const toggleChapterCompletion = async (chapterId, e) => {
     if (e) e.stopPropagation();
     if (!isLoggedIn || !isEnrolled) {
       setToast({
@@ -429,12 +436,60 @@ const CourseDetail = () => {
       });
       return;
     }
+
+    // current state
+    const isCompleted = completedChapters.has(chapterId);
+    const newState = !isCompleted;
+
+    // optimistic update
     setCompletedChapters((prev) => {
       const next = new Set(prev);
-      if (next.has(chapterId)) next.delete(chapterId);
-      else next.add(chapterId);
+      if (newState) next.add(chapterId);
+      else next.delete(chapterId);
       return next;
     });
+
+    // save to server
+    try {
+      let headers = { "Content-Type": "application/json" };
+      if (getToken) {
+        try {
+          const token = await getToken();
+          if (token) headers.Authorization = `Bearer ${token}`;
+        } catch (e) { }
+      }
+
+      // Fix: prioritize _id for backend lookup
+      const bkId = bookingInfo ? (bookingInfo._id || bookingInfo.bookingId) : null;
+
+      const payload = {
+        bookingId: bkId,
+        courseId: course._id ?? course.id, // fallback if bookingId missing
+        chapterId,
+        completed: newState
+      };
+
+      const res = await fetch(`${API_BASE}/api/booking/progress`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save progress");
+      }
+
+    } catch (err) {
+      console.error("Failed to save progress", err);
+      setToast({ message: "Failed to save progress", type: "error" });
+      // revert state
+      setCompletedChapters((prev) => {
+        const next = new Set(prev);
+        if (newState) next.delete(chapterId);
+        else next.add(chapterId); // was completed, failed to uncomplete -> add back
+        return next;
+      });
+    }
   };
 
   // create or complete booking (enroll)
@@ -465,8 +520,8 @@ const CourseDetail = () => {
         salePrice != null
           ? salePrice
           : originalPrice != null
-          ? originalPrice
-          : 0;
+            ? originalPrice
+            : 0;
       const studentName = studentNameFromUser || "";
       const email = studentEmailFromUser || "";
 
@@ -684,9 +739,8 @@ const CourseDetail = () => {
       )}
 
       <div
-        className={`${courseDetailStylesH.mainContainer} ${
-          isPageLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
+        className={`${courseDetailStylesH.mainContainer} ${isPageLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
       >
         <div className="flex items-center justify-between">
           <button
@@ -746,9 +800,8 @@ const CourseDetail = () => {
             </div>
 
             <div
-              className={`${courseDetailStylesH.teacherStat} ${
-                isTeacherAnimating ? "scale-110 bg-indigo-100/50" : ""
-              }`}
+              className={`${courseDetailStylesH.teacherStat} ${isTeacherAnimating ? "scale-110 bg-indigo-100/50" : ""
+                }`}
             >
               <User className={courseDetailStylesH.teacherIcon} />
               <span className={courseDetailStylesH.teacherText}>
@@ -809,8 +862,8 @@ const CourseDetail = () => {
                           {!isLoggedIn
                             ? "Login required"
                             : bookingPendingPayment
-                            ? "Payment pending"
-                            : "Enrollment required"}
+                              ? "Payment pending"
+                              : "Enrollment required"}
                         </p>
                       ) : null}
                     </div>
@@ -855,11 +908,10 @@ const CourseDetail = () => {
                       onClick={() =>
                         toggleChapterCompletion(selectedContent.chapterId)
                       }
-                      className={`${courseDetailStylesH.completionButton} ${
-                        completedChapters.has(selectedContent.chapterId)
-                          ? courseDetailStylesH.completionButtonCompleted
-                          : courseDetailStylesH.completionButtonIncomplete
-                      }`}
+                      className={`${courseDetailStylesH.completionButton} ${completedChapters.has(selectedContent.chapterId)
+                        ? courseDetailStylesH.completionButtonCompleted
+                        : courseDetailStylesH.completionButtonIncomplete
+                        }`}
                     >
                       {completedChapters.has(selectedContent.chapterId) ? (
                         <>
@@ -912,11 +964,10 @@ const CourseDetail = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div
-                      className={`${courseDetailStylesH.lectureHeader} ${
-                        expandedLectures.has(lecture.id ?? lecture._id)
-                          ? courseDetailStylesH.lectureHeaderExpanded
-                          : courseDetailStylesH.lectureHeaderNormal
-                      }`}
+                      className={`${courseDetailStylesH.lectureHeader} ${expandedLectures.has(lecture.id ?? lecture._id)
+                        ? courseDetailStylesH.lectureHeaderExpanded
+                        : courseDetailStylesH.lectureHeaderNormal
+                        }`}
                       onClick={() =>
                         onLectureHeaderClick(lecture.id ?? lecture._id)
                       }
@@ -924,11 +975,10 @@ const CourseDetail = () => {
                       <div className={courseDetailStylesH.lectureContent}>
                         <div className={courseDetailStylesH.lectureLeft}>
                           <div
-                            className={`${courseDetailStylesH.lectureChevron} ${
-                              expandedLectures.has(lecture.id ?? lecture._id)
-                                ? courseDetailStylesH.lectureChevronExpanded
-                                : courseDetailStylesH.lectureChevronNormal
-                            }`}
+                            className={`${courseDetailStylesH.lectureChevron} ${expandedLectures.has(lecture.id ?? lecture._id)
+                              ? courseDetailStylesH.lectureChevronExpanded
+                              : courseDetailStylesH.lectureChevronNormal
+                              }`}
                           >
                             <ChevronDown className="w-5 h-5" />
                           </div>
@@ -967,17 +1017,16 @@ const CourseDetail = () => {
                           const isCompleted = completedChapters.has(chapId);
                           const isSelected =
                             String(selectedContent.chapterId) ===
-                              String(chapId) &&
+                            String(chapId) &&
                             String(selectedContent.lectureId) ===
-                              String(lecture.id ?? lecture._id);
+                            String(lecture.id ?? lecture._id);
                           return (
                             <div
                               key={chapId}
-                              className={`${courseDetailStylesH.chapterItem} ${
-                                isSelected
-                                  ? courseDetailStylesH.chapterItemSelected
-                                  : courseDetailStylesH.chapterItemNormal
-                              }`}
+                              className={`${courseDetailStylesH.chapterItem} ${isSelected
+                                ? courseDetailStylesH.chapterItemSelected
+                                : courseDetailStylesH.chapterItemNormal
+                                }`}
                               onClick={() =>
                                 handleContentSelect(
                                   lecture.id ?? lecture._id,
@@ -996,13 +1045,11 @@ const CourseDetail = () => {
                                       e.stopPropagation();
                                       toggleChapterCompletion(chapId, e);
                                     }}
-                                    className={`${
-                                      courseDetailStylesH.chapterCompletionButton
-                                    } ${
-                                      isCompleted
+                                    className={`${courseDetailStylesH.chapterCompletionButton
+                                      } ${isCompleted
                                         ? courseDetailStylesH.chapterCompletionCompleted
                                         : courseDetailStylesH.chapterCompletionNormal
-                                    }`}
+                                      }`}
                                   >
                                     {isCompleted ? (
                                       <CheckCircle className="w-5 h-5" />
@@ -1014,13 +1061,11 @@ const CourseDetail = () => {
                                     className={courseDetailStylesH.chapterInfo}
                                   >
                                     <div
-                                      className={`${
-                                        courseDetailStylesH.chapterName
-                                      } ${
-                                        isSelected
+                                      className={`${courseDetailStylesH.chapterName
+                                        } ${isSelected
                                           ? courseDetailStylesH.chapterNameSelected
                                           : courseDetailStylesH.chapterNameNormal
-                                      }`}
+                                        }`}
                                     >
                                       {chapter.name}
                                     </div>
@@ -1053,112 +1098,108 @@ const CourseDetail = () => {
               </div>
             </div>
 
-            <div
-              className={`${courseDetailStylesH.sidebarCard} ${animationDelaysH.delay200}`}
-            >
-              <div className={courseDetailStylesH.pricingHeader}>
-                <h5 className={courseDetailStylesH.pricingTitle}>Pricing</h5>
-              </div>
-              <div className={courseDetailStylesH.pricingAmount}>
-                <div className={courseDetailStylesH.pricingCurrent}>
-                  {salePrice != null
-                    ? formatCurrency(salePrice)
-                    : originalPrice != null
-                    ? formatCurrency(originalPrice)
-                    : "Free"}
+            {/* If fully enrolled (and no pending payment), we hide the Pricing card entirely
+                OR show a compact "Purchased" card. The user requested:
+                "remove the option to enroll again" -> Hiding is safest/cleanest.
+             */}
+            {!bookingPendingPayment && isEnrolled ? null : (
+              <div
+                className={`${courseDetailStylesH.sidebarCard} ${animationDelaysH.delay200}`}
+              >
+                <div className={courseDetailStylesH.pricingHeader}>
+                  <h5 className={courseDetailStylesH.pricingTitle}>Pricing</h5>
                 </div>
-                {hasDiscount && (
-                  <div className={courseDetailStylesH.pricingOriginal}>
-                    {formatCurrency(originalPrice)}
+                <div className={courseDetailStylesH.pricingAmount}>
+                  <div className={courseDetailStylesH.pricingCurrent}>
+                    {salePrice != null
+                      ? formatCurrency(salePrice)
+                      : originalPrice != null
+                        ? formatCurrency(originalPrice)
+                        : "Free"}
                   </div>
-                )}
-                {hasDiscount && (
-                  <div className={courseDetailStylesH.pricingDiscount}>
-                    {Math.round(
-                      ((originalPrice - salePrice) / originalPrice) * 100
-                    )}
-                    % off
-                  </div>
-                )}
-              </div>
-              <p className={courseDetailStylesH.pricingDescription}>
-                {courseIsFree
-                  ? "Free access · Learn anytime (enroll to unlock)"
-                  : "One-time payment · Lifetime access · 30-day guarantee"}
-              </p>
+                  {hasDiscount && (
+                    <div className={courseDetailStylesH.pricingOriginal}>
+                      {formatCurrency(originalPrice)}
+                    </div>
+                  )}
+                  {hasDiscount && (
+                    <div className={courseDetailStylesH.pricingDiscount}>
+                      {Math.round(
+                        ((originalPrice - salePrice) / originalPrice) * 100
+                      )}
+                      % off
+                    </div>
+                  )}
+                </div>
+                <p className={courseDetailStylesH.pricingDescription}>
+                  {courseIsFree
+                    ? "Free access · Learn anytime (enroll to unlock)"
+                    : "One-time payment · Lifetime access · 30-day guarantee"}
+                </p>
 
-              <div className="mt-6">
-                {/* If booking exists and unpaid -> show a "Complete payment" / "View payment" CTA */}
-                {bookingPendingPayment ? (
-                  <div className="flex flex-col gap-2">
+                <div className="mt-6">
+                  {/* If booking exists and unpaid -> show a "Complete payment" / "View payment" CTA */}
+                  {bookingPendingPayment ? (
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => {
+                          // attempt to create/refresh checkout by calling handleEnroll again
+                          handleEnroll();
+                        }}
+                        className={courseDetailStylesH.enrollButton}
+                        disabled={isEnrolling}
+                      >
+                        {isEnrolling ? (
+                          <>
+                            <div className={courseDetailStylesH.enrollSpinner} />
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            <Play
+                              className={courseDetailStylesH.enrollButtonIcon}
+                            />
+                            Complete Payment
+                            <span className="ml-auto opacity-80 group-hover:opacity-100">
+                              <ArrowRight className="w-4 h-4" />
+                            </span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => navigate("/my-courses")}
+                        className="text-sm underline"
+                      >
+                        View booking (My Courses)
+                      </button>
+                    </div>
+                  ) : !isEnrolled ? (
                     <button
-                      onClick={() => {
-                        // attempt to create/refresh checkout by calling handleEnroll again
-                        handleEnroll();
-                      }}
-                      className={courseDetailStylesH.enrollButton}
+                      onClick={handleEnroll}
                       disabled={isEnrolling}
+                      className={courseDetailStylesH.enrollButton}
                     >
                       {isEnrolling ? (
                         <>
                           <div className={courseDetailStylesH.enrollSpinner} />
-                          Processing...
+                          Enrolling...
                         </>
                       ) : (
                         <>
                           <Play
                             className={courseDetailStylesH.enrollButtonIcon}
                           />
-                          Complete Payment
+                          {courseIsFree ? "Enroll (Free)" : "Enroll Now"}
                           <span className="ml-auto opacity-80 group-hover:opacity-100">
                             <ArrowRight className="w-4 h-4" />
                           </span>
                         </>
                       )}
                     </button>
-                    <button
-                      onClick={() => navigate("/my-courses")}
-                      className="text-sm underline"
-                    >
-                      View booking (My Courses)
-                    </button>
-                  </div>
-                ) : !isEnrolled ? (
-                  <button
-                    onClick={handleEnroll}
-                    disabled={isEnrolling}
-                    className={courseDetailStylesH.enrollButton}
-                  >
-                    {isEnrolling ? (
-                      <>
-                        <div className={courseDetailStylesH.enrollSpinner} />
-                        Enrolling...
-                      </>
-                    ) : (
-                      <>
-                        <Play
-                          className={courseDetailStylesH.enrollButtonIcon}
-                        />
-                        {courseIsFree ? "Enroll (Free)" : "Enroll Now"}
-                        <span className="ml-auto opacity-80 group-hover:opacity-100">
-                          <ArrowRight className="w-4 h-4" />
-                        </span>
-                      </>
-                    )}
-                  </button>
-                ) : (
-                  <button
-                    disabled
-                    className={courseDetailStylesH.enrollButtonEnrolled}
-                  >
-                    <CheckCircle
-                      className={courseDetailStylesH.enrollButtonIcon}
-                    />
-                    Enrolled
-                  </button>
-                )}
+                  ) : null}
+                </div>
               </div>
-            </div>
+            )}
 
             <div
               className={`${courseDetailStylesH.sidebarCard} ${animationDelaysH.delay400}`}
@@ -1178,7 +1219,7 @@ const CourseDetail = () => {
                         (completedChapters.size /
                           (course.lectures?.flatMap((l) => l.chapters || [])
                             .length || 1)) *
-                          100
+                        100
                       )}
                       %
                     </span>
@@ -1187,12 +1228,11 @@ const CourseDetail = () => {
                     <div
                       className={courseDetailStylesH.progressBar}
                       style={{
-                        width: `${
-                          (completedChapters.size /
-                            (course.lectures?.flatMap((l) => l.chapters || [])
-                              .length || 1)) *
+                        width: `${(completedChapters.size /
+                          (course.lectures?.flatMap((l) => l.chapters || [])
+                            .length || 1)) *
                           100
-                        }%`,
+                          }%`,
                       }}
                     />
                   </div>

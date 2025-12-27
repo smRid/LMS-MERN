@@ -1,0 +1,12 @@
+{
+  "navbar": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About",
+    "faculty": "Faculty",
+    "contact": "Contact",
+    "my_courses": "My Courses",
+    "sign_up": "Sign up"
+  },
+  "loading": "Loading..."
+}

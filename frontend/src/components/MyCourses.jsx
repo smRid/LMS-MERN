@@ -4,7 +4,7 @@ import { myCoursesStyles, myCoursesCustomStyles } from "../assets/dummyStyles";
 import { useUser, useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { User, Play, Star} from "lucide-react";
+import { User, Play, Star } from "lucide-react";
 
 const API_BASE = "http://localhost:4000";
 
@@ -30,7 +30,7 @@ const MyCourses = () => {
   useEffect(() => {
     try {
       localStorage.setItem("userCourseRatings", JSON.stringify(userRatings));
-    } catch {}
+    } catch { }
   }, [userRatings]);
 
 
@@ -98,7 +98,7 @@ const MyCourses = () => {
               try {
                 const token = await getToken().catch(() => null);
                 if (token) cHeaders.Authorization = `Bearer ${token}`;
-              } catch (e) {}
+              } catch (e) { }
 
               const courseRes = await fetch(
                 `${API_BASE}/api/course/${courseId}`,
@@ -152,7 +152,16 @@ const MyCourses = () => {
 
         if (!mounted) return;
         const valid = combined.filter(Boolean);
-        const uiCourses = valid.map(({ booking, course }) => ({
+        // Deduplicate by course ID
+        const uniqueCoursesMap = new Map();
+        valid.forEach(({ booking, course }) => {
+          const cId = course._id ?? course.id ?? booking.course ?? booking.courseId;
+          if (cId && !uniqueCoursesMap.has(cId)) {
+            uniqueCoursesMap.set(cId, { booking, course });
+          }
+        });
+
+        const uiCourses = Array.from(uniqueCoursesMap.values()).map(({ booking, course }) => ({
           booking,
           id: course._id ?? course.id ?? booking.course ?? booking.courseId,
           name: course.name ?? booking.courseName ?? "Untitled Course",
@@ -186,7 +195,7 @@ const MyCourses = () => {
               try {
                 const token = await getToken().catch(() => null);
                 if (token) rHeaders.Authorization = `Bearer ${token}`;
-              } catch (e) {}
+              } catch (e) { }
               const res = await fetch(
                 `${API_BASE}/api/course/${c.id}/my-rating`,
                 {
@@ -199,7 +208,7 @@ const MyCourses = () => {
               if (res.ok && data && data.success && data.myRating) {
                 return { courseId: c.id, myRating: data.myRating.rating };
               }
-            } catch (err) {}
+            } catch (err) { }
             return null;
           });
 
@@ -227,7 +236,7 @@ const MyCourses = () => {
   }, [isSignedIn]);
 
   // To submit rating to server 
-   // Helper: optimistic submit rating to server
+  // Helper: optimistic submit rating to server
   const submitRatingToServer = async (courseId, ratingValue) => {
     try {
       const headers = { "Content-Type": "application/json" };
@@ -268,11 +277,11 @@ const MyCourses = () => {
           prev.map((c) =>
             c.id === courseId
               ? {
-                  ...c,
-                  avgRating: typeof avg === "number" ? avg : c.avgRating,
-                  totalRatings:
-                    typeof total === "number" ? total : c.totalRatings,
-                }
+                ...c,
+                avgRating: typeof avg === "number" ? avg : c.avgRating,
+                totalRatings:
+                  typeof total === "number" ? total : c.totalRatings,
+              }
               : c
           )
         );
@@ -411,16 +420,16 @@ const MyCourses = () => {
         <div className={myCoursesStyles.grid}>
           {courses.map((course, index) => (
             <div key={course.id ?? index} className={myCoursesStyles.courseCard}
-            style={{
-              animationDelay: `${index * 100}ms`,
-              animation: `fadeInUp 0.6s ease-out ${index * 100}ms both`
-            }}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleViewCourse(course.id);
-            }}
-            onClick={() => handleViewCourse(course.id)}
+              style={{
+                animationDelay: `${index * 100}ms`,
+                animation: `fadeInUp 0.6s ease-out ${index * 100}ms both`
+              }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleViewCourse(course.id);
+              }}
+              onClick={() => handleViewCourse(course.id)}
             >
               <div className={myCoursesStyles.imageContainer}>
                 <img
@@ -432,27 +441,27 @@ const MyCourses = () => {
               <div className={myCoursesStyles.courseContent}>
                 <h3 className={myCoursesStyles.courseName}>{course.name}</h3>
                 <div className={myCoursesStyles.infoContainer}>
-                <div className={myCoursesStyles.ratingContainer}>
-                  {renderInteractiveStars(course)}
+                  <div className={myCoursesStyles.ratingContainer}>
+                    {renderInteractiveStars(course)}
+                  </div>
+                  <div className={myCoursesStyles.teacherContainer}>
+                    <User className={myCoursesStyles.teacherIcon} />
+                    <span className={myCoursesStyles.teacherText}>
+                      {course.teacher}
+                    </span>
+                  </div>
                 </div>
-                <div className={myCoursesStyles.teacherContainer}>
-                  <User className={myCoursesStyles.teacherIcon} />
-                  <span className={myCoursesStyles.teacherText}>
-                    {course.teacher}
-                  </span>
-                </div>
-              </div>
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleViewCourse(course.id);
-                }}
-                className={myCoursesStyles.viewButton}
-              >
-                <Play className={myCoursesStyles.buttonIcon} />
-                <span>View Course</span>
-              </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleViewCourse(course.id);
+                  }}
+                  className={myCoursesStyles.viewButton}
+                >
+                  <Play className={myCoursesStyles.buttonIcon} />
+                  <span>View Course</span>
+                </button>
               </div>
 
             </div>
