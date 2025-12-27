@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import CourseDetailPageHome from "./pages/CourseDetailPageHome";
 import CourseDetailPage from "./pages/CourseDetailPage";
-import MyCourses from "./components/MyCourses";
 import VerifyPaymentPage from "./components/VerifyPaymentPage";
+import MyCoursePage from "./pages/MyCoursePage";
 
 const ScrollToTopOnRouteChange = () => {
   const location = useLocation();
@@ -73,7 +73,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/faculty" element={<Faculty />} />
         <Route path="/courses" element={<Course />} />
-        <Route path="/mycourses" element={<MyCourses />} />
+        <Route path="/mycourses" element={<MyCoursePage />} />
 
         <Route
           path="/course/:id"
