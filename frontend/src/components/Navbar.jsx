@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { navbarStyles } from '../assets/dummyStyles';
 import Logo from '../assets/Logo.png';
-import { Home, BookOpen, BookMarked, Users, Contact, Menu, X } from 'lucide-react';
+import { Home, BookOpen, BookMarked, Users, Contact, Menu, X, BookOpenText, } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth, useClerk, UserButton, useUser } from '@clerk/clerk-react';
 
-const navItems = [
+const baseNav = [
   { name: "Home", icon: Home, href: "/" },
   { name: "Courses", icon: BookOpen, href: "/courses" },
   { name: "About", icon: BookMarked, href: "/about" },
@@ -26,6 +26,13 @@ const Navbar = () => {
 
     const menuRef = useRef(null);
     const isloggedin = isSignedIn && Boolean(localStorage.getItem("token"));
+
+    const navItems = isSignedIn
+      ? [
+          ...baseNav,
+          { name: "My Courses", icon: BookOpenText, href: "/mycourses" },
+        ]
+      : baseNav;
 
     // fetch token
     useEffect(() => {

@@ -194,7 +194,7 @@ const CourseDetail = () => {
     hasPriceObj && priceObj.original != null ? Number(priceObj.original) : null;
   const formatCurrency = (n) => {
     if (n == null || Number.isNaN(n)) return "";
-    return `₹${n}`;
+    return `৳${n}`;
   };
   const priceLabel =
     salePrice != null

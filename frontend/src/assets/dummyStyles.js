@@ -1,6 +1,8 @@
+// assets/dummyStyles.js
+
 export const bannerStyles = {
   // Layout and container styles
-  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] pt-6 sm:pt-20 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient-bg rounded-3xl",
+  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] pt-6 sm:pt-8 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient-bg rounded-3xl",
   
   // Floating icons wrapper
   floatingIconsWrapper: "absolute inset-0 pointer-events-none overflow-visible z-0",
@@ -554,7 +556,7 @@ export const coursePageStyles = {
 
 export const myCoursesStyles = {
   // Layout and container styles
-  pageContainer: "min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 font-[pacifico]",
+  pageContainer: "min-h-screen pt-25 bg-gradient-to-br from-blue-50 to-indigo-100 py-8 font-[pacifico]",
   mainContainer: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
   
   // Header
@@ -563,25 +565,25 @@ export const myCoursesStyles = {
   emptyText: "text-gray-600 text-lg",
   
   // Grid layout
-  grid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8",
+  grid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 gap-8",
   
   // Course card
   courseCard: "group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/50 cursor-pointer",
   imageContainer: "relative overflow-hidden",
-  courseImage: "w-full h-48 object-contain pb-7.5 lg:pb-6 xl:pb-8.5 transition-transform duration-700",
+  courseImage: "w-full h-48 object-contain pb-7.5 lg:pb-6 xl:pb-8.5 md:object-cover transition-transform duration-700",
   courseContent: "p-5",
   
   // Course info
   courseName: "text-lg font-bold text-gray-800 mb-3 line-clamp-2 transition-colors duration-300",
-  infoContainer: "flex items-center justify-between mb-4",
+  infoContainer: "flex flex flex-col gap-2   justify-between mb-4",
   
   // Rating
-  ratingContainer: "flex items-center space-x-1 bg-yellow-50 rounded-full px-3 py-1 border border-yellow-100",
+  ratingContainer: "flex  items-center space-x-1 bg-yellow-50 rounded-full px-3 py-1 border border-yellow-100",
   ratingIcon: "w-4 h-4 text-yellow-500 fill-current",
   ratingText: "text-sm font-semibold text-gray-800",
   
   // Teacher
-  teacherContainer: "flex items-center space-x-1 bg-blue-50 rounded-full px-3 py-1 border border-blue-100",
+  teacherContainer: "flex items-center space-x-1 px-3 py-1",
   teacherIcon: "w-4 h-4 text-blue-600",
   teacherText: "text-sm font-medium text-gray-800 truncate max-w-[80px]",
   
@@ -745,7 +747,7 @@ export const footerStyles = {
   contactIconContainer: "flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mr-3 sm:mr-4 transform transition-transform duration-300 shadow-lg border border-white overflow-hidden",
   contactIcon: "w-4 h-4",
   contactTextContainer: "min-w-0",
-  contactTextPrimary: "font-medium text-sm break-words",
+  contactTextPrimary: "font-medium text-sm break-words xl:text-xs",
   contactTextSecondary: "text-xs text-slate-500",
   
   // Social section
