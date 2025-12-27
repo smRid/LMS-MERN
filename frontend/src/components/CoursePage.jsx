@@ -178,7 +178,7 @@ const CoursePage = () => {
               try {
                 const token = await getToken().catch(() => null);
                 if (token) headers.Authorization = `Bearer ${token}`;
-              } catch (e) {}
+              } catch (err) {}
               const r = await fetch(
                 `${API_BASE}/api/course/${encodeURIComponent(
                   course.id
@@ -228,7 +228,7 @@ const CoursePage = () => {
         try {
           const token = await getToken().catch(() => null);
           if (token) headers.Authorization = `Bearer ${token}`;
-        } catch (e) {
+        } catch (err) {
           // ignore any error
         }
 
@@ -495,32 +495,13 @@ const CoursePage = () => {
                               <div
                                 className={coursePageStyles.ratingStarsInner}
                               >
-                                {[1, 2, 3, 4, 5].map((star) => {
-                                  const filled = star <= userRating;
-                                  return (
-                                    <button
-                                      key={star}
-                                      onClick={(e) =>
-                                        handleRating(course.id, star, e)
-                                      }
-                                      className={
-                                        coursePageStyles.ratingStarButton
-                                      }
-                                      aria-label={`Rate ${star} star${
-                                        star > 1 ? "s" : ""
-                                      }`}
-                                    >
-                                      <StarIcon
-                                        filled={filled}
-                                        className={
-                                          filled
-                                            ? "text-yellow-400"
-                                            : "text-gray-300"
-                                        }
-                                      />
-                                    </button>
-                                  );
-                                })}
+                              <RatingStars
+                                courseId={course.id}
+                                userRating={userRating}
+                                avgRating={course.avgRating}
+                                totalRatings={course.totalRatings}
+                                onRate={handleRating}
+                              />     
                               </div>
                             </div>
                           </div>
