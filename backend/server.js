@@ -21,6 +21,12 @@ app.use(clerkMiddleware());
 
 app.use('/uploads', express.static('uploads'));
 
+// REQUEST LOGGING MIDDLEWARE
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
 // ROUTES
 app.use('/api/course', courseRouter);
 app.use('/api/booking', bookingRouter);

@@ -36,8 +36,8 @@ const Toast = ({ message, type = "info", onClose }) => {
   return (
     <div
       className={`${courseDetailStyles.toast} ${type === "error"
-          ? courseDetailStyles.toastError
-          : courseDetailStyles.toastInfo
+        ? courseDetailStyles.toastError
+        : courseDetailStyles.toastInfo
         }`}
     >
       <div className={courseDetailStyles.toastContent}>
@@ -267,6 +267,10 @@ const CourseDetailPage = () => {
         if (bookingPaidOrConfirmed) {
           setBookingInfo(booking || null);
           setIsEnrolled(true);
+          // Load saved progress
+          if (booking && Array.isArray(booking.progress)) {
+            setCompletedChapters(new Set(booking.progress));
+          }
           return;
         }
 
@@ -464,7 +468,7 @@ const CourseDetailPage = () => {
     }
   };
 
-  const toggleChapterCompletion = (chapterId, e) => {
+  const toggleChapterCompletion = async (chapterId, e) => {
     if (e) e.stopPropagation();
     if (!isLoggedIn || !isEnrolled) {
       setToast({
@@ -473,12 +477,81 @@ const CourseDetailPage = () => {
       });
       return;
     }
+
+    // Optimistically update UI
+    const wasCompleted = completedChapters.has(chapterId);
+    const newCompleted = !wasCompleted;
+
     setCompletedChapters((prev) => {
       const next = new Set(prev);
-      if (next.has(chapterId)) next.delete(chapterId);
-      else next.add(chapterId);
+      if (newCompleted) {
+        next.add(chapterId);
+      } else {
+        next.delete(chapterId);
+      }
       return next;
     });
+
+    // Save to backend
+    if (!bookingInfo?.bookingId && !bookingInfo?._id) {
+      console.warn("No booking ID available, progress won't persist");
+      return;
+    }
+
+    try {
+      const headers = { "Content-Type": "application/json" };
+      let opts = {
+        method: "POST",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({
+          bookingId: bookingInfo.bookingId || bookingInfo._id,
+          chapterId: String(chapterId),
+          completed: newCompleted,
+        }),
+      };
+
+      if (typeof getToken === "function") {
+        try {
+          const token = await getToken().catch(() => null);
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+            opts.headers = headers;
+          }
+        } catch (e) {
+          console.debug("Failed to get token:", e);
+        }
+      }
+
+      const res = await fetch(`${API_BASE}/api/booking/progress`, opts);
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data?.success) {
+        // Revert on error
+        setCompletedChapters((prev) => {
+          const next = new Set(prev);
+          if (wasCompleted) {
+            next.add(chapterId);
+          } else {
+            next.delete(chapterId);
+          }
+          return next;
+        });
+        console.error("Failed to save progress:", data?.message);
+      }
+    } catch (err) {
+      // Revert on network error
+      setCompletedChapters((prev) => {
+        const next = new Set(prev);
+        if (wasCompleted) {
+          next.add(chapterId);
+        } else {
+          next.delete(chapterId);
+        }
+        return next;
+      });
+      console.error("Network error saving progress:", err);
+    }
   };
 
   const handleEnroll = async () => {
@@ -659,8 +732,8 @@ const CourseDetailPage = () => {
 
       <div
         className={`${courseDetailStyles.mainContainer} ${isPageLoaded
-            ? courseDetailStyles.containerVisible
-            : courseDetailStyles.containerHidden
+          ? courseDetailStyles.containerVisible
+          : courseDetailStyles.containerHidden
           }`}
       >
         <div className="flex items-center justify-between">
@@ -825,8 +898,8 @@ const CourseDetailPage = () => {
                         toggleChapterCompletion(selectedContent.chapterId)
                       }
                       className={`${courseDetailStyles.completionButton} ${completedChapters.has(selectedContent.chapterId)
-                          ? courseDetailStyles.completionButtonCompleted
-                          : courseDetailStyles.completionButtonIncomplete
+                        ? courseDetailStyles.completionButtonCompleted
+                        : courseDetailStyles.completionButtonIncomplete
                         }`}
                     >
                       {completedChapters.has(selectedContent.chapterId) ? (
@@ -879,8 +952,8 @@ const CourseDetailPage = () => {
                   >
                     <div
                       className={`${courseDetailStyles.lectureHeader} ${expandedLectures.has(lecture.id ?? lecture._id)
-                          ? courseDetailStyles.lectureHeaderExpanded
-                          : courseDetailStyles.lectureHeaderCollapsed
+                        ? courseDetailStyles.lectureHeaderExpanded
+                        : courseDetailStyles.lectureHeaderCollapsed
                         }`}
                       onClick={() =>
                         onLectureHeaderClick(lecture.id ?? lecture._id)
@@ -890,8 +963,8 @@ const CourseDetailPage = () => {
                         <div className={courseDetailStyles.lectureLeftSection}>
                           <div
                             className={`${courseDetailStyles.lectureChevron} ${expandedLectures.has(lecture.id ?? lecture._id)
-                                ? courseDetailStyles.lectureChevronExpanded
-                                : courseDetailStyles.lectureChevronCollapsed
+                              ? courseDetailStyles.lectureChevronExpanded
+                              : courseDetailStyles.lectureChevronCollapsed
                               }`}
                           >
                             <ChevronDown className="w-5 h-5" />
@@ -933,8 +1006,8 @@ const CourseDetailPage = () => {
                             <div
                               key={chapId}
                               className={`${courseDetailStyles.chapterItem} ${isSelected
-                                  ? courseDetailStyles.chapterSelected
-                                  : courseDetailStyles.chapterNotSelected
+                                ? courseDetailStyles.chapterSelected
+                                : courseDetailStyles.chapterNotSelected
                                 } ${!isEnrolled
                                   ? courseDetailStyles.chapterDisabled
                                   : ""
@@ -1151,12 +1224,19 @@ const CourseDetailPage = () => {
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-gray-600">Course Completion</span>
                     <span className="font-semibold text-indigo-600">
-                      {Math.round(
-                        (completedChapters.size /
-                          (course.lectures?.flatMap((l) => l.chapters || [])
-                            .length || 1)) *
-                        100
-                      )}
+                      {(() => {
+                        const totalChapters = course.lectures?.reduce((sum, lecture) =>
+                          sum + (lecture.chapters?.length || 0), 0) || 0;
+
+                        if (totalChapters === 0) return '0';
+
+                        const percentage = Math.round(
+                          (completedChapters.size / totalChapters) * 100
+                        );
+
+                        // Cap at 100% to prevent display issues
+                        return Math.min(100, Math.max(0, percentage));
+                      })()}
                       %
                     </span>
                   </div>
@@ -1164,11 +1244,17 @@ const CourseDetailPage = () => {
                     <div
                       className={courseDetailStyles.progressFill}
                       style={{
-                        width: `${(completedChapters.size /
-                            (course.lectures?.flatMap((l) => l.chapters || [])
-                              .length || 1)) *
-                          100
-                          }%`,
+                        width: `${(() => {
+                          const totalChapters = course.lectures?.reduce((sum, lecture) =>
+                            sum + (lecture.chapters?.length || 0), 0) || 0;
+
+                          if (totalChapters === 0) return 0;
+
+                          const percentage = (completedChapters.size / totalChapters) * 100;
+
+                          // Cap at 100% to prevent overflow
+                          return Math.min(100, Math.max(0, percentage));
+                        })()}%`,
                       }}
                     />
                   </div>

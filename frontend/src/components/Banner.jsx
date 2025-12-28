@@ -19,9 +19,10 @@ const Banner = () => {
                         key={i}
                         src={icon.src}
                         alt={icon.alt || ""}
-                        className={`${bannerStyles.floatingIcon} ${icon.pos}`}
+                        className={`${bannerStyles.floatingIcon} ${icon.pos} ${i % 2 === 0 ? 'animate-float' : 'animate-float-slow'
+                            }`}
                         style={{
-                            animationDelay: `${i * 0.35}s`,
+                            animationDelay: `${i * 0.4}s`,
                             willChange: "transform, opacity",
                         }}
                     />

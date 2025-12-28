@@ -53,10 +53,17 @@ export const getBookings = async (req, res) => {
       ];
     }
 
+    const bookings = await Booking.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
 
-  }
-
-  catch (err) {
+    return res.json({
+      success: true,
+      bookings
+    });
+  } catch (err) {
     console.error('getBookings error:', err);
     return res.status(500).json({
       success: false,
@@ -309,10 +316,10 @@ export const getUserBookings = async (req, res) => {
 
   }
   catch (err) {
-    console.error("getUserBookings:", err);
-    return res.status(500).json({ success: false, message: "Server error" });
+    console.error('getUserBookings ERROR:', err);
+    return res.status(500).json({ success: false, message: 'Server error' });
   }
-}
+};
 
 
 

@@ -1,11 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addPageStyles } from "../assets/dummyStyles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Toaster } from "react-hot-toast";
-import { BookOpenText, ChevronUp, Clock, X, HandCoins, ImageIcon, ListOrdered, PenLine, Plus, Star, Upload, UserPen, Video } from "lucide-react";
+import { BookOpenText, ChevronUp, ChevronDown, Clock, X, HandCoins, ImageIcon, ListOrdered, PenLine, Plus, Star, Upload, UserPen, Video } from "lucide-react";
 
 const API_BASE = "http://localhost:4000";
+
+// Helper function to validate video URLs (YouTube and Google Drive)
+const isValidVideoUrl = (url) => {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+
+  // YouTube validation
+  const isYouTube = /youtube\.com|youtu\.be/i.test(trimmed);
+
+  // Google Drive validation - must be file URL, NOT folder URL
+  if (/drive\.google\.com/i.test(trimmed)) {
+    // Reject folder URLs
+    if (/\/folders\//i.test(trimmed)) {
+      return false; // Folder URLs cannot be embedded as video
+    }
+    // Accept file URLs
+    if (/\/file\/d\//i.test(trimmed) || /[?&]id=/i.test(trimmed)) {
+      return true;
+    }
+    // If it's a Drive URL but we can't identify the format, reject it
+    return false;
+  }
+
+  // Accept YouTube URLs
+  return isYouTube;
+};
+
 
 // formatDuration accepts either {hours, minutes} or (hours, minutes)
 const formatDuration = (a, b) => {
@@ -59,7 +86,7 @@ const computeCourseTotals = (lectures = []) => {
       lectureTotalMinutes = Math.max(
         0,
         (Number(lec.duration.hours) || 0) * 60 +
-          (Number(lec.duration.minutes) || 0)
+        (Number(lec.duration.minutes) || 0)
       );
     }
 
@@ -91,8 +118,12 @@ const computeCourseTotals = (lectures = []) => {
 
 const AddPage = () => {
 
+
+  const { id } = useParams(); // check if editing
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     teacher: "",
@@ -118,6 +149,7 @@ const AddPage = () => {
     topic: "",
     duration: { hours: "", minutes: "" },
     videoUrl: "",
+    totalMinutes: 0
   });
 
   const [showLectureForm, setShowLectureForm] = useState(false);
@@ -125,15 +157,55 @@ const AddPage = () => {
   const [expandedLectures, setExpandedLectures] = useState([]);
   const [selectedLectureIndex, setSelectedLectureIndex] = useState(null);
 
+  // Fetch course data if in edit mode
+  useEffect(() => {
+    if (id) {
+      setIsEditMode(true);
+      setLoading(true);
+      fetch(`${API_BASE}/api/course/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.course) {
+            const c = data.course;
+            // populate form
+            setFormData({
+              name: c.name || "",
+              teacher: c.teacher || "",
+              image: { file: null, preview: c.image }, // maintain valid preview
+              rating: c.rating || 0,
+              pricingType: c.pricingType || "free",
+              price: {
+                original: c.price?.original || "",
+                sale: c.price?.sale || ""
+              },
+              overview: c.overview || "",
+              totalDuration: c.totalDuration || { hours: 0, minutes: 0 },
+              totalLectures: c.totalLectures || "",
+              lectures: Array.isArray(c.lectures) ? c.lectures : [],
+              courseType: c.courseType || "regular"
+            });
+          } else {
+            toast.error("Failed to fetch course details");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          toast.error("Error loading course");
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id]);
+
+
 
   // TO toggle lecture expansion
-    const toggleLecture = (index) =>
-        setExpandedLectures((prev) =>
-        prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+  const toggleLecture = (index) =>
+    setExpandedLectures((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
 
 
- const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name.includes("price.")) {
       const priceField = name.split(".")[1];
@@ -164,7 +236,7 @@ const AddPage = () => {
   };
 
   //for image handling
-   const handleImageUpload = (e) => {
+  const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
@@ -185,7 +257,7 @@ const AddPage = () => {
   const handleRatingChange = (rating) =>
     setFormData((prev) => ({ ...prev, rating }));
 
-   const handleLectureChange = (e) => {
+  const handleLectureChange = (e) => {
     const { name, value } = e.target;
     if (name.includes("duration.")) {
       const durationField = name.split(".")[1];
@@ -212,21 +284,32 @@ const AddPage = () => {
   };
 
   //to calculate total number of lectures and duration
-    const calculateTotalMinutes = (hours, minutes) =>
-        (parseInt(hours) || 0) * 60 + (parseInt(minutes) || 0);
+  const calculateTotalMinutes = (hours, minutes) =>
+    (parseInt(hours) || 0) * 60 + (parseInt(minutes) || 0);
 
-    const calculateTotalCourseDuration = () => {
-        const { totalDuration } = computeCourseTotals(formData.lectures);
-        return formatDuration(totalDuration);
-    };
+  const calculateTotalCourseDuration = () => {
+    const { totalDuration } = computeCourseTotals(formData.lectures);
+    return formatDuration(totalDuration);
+  };
 
-    const calculateTotalLectures = () => formData.lectures.length;
+  const calculateTotalLectures = () => formData.lectures.length;
 
-    const formatTotalDuration = () => formatDuration(formData.totalDuration);
+  const formatTotalDuration = () => formatDuration(formData.totalDuration);
 
-    // Validate each form field
-     const validateForm = () => {
+  // Validate each form field
+  const validateForm = () => {
+    console.log("🔍 VALIDATING FORM...");
+    console.log("Form Data:", {
+      name: formData.name,
+      teacher: formData.teacher,
+      hasImage: !!formData.image,
+      overview: formData.overview?.substring(0, 50),
+      pricingType: formData.pricingType,
+      lecturesCount: formData.lectures?.length
+    });
+
     if (!formData.name?.trim()) {
+      console.log("❌ Validation failed: No course name");
       toast.error("Please enter course name");
       return false;
     }
@@ -234,7 +317,7 @@ const AddPage = () => {
       toast.error("Please enter instructor name");
       return false;
     }
-    if (!formData.image?.file) {
+    if (!formData.image?.file && !formData.image?.preview) {
       toast.error("Please upload a course image");
       return false;
     }
@@ -292,7 +375,7 @@ const AddPage = () => {
     return true;
   };
 
-      // Add lecture: allow lecture with chapters (duration optional if chapters exist)
+  // Add lecture: allow lecture with chapters (duration optional if chapters exist)
   const addLecture = () => {
     if (!currentLecture.title?.trim()) {
       toast.error("Please enter lecture title");
@@ -344,7 +427,7 @@ const AddPage = () => {
     toast.success("Lecture added successfully!");
   };
 
-   // Add chapter: to existing lecture or to current lecture draft
+  // Add chapter: to existing lecture or to current lecture draft
   const addChapter = () => {
     if (!currentChapter.name?.trim()) {
       toast.error("Please enter chapter name");
@@ -362,6 +445,18 @@ const AddPage = () => {
       toast.error("Please enter video URL");
       return;
     }
+
+    // Validate that the URL is either YouTube or Google Drive
+    if (!isValidVideoUrl(currentChapter.videoUrl)) {
+      // Check if it's a Drive folder URL (common mistake)
+      if (/drive\.google\.com.*\/folders\//i.test(currentChapter.videoUrl)) {
+        toast.error("❌ Cannot use Drive FOLDER URLs! Please use a link to the VIDEO FILE itself (right-click video → Get link)");
+        return;
+      }
+      toast.error("Please enter a valid YouTube or Google Drive video file URL");
+      return;
+    }
+
 
     const chapter = {
       id: `chapter-${Date.now()}`,
@@ -424,7 +519,7 @@ const AddPage = () => {
     setSelectedLectureIndex(null);
   };
 
-   const openAddChapter = (lectureIndex = null) => {
+  const openAddChapter = (lectureIndex = null) => {
     setSelectedLectureIndex(lectureIndex);
     setShowChapterForm(true);
   };
@@ -462,14 +557,26 @@ const AddPage = () => {
     toast.success("Chapter removed");
   };
 
-   // Submit
+  // Submit
   const submitToBackend = async () => {
-    if (!validateForm()) return;
+    console.log("🔥 submitToBackend CALLED - Starting submission process");
 
+    if (!validateForm()) {
+      console.log("❌ Form validation FAILED");
+      return;
+    }
+
+    console.log("✅ Form validation PASSED");
     setLoading(true);
     try {
       const computed = computeCourseTotals(formData.lectures);
       const fd = new FormData();
+
+      console.log("=== SUBMITTING COURSE ===");
+      console.log("Edit Mode:", isEditMode);
+      console.log("Course ID:", id);
+      console.log("Course Name:", formData.name);
+      console.log("Lectures Count:", computed.lectures.length);
 
       fd.append("name", formData.name);
       fd.append("teacher", formData.teacher);
@@ -486,28 +593,59 @@ const AddPage = () => {
       fd.append("totalDuration", JSON.stringify(computed.totalDuration));
       fd.append("lectures", JSON.stringify(computed.lectures));
 
-      if (formData.image?.file) fd.append("image", formData.image.file);
+      if (formData.image?.file) {
+        fd.append("image", formData.image.file);
+        console.log("Uploading new image:", formData.image.file.name);
+      }
 
-      const res = await fetch(`${API_BASE}/api/course`, {
-        method: "POST",
+      let url = `${API_BASE}/api/course`;
+      let method = "POST";
+
+      if (isEditMode) {
+        url = `${API_BASE}/api/course/${id}`;
+        method = "PUT";
+        console.log("UPDATE request to:", url);
+      } else {
+        console.log("CREATE request to:", url);
+      }
+
+      const res = await fetch(url, {
+        method,
         body: fd,
       });
 
+      console.log("Response status:", res.status);
+
       const data = await res.json().catch(() => ({}));
+      console.log("Response data:", JSON.stringify(data, null, 2));
+      console.log("Response success field:", data.success);
+      console.log("Response message field:", data.message);
 
       if (!res.ok) {
         const message =
-          data?.message || data?.error || "Failed to create course";
+          data?.message || data?.error || `Failed to ${isEditMode ? 'update' : 'create'} course`;
+        console.error("Server error:", message);
         toast.error(message);
         setLoading(false);
         return;
       }
 
-      toast.success("Course created successfully!");
+      if (!data.success) {
+        const message = data?.message || data?.error || `Failed to ${isEditMode ? 'update' : 'create'} course`;
+        console.error("Operation failed:", message);
+        toast.error(message);
+        setLoading(false);
+        return;
+      }
+
+      console.log("Success! Course", isEditMode ? "updated" : "created");
+      toast.success(data.message || (isEditMode ? "Course updated successfully!" : "Course created successfully!"));
       navigate("/listcourse");
     } catch (err) {
-      console.error("submitToBackend error:", err);
-      toast.error("Server error while creating course");
+      console.error("=== SUBMIT ERROR ===");
+      console.error("Error:", err.message);
+      console.error("Stack:", err.stack);
+      toast.error(`Network error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -515,6 +653,9 @@ const AddPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("📝 FORM SUBMITTED - handleSubmit called");
+    console.log("Edit Mode:", isEditMode);
+    console.log("Course ID:", id);
     await submitToBackend();
   };
 
@@ -538,25 +679,25 @@ const AddPage = () => {
   );
 
 
-    return (
-        <div className={addPageStyles.pageContainer}>
-            <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+  return (
+    <div className={addPageStyles.pageContainer}>
+      <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
-            <div className={addPageStyles.contentContainer}>
-            <div className={addPageStyles.headerContainer}>
-                    <div className={addPageStyles.headerGradient}>
-                    <div className={addPageStyles.headerGlow}></div>
-                    <h1 className={addPageStyles.headerTitle}>Create New Course</h1>
-                    </div>
-                    <p className={addPageStyles.headerSubtitle}>
-                    Craft an exceptional learning experience with our intuitive course
-                    creation platform
-                    </p>
-                </div>
-               
+      <div className={addPageStyles.contentContainer}>
+        <div className={addPageStyles.headerContainer}>
+          <div className={addPageStyles.headerGradient}>
+            <div className={addPageStyles.headerGlow}></div>
+            <h1 className={addPageStyles.headerTitle}>{isEditMode ? "Edit Course" : "Create New Course"}</h1>
+          </div>
+          <p className={addPageStyles.headerSubtitle}>
+            Craft an exceptional learning experience with our intuitive course
+            creation platform
+          </p>
+        </div>
 
-            {/* Form */}
-            
+
+        {/* Form */}
+
         <form onSubmit={handleSubmit} className={addPageStyles.form}>
           {/* Course Type */}
           <div
@@ -719,10 +860,10 @@ const AddPage = () => {
                 </div>
                 {(formData.totalDuration.hours ||
                   formData.totalDuration.minutes) && (
-                  <p className={addPageStyles.durationFormatted}>
-                    Formatted: {formatTotalDuration()}
-                  </p>
-                )}
+                    <p className={addPageStyles.durationFormatted}>
+                      Formatted: {formatTotalDuration()}
+                    </p>
+                  )}
               </div>
 
               <div className={addPageStyles.inputContainer}>
@@ -818,7 +959,7 @@ const AddPage = () => {
                       accept="image/*"
                       onChange={handleImageUpload}
                       className={addPageStyles.uploadInput}
-                      required
+                    // required -> validation handled manually because of edit mode prepopulation
                     />
                     <div className={addPageStyles.uploadBox}>
                       <Upload size={18} className={addPageStyles.uploadIcon} />
@@ -893,7 +1034,7 @@ const AddPage = () => {
 
             <div className={addPageStyles.lecturesList}>
               {formData.lectures.map((lecture, lectureIndex) => (
-                <div key={lecture.id} className={addPageStyles.lectureCard}>
+                <div key={lecture.id || `lecture-${lectureIndex}`} className={addPageStyles.lectureCard}>
                   <div className={addPageStyles.lectureHeader}>
                     <div className={addPageStyles.lectureContent}>
                       <button
@@ -940,7 +1081,7 @@ const AddPage = () => {
                       <div className={addPageStyles.chaptersContainer(true)}>
                         {lecture.chapters.map((chapter, chapterIndex) => (
                           <div
-                            key={chapter.id}
+                            key={chapter.id || `chapter-${chapterIndex}`}
                             className={addPageStyles.chapterCard}
                           >
                             <div className={addPageStyles.chapterContent}>
@@ -991,127 +1132,125 @@ const AddPage = () => {
             >
               <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               {loading
-                ? "Creating..."
-                : `Create ${
-                    formData.courseType === "top" ? "Top" : "Regular"
-                  } Course`}
+                ? (isEditMode ? "Updating..." : "Creating...")
+                : (isEditMode ? "Update Course" : `Create ${formData.courseType === "top" ? "Top" : "Regular"} Course`)}
             </button>
           </div>
         </form>
         {/* for adding of lectures */}
-            {showLectureForm && (
-            <div className={addPageStyles.modalOverlay}>
-                <div className={addPageStyles.modal}>
-                <div className={addPageStyles.modalHeader}>
-                    <div className={addPageStyles.modalIconContainer("bg-sky-300")}>
-                    <Video className="text-white" size={20} />
-                    </div>
-                    <h3 className={addPageStyles.modalTitle}>Add New Lecture</h3>
+        {showLectureForm && (
+          <div className={addPageStyles.modalOverlay}>
+            <div className={addPageStyles.modal}>
+              <div className={addPageStyles.modalHeader}>
+                <div className={addPageStyles.modalIconContainer("bg-sky-300")}>
+                  <Video className="text-white" size={20} />
                 </div>
+                <h3 className={addPageStyles.modalTitle}>Add New Lecture</h3>
+              </div>
 
-                <div className={addPageStyles.modalContent}>
+              <div className={addPageStyles.modalContent}>
                 <div>
-                    <label className={addPageStyles.inputLabel}>
+                  <label className={addPageStyles.inputLabel}>
                     Lecture Title *
-                    </label>
-                    <input
+                  </label>
+                  <input
                     type="text"
                     name="title"
                     value={currentLecture.title}
                     onChange={handleLectureChange}
                     placeholder="e.g., Introduction to React"
                     className={addPageStyles.input}
-                    />
+                  />
                 </div>
 
                 <div>
-                <label className={addPageStyles.inputLabel}>Duration *</label>
-                <div className={addPageStyles.durationGrid}>
-                  <div>
-                    <input
-                      type="number"
-                      name="duration.hours"
-                      value={currentLecture.duration.hours}
-                      onChange={handleLectureChange}
-                      placeholder="Hours"
-                      min="0"
-                      className={addPageStyles.input}
-                    />
-                    <span className={addPageStyles.durationHelper}>
-                      Hours
-                    </span>
+                  <label className={addPageStyles.inputLabel}>Duration *</label>
+                  <div className={addPageStyles.durationGrid}>
+                    <div>
+                      <input
+                        type="number"
+                        name="duration.hours"
+                        value={currentLecture.duration.hours}
+                        onChange={handleLectureChange}
+                        placeholder="Hours"
+                        min="0"
+                        className={addPageStyles.input}
+                      />
+                      <span className={addPageStyles.durationHelper}>
+                        Hours
+                      </span>
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        name="duration.minutes"
+                        value={currentLecture.duration.minutes}
+                        onChange={handleLectureChange}
+                        placeholder="Minutes"
+                        min="0"
+                        max="59"
+                        className={addPageStyles.input}
+                      />
+                      <span className={addPageStyles.durationHelper}>
+                        Minutes
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <input
-                      type="number"
-                      name="duration.minutes"
-                      value={currentLecture.duration.minutes}
-                      onChange={handleLectureChange}
-                      placeholder="Minutes"
-                      min="0"
-                      max="59"
-                      className={addPageStyles.input}
-                    />
-                    <span className={addPageStyles.durationHelper}>
-                      Minutes
-                    </span>
-                  </div>
-                </div>
                 </div>
                 {currentLecture.chapters.length > 0 && (
-                <div>
+                  <div>
                     <label className={addPageStyles.inputLabel}>
-                    Chapters in this lecture:
+                      Chapters in this lecture:
                     </label>
                     <div className={addPageStyles.chaptersList}>
-                    {currentLecture.chapters.map((chapter) => (
-                        <div key={chapter.id} className={addPageStyles.chapterPreview}>
-                        <div className={addPageStyles.chapterPreviewTitle}>
+                      {currentLecture.chapters.map((chapter, index) => (
+                        <div key={chapter.id || `preview-${chapter.name}-${index}`} className={addPageStyles.chapterPreview}>
+                          <div className={addPageStyles.chapterPreviewTitle}>
                             {chapter.name}
-                        </div>
+                          </div>
 
-                        <div className={addPageStyles.chapterPreviewDuration}>
+                          <div className={addPageStyles.chapterPreviewDuration}>
                             {formatDuration(chapter.duration)}
+                          </div>
                         </div>
-                        </div>
-                    ))}
+                      ))}
                     </div>
-                </div>
+                  </div>
                 )}
-                </div>
-                <div className={addPageStyles.modalActions}>
+              </div>
+              <div className={addPageStyles.modalActions}>
                 <button
-                    type="button"
-                    onClick={() => openAddChapter()}
-                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
+                  type="button"
+                  onClick={() => openAddChapter()}
+                  className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
                 >
-                    <Plus size={14} /> Add Chapter
+                  <Plus size={14} /> Add Chapter
                 </button>
-                </div>
-                <div className=" flex gap-2 sm:gap-3 pt-2">
+              </div>
+              <div className=" flex gap-2 sm:gap-3 pt-2">
                 <button
-                    type="button"
-                    onClick={addLecture}
-                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
+                  type="button"
+                  onClick={addLecture}
+                  className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
                 >
-                    Add Lecture
+                  Add Lecture
                 </button>
                 <button
-                    type="button"
-                    onClick={() => setShowLectureForm(false)}
-                    className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonSecondary}`}
+                  type="button"
+                  onClick={() => setShowLectureForm(false)}
+                  className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonSecondary}`}
                 >
-                    Cancel
+                  Cancel
                 </button>
-                </div>
-                </div>
+              </div>
             </div>
-            )}
+          </div>
+        )}
 
 
 
-     {/* Chapter Modal */}
-   {showChapterForm && (
+        {/* Chapter Modal */}
+        {showChapterForm && (
           <div className={addPageStyles.modalOverlay}>
             <div className={addPageStyles.modal}>
               <div className={addPageStyles.modalHeader}>
@@ -1188,13 +1327,13 @@ const AddPage = () => {
                   </div>
                 </div>
                 <div className={addPageStyles.modalActions}>
-                <button
+                  <button
                     type="button"
                     onClick={() => openAddChapter()}
                     className={`${addPageStyles.modalButton} ${addPageStyles.modalButtonPrimary}`}
-                >
+                  >
                     <Plus size={14} /> Add Chapter
-                </button>
+                  </button>
                 </div>
 
 
@@ -1236,11 +1375,11 @@ const AddPage = () => {
           </div>
         )}
 
-        
-        </div>
-         </div>
-    );
 
-    };
+      </div>
+    </div>
+  );
+
+};
 
 export default AddPage;

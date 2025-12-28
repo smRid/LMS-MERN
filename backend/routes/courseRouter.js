@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import { createCourse, deleteCourse, getCourseById, getCourses, getMyRating, getPublicCourses, rateCourse } from '../controllers/courseController.js';
+import { createCourse, deleteCourse, getCourseById, getCourses, getMyRating, getPublicCourses, rateCourse, updateCourse } from '../controllers/courseController.js';
 
 // MULTER SETUP
 const storage = multer.diskStorage({
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage });
 
 const courseRouter = express.Router();
 
@@ -22,6 +22,7 @@ courseRouter.get('/', getCourses);
 courseRouter.get('/:id', getCourseById);
 
 courseRouter.post('/', upload.single('image'), createCourse);
+courseRouter.put('/:id', upload.single('image'), updateCourse);
 courseRouter.delete('/:id', deleteCourse);
 
 courseRouter.post('/:courseId/rate', rateCourse);

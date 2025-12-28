@@ -51,13 +51,15 @@ const MyCourses = () => {
           }
           return;
         }
-        // Prepare headers and attempt to include Clerk token
+        // Prepare headers and attempt to include Clerk token.
+        // Optimization: Fetch token once and reuse for all sub-requests
         const headers = { "Content-Type": "application/json" };
+        let mainToken = null;
         try {
-          const token = await getToken().catch(() => null);
-          if (token) headers.Authorization = `Bearer ${token}`;
+          mainToken = await getToken().catch(() => null);
+          if (mainToken) headers.Authorization = `Bearer ${mainToken}`;
         } catch (e) {
-          // ignore token acquisition failure; server will respond 401
+          // ignore token acquisition failure
         }
         const bookingsRes = await fetch(`${API_BASE}/api/booking/my`, {
           method: "GET",
@@ -87,7 +89,8 @@ const MyCourses = () => {
           );
         }
         const bookings = bookingsJson.bookings || [];
-        // (the rest of your logic is unchanged — fetch courses for each booking)
+
+        // Parallel fetch for each booking
         const combined = await Promise.all(
           bookings.map(async (b) => {
             const courseId = b.course ?? b.courseId ?? null;
@@ -95,10 +98,8 @@ const MyCourses = () => {
 
             try {
               const cHeaders = { "Content-Type": "application/json" };
-              try {
-                const token = await getToken().catch(() => null);
-                if (token) cHeaders.Authorization = `Bearer ${token}`;
-              } catch (e) { }
+              // reuse mainToken
+              if (mainToken) cHeaders.Authorization = `Bearer ${mainToken}`;
 
               const courseRes = await fetch(
                 `${API_BASE}/api/course/${courseId}`,
@@ -111,17 +112,12 @@ const MyCourses = () => {
               );
 
               if (!courseRes.ok) {
-                console.warn(
-                  `Course ${courseId} not available (status ${courseRes.status}). Skipping booking.`
-                );
+                // Silently skip missing courses
                 return null;
               }
 
               const courseJson = await courseRes.json().catch(() => null);
               if (!courseJson || !courseJson.success || !courseJson.course) {
-                console.warn(
-                  `Course ${courseId} response invalid; skipping booking.`
-                );
                 return null;
               }
 
@@ -144,7 +140,6 @@ const MyCourses = () => {
               };
             } catch (err) {
               if (controller.signal.aborted) return null;
-              console.warn("Course fetch error for", courseId, err);
               return null;
             }
           })
@@ -186,18 +181,16 @@ const MyCourses = () => {
           rawBooking: booking,
         }));
         setCourses(uiCourses);
-        // fetch user's per-course rating (unchanged)
+        // fetch user's per-course rating using reused token
         if (isSignedIn && uiCourses.length > 0) {
           const ratingPromises = uiCourses.map(async (c) => {
             if (!c.id) return null;
             try {
               const rHeaders = { "Content-Type": "application/json" };
-              try {
-                const token = await getToken().catch(() => null);
-                if (token) rHeaders.Authorization = `Bearer ${token}`;
-              } catch (e) { }
+              if (mainToken) rHeaders.Authorization = `Bearer ${mainToken}`;
+
               const res = await fetch(
-                `${API_BASE}/api/course/${c.id}/my-rating`,
+                `${API_BASE}/api/course/${c.id}/rating`,
                 {
                   method: "GET",
                   headers: rHeaders,

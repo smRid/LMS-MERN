@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { listStyles } from "../assets/dummyStyles";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
-import { Search,BookOpen,Clock,EyeClosed,Trash2,Eye,Star,StarHalf,Video } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Search, BookOpen, Clock, EyeClosed, Trash2, Eye, Star, StarHalf, Video, SquarePen } from "lucide-react";
 
 const ListPage = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedCourse, setExpandedCourse] = useState(null);
   const [expandedLectures, setExpandedLectures] = useState({});
@@ -15,19 +17,19 @@ const ListPage = () => {
 
 
   //  build image URL for fetching
-    const getImageUrl = (imagePath) => {
+  const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
     if (imagePath.startsWith("http://") || imagePath.startsWith("https://"))
-        return imagePath;
+      return imagePath;
     // If the server sends path like "/uploads/..." or "uploads/..."
     if (imagePath.startsWith("/")) return `${API_BASE}${imagePath}`;
     if (imagePath.includes("/uploads/"))
-        return `${API_BASE}/${imagePath}`.replace(/\/ \/+/g, "/");
+      return `${API_BASE}/${imagePath}`.replace(/\/ \/+/g, "/");
     return `${API_BASE}/uploads/${imagePath}`;
-    };
+  };
 
-    // parse duration into total minutes
-    
+  // parse duration into total minutes
+
   const parseDuration = (v) => {
     if (v == null) return 0;
 
@@ -101,7 +103,7 @@ const ListPage = () => {
     return `${h}h ${rem}m`;
   };
 
-   // normalize ID (not strictly required but handy)
+  // normalize ID (not strictly required but handy)
   const getId = (c) => (c && (c._id ? c._id : c.id)) || null;
 
   // Robust fetch that handles variations: array | { items: [...] } | { courses: [...] }
@@ -115,10 +117,10 @@ const ListPage = () => {
       let arr = Array.isArray(raw)
         ? raw
         : Array.isArray(raw.items)
-        ? raw.items
-        : Array.isArray(raw.courses)
-        ? raw.courses
-        : [];
+          ? raw.items
+          : Array.isArray(raw.courses)
+            ? raw.courses
+            : [];
 
       // Defensive nested case
       if (!Array.isArray(arr) && raw.items && Array.isArray(raw.items.items)) {
@@ -150,23 +152,23 @@ const ListPage = () => {
         // ensure each lecture/chapter durations normalized too (not altering original shape but helpful)
         const normalizedLectures = Array.isArray(lecturesArr)
           ? lecturesArr.map((lec) => ({
-              ...lec,
-              _parsedDurationMinutes:
-                lec.durationMin ??
-                lec.totalMinutes ??
-                parseDuration(lec.duration) ??
-                0,
-              chapters: Array.isArray(lec.chapters)
-                ? lec.chapters.map((ch) => ({
-                    ...ch,
-                    _parsedDurationMinutes:
-                      ch.durationMin ??
-                      ch.totalMinutes ??
-                      parseDuration(ch.duration) ??
-                      0,
-                  }))
-                : [],
-            }))
+            ...lec,
+            _parsedDurationMinutes:
+              lec.durationMin ??
+              lec.totalMinutes ??
+              parseDuration(lec.duration) ??
+              0,
+            chapters: Array.isArray(lec.chapters)
+              ? lec.chapters.map((ch) => ({
+                ...ch,
+                _parsedDurationMinutes:
+                  ch.durationMin ??
+                  ch.totalMinutes ??
+                  parseDuration(ch.duration) ??
+                  0,
+              }))
+              : [],
+          }))
           : [];
 
         return {
@@ -237,7 +239,7 @@ const ListPage = () => {
     setExpandedLectures((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-   // DELETE without auth headers
+  // DELETE without auth headers
   const handleRemoveCourse = async (courseId, courseName) => {
     if (
       !window.confirm(`Delete course "${courseName}"? This cannot be undone.`)
@@ -284,34 +286,34 @@ const ListPage = () => {
     );
   };
 
-    return (
+  return (
     <div className={listStyles.pageContainer}>
-        <Toaster position="top-right" />
-        <div className={listStyles.contentContainer}>
+      <Toaster position="top-right" />
+      <div className={listStyles.contentContainer}>
         <div className={listStyles.headerContainer}>
-            <h1 className={listStyles.headerTitle}>Course Catalog</h1>
-            <p className={listStyles.headerSubtitle}>
+          <h1 className={listStyles.headerTitle}>Course Catalog</h1>
+          <p className={listStyles.headerSubtitle}>
             Manage and browse your courses - clean, light and elegant
-            </p>
+          </p>
         </div>
         <div className={listStyles.searchContainer}>
-        <div className={listStyles.searchInputContainer}>
+          <div className={listStyles.searchInputContainer}>
             <Search className={listStyles.searchIcon} />
             <input
-            type="text"
-            placeholder="Search courses, instructors, or categories..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={listStyles.searchInput}
+              type="text"
+              placeholder="Search courses, instructors, or categories..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={listStyles.searchInput}
             />
-        </div>
+          </div>
         </div>
         <div className={listStyles.courseList}>
-        {loading && (
+          {loading && (
             <div className={listStyles.emptyText}>Loading Courses...</div>
-        )}
+          )}
 
-        
+
           {!loading &&
             filteredCourses.map((course) => (
               <div key={course.id} className={listStyles.courseCard}>
@@ -338,11 +340,10 @@ const ListPage = () => {
                             className={listStyles.courseBadge(
                               course.courseType
                             )}
-                            aria-label={`Course type: ${
-                              course.courseType === "top"
-                                ? "Top Course"
-                                : "Regular Course"
-                            }`}
+                            aria-label={`Course type: ${course.courseType === "top"
+                              ? "Top Course"
+                              : "Regular Course"
+                              }`}
                             title={
                               course.courseType === "top"
                                 ? "Top Course"
@@ -406,6 +407,15 @@ const ListPage = () => {
                           ) : (
                             <EyeClosed className={listStyles.actionIcon} />
                           )}
+                        </button>
+
+                        <button
+                          onClick={() => navigate(`/edit/${course.id}`)}
+                          className={listStyles.editButton || listStyles.toggleButton}
+                          style={{ marginRight: 8, color: '#3b82f6' }}
+                          aria-label={`Edit course: ${course.name}`}
+                        >
+                          <SquarePen className={listStyles.actionIcon} />
                         </button>
 
                         <button
@@ -475,7 +485,7 @@ const ListPage = () => {
                                         <span>
                                           {formatMinutes(
                                             lecture._parsedDurationMinutes ??
-                                              parseDuration(lecture.duration)
+                                            parseDuration(lecture.duration)
                                           )}
                                         </span>
                                       </div>
@@ -486,9 +496,8 @@ const ListPage = () => {
                                 <EyeClosed
                                   className={listStyles.lectureToggleIcon(
                                     expandedLectures[
-                                      `${course.id}-${
-                                        lecture.id || lecture._id
-                                      }`
+                                    `${course.id}-${lecture.id || lecture._id
+                                    }`
                                     ]
                                   )}
                                 />
@@ -498,86 +507,86 @@ const ListPage = () => {
                             {expandedLectures[
                               `${course.id}-${lecture.id || lecture._id}`
                             ] && (
-                              <div className={listStyles.expandedLecture}>
-                                <div className={listStyles.chapterList}>
-                                  {(lecture.chapters || []).map((chapter) => (
-                                    <div
-                                      key={chapter.id || chapter._id}
-                                      className={listStyles.chapterCard}
-                                    >
+                                <div className={listStyles.expandedLecture}>
+                                  <div className={listStyles.chapterList}>
+                                    {(lecture.chapters || []).map((chapter) => (
                                       <div
-                                        className={listStyles.chapterContent}
+                                        key={chapter.id || chapter._id}
+                                        className={listStyles.chapterCard}
                                       >
                                         <div
-                                          className={listStyles.chapterHeader}
+                                          className={listStyles.chapterContent}
                                         >
                                           <div
-                                            className={listStyles.chapterIcon}
+                                            className={listStyles.chapterHeader}
                                           >
-                                            <Eye
-                                              className={
-                                                listStyles.chapterIconSvg
-                                              }
-                                            />
-                                          </div>
-                                          <div
-                                            className={
-                                              listStyles.chapterDetails
-                                            }
-                                          >
-                                            <a
-                                              href={chapter.videoUrl}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              className={
-                                                listStyles.chapterTitle
-                                              }
-                                            >
-                                              <h6>{chapter.name}</h6>
-                                            </a>
-                                            <p
-                                              className={
-                                                listStyles.chapterTopic
-                                              }
-                                            >
-                                              {chapter.topic}
-                                            </p>
-
                                             <div
-                                              className={listStyles.chapterMeta}
+                                              className={listStyles.chapterIcon}
                                             >
-                                              <span
+                                              <Eye
                                                 className={
-                                                  listStyles.chapterDuration
+                                                  listStyles.chapterIconSvg
                                                 }
-                                              >
-                                                <Clock className="w-3 h-3" />
-                                                {formatMinutes(
-                                                  chapter._parsedDurationMinutes ??
-                                                    parseDuration(
-                                                      chapter.duration
-                                                    )
-                                                )}
-                                              </span>
+                                              />
+                                            </div>
+                                            <div
+                                              className={
+                                                listStyles.chapterDetails
+                                              }
+                                            >
                                               <a
                                                 href={chapter.videoUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={
-                                                  listStyles.chapterVideoLink
+                                                  listStyles.chapterTitle
                                                 }
                                               >
-                                                {chapter.videoUrl}
+                                                <h6>{chapter.name}</h6>
                                               </a>
+                                              <p
+                                                className={
+                                                  listStyles.chapterTopic
+                                                }
+                                              >
+                                                {chapter.topic}
+                                              </p>
+
+                                              <div
+                                                className={listStyles.chapterMeta}
+                                              >
+                                                <span
+                                                  className={
+                                                    listStyles.chapterDuration
+                                                  }
+                                                >
+                                                  <Clock className="w-3 h-3" />
+                                                  {formatMinutes(
+                                                    chapter._parsedDurationMinutes ??
+                                                    parseDuration(
+                                                      chapter.duration
+                                                    )
+                                                  )}
+                                                </span>
+                                                <a
+                                                  href={chapter.videoUrl}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  className={
+                                                    listStyles.chapterVideoLink
+                                                  }
+                                                >
+                                                  {chapter.videoUrl}
+                                                </a>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  ))}
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              )}
                           </div>
                         ))}
                       </div>
@@ -587,22 +596,22 @@ const ListPage = () => {
               </div>
             ))}
 
-            {!loading && filteredCourses.length === 0 && (
+          {!loading && filteredCourses.length === 0 && (
             <div className={listStyles.emptyState}>
-                <Search className={listStyles.emptyIcon} />
-                <p className={listStyles.emptyText}>
+              <Search className={listStyles.emptyIcon} />
+              <p className={listStyles.emptyText}>
                 No courses found matching your search
-                </p>
+              </p>
 
-                <button onClick={() => setSearchTerm("")} className={listStyles.clearButton}>
-                    Clear Search
-                </button>
+              <button onClick={() => setSearchTerm("")} className={listStyles.clearButton}>
+                Clear Search
+              </button>
             </div>
-            )}
+          )}
         </div>
-        </div>
+      </div>
     </div>
-    );
+  );
 };
 
 export default ListPage;

@@ -5,12 +5,13 @@ import List from "./pages/List";
 import Bookings from "./pages/Bookings";
 const App = () => {
   return (
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/addcourse" element={<Add />} />
-        <Route path="/listcourse" element={<List />} />
-        <Route path="/bookings" element={<Bookings />} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/addcourse" element={<Add />} />
+      <Route path="/edit/:id" element={<Add />} />
+      <Route path="/listcourse" element={<List />} />
+      <Route path="/bookings" element={<Bookings />} />
+    </Routes>
   );
 };
 

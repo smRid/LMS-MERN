@@ -7,9 +7,9 @@ import F4 from "../assets/F4.png"
 const sampleTeachers = [
   {
     id: 1,
-    name: "Dr. Priya Sharma",
+    name: "Dr. Julian Thorne",
     qualification: "Ph.D. in Artificial Intelligence",
-    image:F1,
+    image: F1,
     bio: "Specialized in Machine Learning and Deep Neural Networks",
     experience: "12+ years",
     linkedin: "https://www.linkedin.com/in/priya-sharma-ai/",
@@ -19,9 +19,9 @@ const sampleTeachers = [
   },
   {
     id: 2,
-    name: "Mr. Arjun Verma",
+    name: "Marcus Sterling",
     qualification: "M.Tech in Computer Science",
-    image:F2,
+    image: F2,
     bio: "Frontend Architect with expertise in React and Vue",
     experience: "8+ years",
     linkedin: "https://www.linkedin.com/in/arjun-verma/",
@@ -31,9 +31,9 @@ const sampleTeachers = [
   },
   {
     id: 3,
-    name: "Mrs. Neha Kapoor",
+    name: "Maya Halloway",
     qualification: "M.S. in Cloud Computing",
-    image:F3,
+    image: F3,
     bio: "DevOps Engineer and Cloud Infrastructure Specialist",
     experience: "10+ years",
     linkedin: "https://www.linkedin.com/in/neha-kapoor-cloud/",
@@ -43,9 +43,9 @@ const sampleTeachers = [
   },
   {
     id: 4,
-    name: "Mr. Rahul Singh",
+    name: "Elara Vance",
     qualification: "Ph.D. in Data Science",
-    image:F4,
+    image: F4,
     bio: "Data Scientist and Machine Learning Researcher",
     experience: "9+ years",
     linkedin: "https://www.linkedin.com/in/rahul-singh-ds/",

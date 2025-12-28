@@ -167,18 +167,22 @@ const CoursePage = () => {
 
         // if signed in, try to fetch my-rating per course (parallel)
         if (isSignedIn && mapped.length) {
+          // Optimization: fetch token once
+          let mainToken = null;
+          try {
+            mainToken = await getToken().catch(() => null);
+          } catch (e) { }
+
           const promises = mapped.map(async (course) => {
             if (!course.id) return null;
             try {
               const headers = { "Content-Type": "application/json" };
-              try {
-                const token = await getToken().catch(() => null);
-                if (token) headers.Authorization = `Bearer ${token}`;
-              } catch (err) { }
+              if (mainToken) headers.Authorization = `Bearer ${mainToken}`;
+
               const r = await fetch(
                 `${API_BASE}/api/course/${encodeURIComponent(
                   course.id
-                )}/my-rating`,
+                )}/rating`,
                 {
                   method: "GET",
                   headers,
