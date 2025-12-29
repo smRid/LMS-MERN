@@ -7,6 +7,17 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 
 const API_BASE = 'https://lms-smrid.vercel.app';
 
+// Helper to get full image URL (handles relative paths from backend)
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return '/placeholder-course.svg';
+  // If it's already an absolute URL, return as-is
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  // Prepend API_BASE for relative paths (e.g., /uploads/...)
+  return `${API_BASE}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+};
+
 const HomeCourses = () => {
   const navigate = useNavigate();
   const { title, course: courseFont, detail } = homeCoursesStyles.fonts;
@@ -298,10 +309,14 @@ const HomeCourses = () => {
                   >
                     <div className={homeCoursesStyles.imageContainer}>
                       <img
-                        src={course.image}
+                        src={getImageUrl(course.image)}
                         alt={course.name}
                         className={homeCoursesStyles.courseImage}
                         loading="lazy"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/placeholder-course.svg';
+                        }}
                       />
                     </div>
 

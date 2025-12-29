@@ -8,6 +8,17 @@ import { User, Play, Star } from "lucide-react";
 
 const API_BASE = "https://lms-smrid.vercel.app";
 
+// Helper to get full image URL (handles relative paths from backend)
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return '/placeholder-course.svg';
+  // If it's already an absolute URL, return as-is
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  // Prepend API_BASE for relative paths (e.g., /uploads/...)
+  return `${API_BASE}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+};
+
 const MyCourses = () => {
   const navigate = useNavigate();
   const { isSignedIn } = useUser();
@@ -426,9 +437,13 @@ const MyCourses = () => {
             >
               <div className={myCoursesStyles.imageContainer}>
                 <img
-                  src={course.image || undefined}
+                  src={getImageUrl(course.image)}
                   alt={course.name}
                   className={myCoursesStyles.courseImage}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/placeholder-course.svg';
+                  }}
                 />
               </div>
               <div className={myCoursesStyles.courseContent}>

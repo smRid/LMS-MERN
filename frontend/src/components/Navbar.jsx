@@ -4,7 +4,6 @@ import Logo from '../assets/Logo.png';
 import { Home, BookOpen, BookMarked, Users, Contact, Menu, X, BookOpenText, } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth, useClerk, UserButton, useUser } from '@clerk/clerk-react';
-import { useTranslation } from 'react-i18next';
 
 const baseNav = [
   { name: "Home", icon: Home, href: "/" },
@@ -15,21 +14,6 @@ const baseNav = [
 ];
 
 const Navbar = () => {
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'bn' : 'en';
-    i18n.changeLanguage(newLang);
-  };
-
-  const navItemsList = [
-    { name: t('navbar.home'), icon: Home, href: "/" },
-    { name: t('navbar.courses'), icon: BookOpen, href: "/courses" },
-    { name: t('navbar.about'), icon: BookMarked, href: "/about" },
-    { name: t('navbar.faculty'), icon: Users, href: "/faculty" },
-    { name: t('navbar.contact'), icon: Contact, href: "/contact" },
-  ];
-
   // for clerk
   const { openSignUp } = useClerk();
   const { isSignedIn, isLoaded } = useUser();
@@ -44,10 +28,10 @@ const Navbar = () => {
 
   const navItems = isSignedIn
     ? [
-      ...navItemsList,
-      { name: t('navbar.my_courses'), icon: BookOpenText, href: "/mycourses" },
+      ...baseNav,
+      { name: "My Courses", icon: BookOpenText, href: "/mycourses" },
     ]
-    : navItemsList;
+    : baseNav;
 
   // fetch token
   useEffect(() => {
@@ -138,13 +122,6 @@ const Navbar = () => {
             >
               ShikhoHub
             </div>
-            {/* Language Toggle Desktop */}
-            <button
-              onClick={changeLanguage}
-              className="ml-2 px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 transition-colors cursor-pointer"
-            >
-              {i18n.language === 'en' ? 'BN' : 'EN'}
-            </button>
           </div>
 
           <div className={navbarStyles.desktopNav}>
@@ -178,7 +155,7 @@ const Navbar = () => {
               <button type="button" onClick={() => openSignUp({})} className={
                 navbarStyles.createAccountButton ?? navbarStyles.loginButton
               }>
-                <span className='cursor-pointer'>{t('navbar.sign_up')}</span>
+                <span className='cursor-pointer'>Sign up</span>
               </button>
             ) : (
               <div className="flex items-center">
@@ -233,7 +210,7 @@ const Navbar = () => {
                 }} className={
                   navbarStyles.mobileCreateAccountButton ?? navbarStyles.mobileLoginButton
                 }>
-                  <span className='cursor-pointer'>{t('navbar.sign_up')}</span>
+                  <span className='cursor-pointer'>Sign up</span>
                 </button>
               ) : (
                 <div className="px-4 py-2">
