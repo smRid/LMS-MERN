@@ -276,30 +276,35 @@ const HomeCourses = () => {
     );
   };
 
-  // Skeleton card
+  // Skeleton card component - matches actual course card structure
   const SkeletonHomeCard = ({ delay = 0 }) => (
     <div
       className={homeCoursesStyles.coursesCard}
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className={homeCoursesStyles.imageContainer}>
-        <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+        <div
+          className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]"
+          style={{ minHeight: '160px' }}
+        />
       </div>
 
       <div className={homeCoursesStyles.courseInfo}>
-        <div className="h-6 bg-gray-200 rounded-lg w-3/4 mb-3 animate-pulse" />
+        <div className="h-5 bg-gray-200 rounded-lg w-4/5 mb-3 animate-pulse" />
         <div className="flex items-center gap-2 mb-3">
           <div className="w-4 h-4 bg-gray-200 rounded-full animate-pulse" />
-          <div className="h-4 bg-gray-200 rounded-lg w-20 animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded-lg w-24 animate-pulse" />
         </div>
-        <div className="flex gap-1 mb-2">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 text-gray-200 fill-gray-200" />
-          ))}
-        </div>
-        <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
-          <div className="h-6 bg-gray-200 rounded-lg w-16 animate-pulse" />
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 text-gray-200 fill-gray-200" />
+            ))}
+          </div>
           <div className="h-4 bg-gray-200 rounded-lg w-12 animate-pulse" />
+        </div>
+        <div className="flex items-center justify-between border-t border-gray-100 pt-3 mt-auto">
+          <div className="h-6 bg-gray-200 rounded-lg w-16 animate-pulse" />
         </div>
       </div>
     </div>
