@@ -381,8 +381,63 @@ const CoursePage = () => {
     return "Free";
   };
 
-  if (loading)
-    return <div className="p-6 text-center">Loading courses...</div>;
+  // Skeleton loading component
+  const SkeletonCard = () => (
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
+      <div className="h-48 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+      <div className="p-5">
+        <div className="h-5 bg-gray-200 rounded-full w-3/4 mb-3" />
+        <div className="h-4 bg-gray-200 rounded-full w-1/2 mb-4" />
+        <div className="flex items-center gap-1 mb-3">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="w-4 h-4 bg-gray-200 rounded-full" />
+          ))}
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="h-6 bg-gray-200 rounded-full w-16" />
+          <div className="h-8 bg-gray-200 rounded-full w-24" />
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <div className={coursePageStyles.pageContainer}>
+        <div className={coursePageStyles.headerContainer}>
+          <div className={coursePageStyles.headerTransform}>
+            <h1 className={coursePageStyles.headerTitle}>LEARN & GROW</h1>
+          </div>
+          <p className={coursePageStyles.headerSubtitle}>
+            Master New Skills with Expert-Led Courses
+          </p>
+          <div className={coursePageStyles.searchContainer}>
+            <div className={coursePageStyles.searchGradient} />
+            <div className={coursePageStyles.searchInputContainer}>
+              <div className={coursePageStyles.searchIconContainer}>
+                <Search className="w-5 h-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search courses by name, instructor, or category..."
+                disabled
+                className={coursePageStyles.searchInput}
+                style={{ opacity: 0.7 }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (error)
     return <div className="p-6 text-center text-red-500">{error}</div>;
 
