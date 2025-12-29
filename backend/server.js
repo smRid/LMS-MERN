@@ -11,7 +11,12 @@ const port = 4000;
 
 // MIDDLEWARES
 app.use(cors({
-    origin: ['http://localhost:5173', "http://localhost:5174", "https://shikhohub.vercel.app"],
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'https://shikhohub.vercel.app',
+        'https://skhub-admin.vercel.app'
+    ],
     credentials: true,
 }));
 app.use(express.json());

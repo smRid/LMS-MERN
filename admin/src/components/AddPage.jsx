@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 import { BookOpenText, ChevronUp, ChevronDown, Clock, X, HandCoins, ImageIcon, ListOrdered, PenLine, Plus, Star, Upload, UserPen, Video } from "lucide-react";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = "https://lms-smrid.vercel.app";
 
 // Helper function to validate video URLs (YouTube and Google Drive)
 const isValidVideoUrl = (url) => {
@@ -622,8 +622,17 @@ const AddPage = () => {
       console.log("Response message field:", data.message);
 
       if (!res.ok) {
-        const message =
-          data?.message || data?.error || `Failed to ${isEditMode ? 'update' : 'create'} course`;
+        let message = data?.message || data?.error || `Failed to ${isEditMode ? 'update' : 'create'} course`;
+
+        // Handle specific error cases
+        if (message.toLowerCase().includes('upload') || message.toLowerCase().includes('image')) {
+          message = "Image upload failed. Please try a smaller image (max 5MB) or check your connection.";
+        } else if (res.status === 413) {
+          message = "Image file is too large. Please use an image under 5MB.";
+        } else if (res.status === 503 || res.status === 502) {
+          message = "Server is temporarily unavailable. Please try again in a moment.";
+        }
+
         console.error("Server error:", message);
         toast.error(message);
         setLoading(false);
@@ -645,7 +654,15 @@ const AddPage = () => {
       console.error("=== SUBMIT ERROR ===");
       console.error("Error:", err.message);
       console.error("Stack:", err.stack);
-      toast.error(`Network error: ${err.message}`);
+
+      // More user-friendly network error messages
+      if (err.message.includes('fetch') || err.message.includes('network') || err.name === 'TypeError') {
+        toast.error("Network error. Please check your internet connection and try again.");
+      } else if (err.message.includes('timeout')) {
+        toast.error("Request timed out. The image might be too large. Please try again.");
+      } else {
+        toast.error(`Error: ${err.message}`);
+      }
     } finally {
       setLoading(false);
     }
