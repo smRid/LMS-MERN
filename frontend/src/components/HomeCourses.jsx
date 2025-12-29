@@ -276,6 +276,35 @@ const HomeCourses = () => {
     );
   };
 
+  // Skeleton card
+  const SkeletonHomeCard = ({ delay = 0 }) => (
+    <div
+      className={homeCoursesStyles.coursesCard}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className={homeCoursesStyles.imageContainer}>
+        <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
+      </div>
+
+      <div className={homeCoursesStyles.courseInfo}>
+        <div className="h-6 bg-gray-200 rounded-lg w-3/4 mb-3 animate-pulse" />
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-4 h-4 bg-gray-200 rounded-full animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded-lg w-20 animate-pulse" />
+        </div>
+        <div className="flex gap-1 mb-2">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-4 h-4 text-gray-200 fill-gray-200" />
+          ))}
+        </div>
+        <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
+          <div className="h-6 bg-gray-200 rounded-lg w-16 animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded-lg w-12 animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className={homeCoursesStyles.container}>
       <div className={homeCoursesStyles.mainContainer}>
@@ -290,8 +319,10 @@ const HomeCourses = () => {
         </div>
 
         {loading ? (
-          <div className="p-6 text-center">
-            Loading courses...
+          <div className={homeCoursesStyles.coursesGrid}>
+            {[...Array(8)].map((_, i) => (
+              <SkeletonHomeCard key={i} delay={i * 100} />
+            ))}
           </div>
         ) : error ? (
           <div className="p-6 text-center text-red-500">{error}</div>
