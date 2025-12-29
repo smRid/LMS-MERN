@@ -161,9 +161,13 @@ const CourseDetail = () => {
 
     fetch(`${API_BASE}/api/course/${courseId}`)
       .then(async (res) => {
+        if (res.status === 404) {
+          // Course not found - this is expected for deleted courses
+          throw new Error("COURSE_NOT_FOUND");
+        }
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(text || `Failed to fetch course ${courseId}`);
+          const text = await res.text().catch(() => "");
+          throw new Error(text || `Failed to fetch course`);
         }
         return res.json();
       })
@@ -176,8 +180,14 @@ const CourseDetail = () => {
         setCourse(normalized);
       })
       .catch((err) => {
-        console.error("Failed to load course:", err);
-        if (mounted) setError(err.message || "Failed to load course");
+        if (mounted) {
+          if (err.message === "COURSE_NOT_FOUND") {
+            setError("This course is no longer available");
+          } else {
+            console.error("Failed to load course:", err);
+            setError(err.message || "Failed to load course");
+          }
+        }
       })
       .finally(() => mounted && setLoading(false));
 
@@ -687,7 +697,27 @@ const CourseDetail = () => {
   const handleBackToHome = () => navigate("/");
 
   if (loading) return <div className="p-6 text-center">Loading course...</div>;
-  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
+  if (error) {
+    return (
+      <div className={courseDetailStylesH.notFoundContainer || "min-h-screen flex items-center justify-center bg-gray-50"}>
+        <div className={courseDetailStylesH.notFoundContent || "text-center p-8"}>
+          <div className="text-6xl mb-4">📚</div>
+          <h2 className={courseDetailStylesH.notFoundTitle || "text-2xl font-bold text-gray-800 mb-2"}>
+            {error.includes("no longer available") ? "Course Unavailable" : "Something went wrong"}
+          </h2>
+          <p className={courseDetailStylesH.notFoundText || "text-gray-600 mb-6"}>
+            {error}
+          </p>
+          <button
+            onClick={() => navigate("/courses")}
+            className={courseDetailStylesH.notFoundButton || "px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"}
+          >
+            Browse All Courses
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!course) {
     return (
