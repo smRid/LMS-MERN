@@ -456,7 +456,7 @@ const CoursePage = () => {
         </div>
         <div className={coursePageStyles.coursesGrid}>
           <div className={coursePageStyles.coursesGridContainer}>
-            {[...Array(6)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <SkeletonCard key={i} delay={i * 100} />
             ))}
           </div>
