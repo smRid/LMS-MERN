@@ -892,7 +892,7 @@ export const homeCoursesStyles = {
   },
 
   // Animations
-  animations: \`
+  animations: `
     @keyframes spin-slow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -900,7 +900,7 @@ export const homeCoursesStyles = {
     .animate-spin-slow { 
       animation: spin-slow 6s linear infinite; 
     }
-  \`
+  `
 };
 
 // Add these to the existing dummyStyles.js file
