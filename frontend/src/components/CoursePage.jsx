@@ -9,8 +9,7 @@ import { Slide, toast, ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast"
 import { useAuth, useUser } from "@clerk/clerk-react";
 
-// const API_BASE = 'http://localhost:4000';
-const API_BASE = 'https://lms-mern-backend-chi.vercel.app/';
+const API_BASE = 'http://localhost:4000';
 
 
 const StarIcon = ({ filled = false, half = false, className = "" }) => {

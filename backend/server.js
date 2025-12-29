@@ -11,8 +11,8 @@ const port = 4000;
 
 // MIDDLEWARES
 app.use(cors({
-    // origin: ['http://localhost:5173', "http://localhost:5174"],
-    origin: ['https://lms-mern-vp75.vercel.app/', "http://localhost:5174"],
+    origin: ['http://localhost:5173', "http://localhost:5174"],
+
     credentials: true,
 }));
 app.use(express.json());
