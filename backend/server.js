@@ -11,8 +11,9 @@ const port = 4000;
 
 // MIDDLEWARES
 app.use(cors({
-    origin: ['http://localhost:5173', "http://localhost:5174"],
-
+    origin: process.env.NODE_ENV === 'production'
+        ? [process.env.FRONTEND_URL, process.env.ADMIN_URL]
+        : ['http://localhost:5173', "http://localhost:5174"],
     credentials: true,
 }));
 app.use(express.json());
@@ -41,6 +42,12 @@ app.get('/', (req, res) => {
     res.send('API WORKING');
 });
 
-app.listen(port, () => {
-    console.log(`Server Started on http://localhost:${port}`)
-})
+// Only start the server if not in serverless environment (Vercel)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`Server Started on http://localhost:${port}`)
+    });
+}
+
+// Export the app for Vercel serverless functions
+export default app;

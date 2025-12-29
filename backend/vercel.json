@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "api/index.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/uploads/(.*)",
+            "dest": "/api/index.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.js"
+        }
+    ],
+    "env": {
+        "MONGODB_URI": "@mongodb_uri",
+        "CLERK_PUBLISHABLE_KEY": "@clerk_publishable_key",
+        "CLERK_SECRET_KEY": "@clerk_secret_key",
+        "STRIPE_SECRET_KEY": "@stripe_secret_key"
+    }
+}
