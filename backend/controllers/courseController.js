@@ -1,7 +1,6 @@
 import Course from '../models/courseModel.js';
 import { getAuth } from '@clerk/express';
-import fs from 'fs';
-import path from 'path'
+import { uploadToCloudinary, deleteFromCloudinary, getPublicIdFromUrl } from '../config/cloudinary.js';
 
 // HELPER FUNCTION
 const toNumber = (v, fallback = 0) => {
@@ -195,8 +194,22 @@ export const createCourse = async (req, res) => {
   try {
     const body = req.body || {};
 
-    // image handling: store relative path so static serving works consistently
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : (body.image || "");
+    // image handling: upload to Cloudinary if file provided
+    let imagePath = body.image || "";
+    if (req.file && req.file.buffer) {
+      try {
+        console.log('📤 Uploading image to Cloudinary...');
+        const cloudinaryResult = await uploadToCloudinary(req.file.buffer, 'courses');
+        imagePath = cloudinaryResult.url;
+        console.log('✅ Image uploaded:', imagePath);
+      } catch (uploadErr) {
+        console.error('❌ Cloudinary upload failed:', uploadErr);
+        return res.status(500).json({
+          success: false,
+          error: 'Failed to upload image'
+        });
+      }
+    }
 
     // parse price
     const priceParsed = parseJSONSafe(body.price) ?? (body.price || {});
@@ -259,7 +272,7 @@ export const createCourse = async (req, res) => {
     await course.save();
 
     const returned = course.toObject();
-    returned.image = makeImageAbsolute(returned.image || "", req);
+    // No need to transform image URL - Cloudinary URLs are already absolute
     return res.status(201).json({
       success: true,
       course: returned
@@ -274,7 +287,6 @@ export const createCourse = async (req, res) => {
 }
 
 
-
 // to delete a course by id
 export const deleteCourse = async (req, res) => {
   try {
@@ -285,15 +297,14 @@ export const deleteCourse = async (req, res) => {
       error: 'Not found'
     });
 
-    //remove upload files form local uploads folder
-    try {
-      if (course.image && !course.image.startsWith('http')) {
-        const filePath = path.join(process.cwd(), course.image.startsWith("/") ? course.image.slice(1) : course.image);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Delete image from Cloudinary if it exists
+    if (course.image && course.image.includes('cloudinary.com')) {
+      const publicId = getPublicIdFromUrl(course.image);
+      if (publicId) {
+        await deleteFromCloudinary(publicId);
       }
-    } catch (e) {
-      //ignore file deletion errors
     }
+
     await course.deleteOne();
     return res.json({
       success: true,
@@ -342,24 +353,31 @@ export const updateCourse = async (req, res) => {
     console.log("✅ Found course:", course.name);
     console.log("📝 Updating fields...");
 
-    // Handle image update
-    if (req.file) {
-      console.log("🖼️  New image uploaded:", req.file.filename);
-      // Delete old image if exists
-      if (course.image && !course.image.startsWith('http')) {
-        const oldImagePath = path.join(process.cwd(),
-          course.image.startsWith('/') ? course.image.substring(1) : course.image
-        );
-        try {
-          if (fs.existsSync(oldImagePath)) {
-            fs.unlinkSync(oldImagePath);
-            console.log("🗑️  Deleted old image");
+    // Handle image update - upload to Cloudinary
+    if (req.file && req.file.buffer) {
+      console.log("🖼️  New image uploaded, uploading to Cloudinary...");
+
+      try {
+        // Delete old image from Cloudinary if it exists
+        if (course.image && course.image.includes('cloudinary.com')) {
+          const oldPublicId = getPublicIdFromUrl(course.image);
+          if (oldPublicId) {
+            await deleteFromCloudinary(oldPublicId);
+            console.log("🗑️  Deleted old image from Cloudinary");
           }
-        } catch (err) {
-          console.log("⚠️  Could not delete old image:", err.message);
         }
+
+        // Upload new image to Cloudinary
+        const cloudinaryResult = await uploadToCloudinary(req.file.buffer, 'courses');
+        course.image = cloudinaryResult.url;
+        console.log("✅ New image uploaded:", course.image);
+      } catch (uploadErr) {
+        console.error("❌ Cloudinary upload failed:", uploadErr);
+        return res.status(500).json({
+          success: false,
+          error: 'Failed to upload image'
+        });
       }
-      course.image = `/uploads/${req.file.filename}`;
     }
 
     // Update basic fields - direct assignment for reliability
