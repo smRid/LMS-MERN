@@ -1245,12 +1245,12 @@ const CourseDetail = () => {
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-gray-600">Course Completion</span>
                     <span className="font-semibold text-indigo-600">
-                      {Math.round(
+                      {Math.min(100, Math.round(
                         (completedChapters.size /
                           (course.lectures?.flatMap((l) => l.chapters || [])
                             .length || 1)) *
                         100
-                      )}
+                      ))}
                       %
                     </span>
                   </div>
@@ -1258,11 +1258,11 @@ const CourseDetail = () => {
                     <div
                       className={courseDetailStylesH.progressBar}
                       style={{
-                        width: `${(completedChapters.size /
+                        width: `${Math.min(100, (completedChapters.size /
                           (course.lectures?.flatMap((l) => l.chapters || [])
                             .length || 1)) *
                           100
-                          }%`,
+                        )}%`,
                       }}
                     />
                   </div>
