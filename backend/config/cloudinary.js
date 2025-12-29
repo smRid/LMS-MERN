@@ -18,16 +18,23 @@ if (cloudinaryUrl) {
         });
         console.log('✅ Cloudinary configured with cloud:', match[3]);
     } else {
-        console.error('❌ Could not parse CLOUDINARY_URL');
+        console.error('❌ Could not parse CLOUDINARY_URL. Format should be: cloudinary://API_KEY:API_SECRET@CLOUD_NAME');
+        console.error('❌ Received (first 50 chars):', cloudinaryUrl.substring(0, 50));
     }
 } else {
     // Fallback to individual env vars
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
-        secure: true
-    });
+    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY) {
+        cloudinary.config({
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET,
+            secure: true
+        });
+        console.log('✅ Cloudinary configured via individual env vars');
+    } else {
+        console.error('⚠️  WARNING: CLOUDINARY_URL not set in environment variables!');
+        console.error('⚠️  Image uploads will fail. Add CLOUDINARY_URL to Vercel env vars.');
+    }
 }
 
 /**

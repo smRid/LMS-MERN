@@ -199,14 +199,30 @@ export const createCourse = async (req, res) => {
     if (req.file && req.file.buffer) {
       try {
         console.log('📤 Uploading image to Cloudinary...');
+        console.log('📁 File size:', req.file.size, 'bytes');
+        console.log('📁 File type:', req.file.mimetype);
         const cloudinaryResult = await uploadToCloudinary(req.file.buffer, 'courses');
         imagePath = cloudinaryResult.url;
         console.log('✅ Image uploaded:', imagePath);
       } catch (uploadErr) {
         console.error('❌ Cloudinary upload failed:', uploadErr);
+        console.error('❌ Error details:', JSON.stringify(uploadErr, null, 2));
+
+        // Provide specific error messages
+        let errorMessage = 'Failed to upload image';
+        if (uploadErr.message) {
+          if (uploadErr.message.includes('Must supply api_key')) {
+            errorMessage = 'Cloudinary not configured. Add CLOUDINARY_URL to environment variables.';
+          } else if (uploadErr.message.includes('Invalid')) {
+            errorMessage = 'Invalid Cloudinary credentials. Check CLOUDINARY_URL.';
+          } else {
+            errorMessage = `Image upload error: ${uploadErr.message}`;
+          }
+        }
+
         return res.status(500).json({
           success: false,
-          error: 'Failed to upload image'
+          error: errorMessage
         });
       }
     }
