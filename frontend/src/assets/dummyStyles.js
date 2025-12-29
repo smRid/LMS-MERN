@@ -848,32 +848,32 @@ export const homeCoursesStyles = {
   // Courses Grid
   coursesGrid: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10",
 
-  // Course Card
-  courseCard: "cursor-pointer group",
-  imageContainer: "relative rounded-2xl xl:rounded-2xl overflow-hidden",
-  courseImage: "w-full object-cover transition-transform duration-300 group-hover:shadow-[0_8px_32px_0_rgba(99,102,241,0.18)] h-48 lg:w- sm:h-48 md:h-40 lg:h-48",
+  // Course Card - Enhanced styling
+  coursesCard: "group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/60 hover:border-indigo-200/60 overflow-hidden",
+  imageContainer: "relative rounded-t-2xl overflow-hidden",
+  courseImage: "w-full object-cover transition-all duration-500 group-hover:scale-105 h-48 sm:h-48 md:h-44 lg:h-48",
 
-  // Course Info
-  courseInfo: "mt-4 px-3 bg-white/70 backdrop-blur-md rounded-xl -translate-y-3 sm:-translate-y-5 shadow-lg space-y-2 py-3",
-  courseName: "text-base sm:text-lg text-indigo-600 flex items-center truncate",
+  // Course Info - Enhanced styling
+  courseInfo: "p-4 bg-gradient-to-b from-white to-gray-50/50 space-y-3",
+  courseName: "text-base sm:text-lg font-bold text-gray-800 line-clamp-1 group-hover:text-indigo-600 transition-colors duration-300",
   teacherInfo: "flex items-center text-gray-500 text-sm",
-  teacherIcon: "mr-1 text-pink-400",
-  teacherName: "italic text-purple-600 truncate",
+  teacherIcon: "mr-1.5 text-indigo-400",
+  teacherName: "font-medium text-gray-600 truncate",
 
-  // Rating Section
-  ratingContainer: "flex items-center mt-1",
+  // Rating Section - Enhanced styling
+  ratingContainer: "flex items-center",
   starsContainer: "flex items-center gap-2",
   interactiveStars: "flex",
-  starButton: "p-1 sm:p-0.5 focus:outline-none transform transition-transform active:scale-95",
-  starButtonActive: "text-yellow-400",
-  starButtonInactive: "text-gray-300",
+  starButton: "p-0.5 focus:outline-none transform transition-all duration-200 hover:scale-125",
+  starButtonActive: "text-yellow-400 drop-shadow-sm",
+  starButtonInactive: "text-gray-300 hover:text-yellow-300",
   starIcon: "size-4",
 
-  // Pricing Section
-  pricingContainer: "flex items-center mt-2 space-x-2",
-  freePrice: "text-lg sm:text-xl font-bold text-green-700 drop-shadow",
-  salePrice: "text-lg sm:text-xl font-bold text-green-700 drop-shadow",
-  originalPrice: "line-through text-green-600 font-medium",
+  // Pricing Section - Enhanced styling
+  pricingContainer: "flex items-center mt-1 space-x-3 pt-2 border-t border-gray-100",
+  freePrice: "text-lg sm:text-xl font-bold text-emerald-600",
+  salePrice: "text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent",
+  originalPrice: "line-through text-gray-400 text-sm font-medium",
 
   // CTA Button
   ctaContainer: "flex justify-center mt-12",
@@ -892,7 +892,7 @@ export const homeCoursesStyles = {
   },
 
   // Animations
-  animations: `
+  animations: \`
     @keyframes spin-slow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -900,7 +900,7 @@ export const homeCoursesStyles = {
     .animate-spin-slow { 
       animation: spin-slow 6s linear infinite; 
     }
-  `
+  \`
 };
 
 // Add these to the existing dummyStyles.js file
@@ -1024,11 +1024,11 @@ export const floatingInputStyles = {
 
 // Custom styles for SignUpPage
 export const signUpPageCustomStyles = `
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
-  }
-  .animate-float { animation: float 6s ease-in-out infinite; }
+@keyframes float {
+  0 %, 100 % { transform: translateY(0px); }
+  50 % { transform: translateY(-15px); }
+}
+  .animate - float { animation: float 6s ease -in -out infinite; }
 `;
 
 // Add these to the existing dummyStyles.js file
@@ -1101,53 +1101,55 @@ export const testimonialStyles = {
 
   // Animations
   animations: `
-    @keyframes rotateGlow {
-      0% { transform: rotate(0deg) scale(1); opacity: 0.6; }
-      50% { transform: rotate(180deg) scale(1.05); opacity: 0.8; }
-      100% { transform: rotate(360deg) scale(1); opacity: 0.6; }
+@keyframes rotateGlow {
+  0 % { transform: rotate(0deg) scale(1); opacity: 0.6; }
+  50 % { transform: rotate(180deg) scale(1.05); opacity: 0.8; }
+  100 % { transform: rotate(360deg) scale(1); opacity: 0.6; }
+}
+@keyframes float {
+  0 %, 100 % { transform: translateY(0) rotate(0deg); }
+  50 % { transform: translateY(-12px) rotate(5deg); }
+}
+@keyframes float - slow {
+  0 %, 100 % { transform: translateY(0) rotate(0deg); }
+  50 % { transform: translateY(-8px) rotate(- 3deg);
+} 
     }
-    @keyframes float { 
-      0%,100%{ transform: translateY(0) rotate(0deg);} 
-      50%{ transform: translateY(-12px) rotate(5deg);} 
+@keyframes pulseSlow {
+  0 % { box- shadow: 0 0 0 0 rgba(99, 102, 241, 0.15);
+}
+70 % { box- shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+100 % { box- shadow: 0 0 0 0 rgba(99, 102, 241, 0); } 
     }
-    @keyframes float-slow { 
-      0%,100%{ transform: translateY(0) rotate(0deg);} 
-      50%{ transform: translateY(-8px) rotate(-3deg);} 
-    }
-    @keyframes pulseSlow { 
-      0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.15); } 
-      70% { box-shadow: 0 0 0 10px rgba(99,102,241,0); } 
-      100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); } 
-    }
-    .animate-float { animation: float 6s ease-in-out infinite; }
-    .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-    .animate-pulse-slow { animation: pulseSlow 3s ease-out infinite; }
-    .card-init { 
-      opacity: 0; 
-      transform: translateY(18px) scale(0.98) rotateX(2deg); 
-      filter: blur(3px);
-    } 
-    .card-visible { 
-      opacity: 1; 
-      transform: translateY(0) scale(1) rotateX(0); 
-      filter: blur(0); 
-      transition: all 700ms cubic-bezier(0.22, 1, 0.36, 1);
-    } 
-    .will-change-transform { will-change: transform; }
+    .animate - float { animation: float 6s ease -in -out infinite; }
+    .animate - float - slow { animation: float - slow 8s ease -in -out infinite; }
+    .animate - pulse - slow { animation: pulseSlow 3s ease - out infinite; }
+    .card - init {
+  opacity: 0;
+  transform: translateY(18px) scale(0.98) rotateX(2deg);
+  filter: blur(3px);
+} 
+    .card - visible {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotateX(0);
+  filter: blur(0);
+  transition: all 700ms cubic - bezier(0.22, 1, 0.36, 1);
+} 
+    .will - change - transform { will - change: transform; }
 
     /* ensure avatar images cover their container and never stretch */
-    .avatar-img { object-fit: cover; object-position: center; display: block; }
+    .avatar - img { object - fit: cover; object - position: center; display: block; }
 
-    /* on very small screens reduce some spacing to keep cards compact */
-    @media (max-width: 420px) {
-      .card-init { transform: translateY(10px) scale(0.99) rotateX(0deg); }
-    }
+/* on very small screens reduce some spacing to keep cards compact */
+@media(max - width: 420px) {
+      .card - init { transform: translateY(10px) scale(0.99) rotateX(0deg); }
+}
 
-    /* small performance hint - don't animate heavy shadows on mobile */
-    @media (max-width: 640px) {
-      .group:hover .card-init { box-shadow: none; }
-    }
-  `
+/* small performance hint - don't animate heavy shadows on mobile */
+@media(max - width: 640px) {
+      .group: hover.card - init { box - shadow: none; }
+}
+`
 };
 
 // Add these to the existing dummyStyles.js file
@@ -1316,86 +1318,86 @@ export const courseDetailStyles = {
 
   // Animations
   animations: `
-    @keyframes slideInUp {
+@keyframes slideInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideInLeft {
+}
+@keyframes slideInLeft {
       from { opacity: 0; transform: translateX(-30px); }
       to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes slideInRight {
+}
+@keyframes slideInRight {
       from { opacity: 0; transform: translateX(30px); }
       to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes fadeInUp {
+}
+@keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
+}
+@keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-    @keyframes bounceIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.05); }
-      70% { transform: scale(0.9); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .animate-fadeIn {
-      animation: fadeIn 0.5s ease-out;
-    }
-    .animate-slideInUp {
-      animation: slideInUp 0.8s ease-out;
-    }
-    .animate-slideInLeft {
-      animation: slideInLeft 0.8s ease-out;
-    }
-    .animate-slideInRight {
-      animation: slideInRight 0.8s ease-out;
-    }
-    .animate-bounceIn {
-      animation: bounceIn 0.8s ease-out;
-    }
-    .animate-fadeInUp {
-      animation: fadeInUp 0.8s ease-out;
-    }
-    .animation-delay-200 {
-      animation-delay: 0.2s;
-    }
-    .animation-delay-400 {
-      animation-delay: 0.4s;
-    }
-    .animation-delay-300 {
-      animation-delay: 0.3s;
-    }
-    .animation-delay-1000 {
-      animation-delay: 1s;
-    }
-    .animation-delay-2000 {
-      animation-delay: 2s;
-    }
-    .animation-delay-3000 {
-      animation-delay: 3s;
-    }
-    .animation-delay-4000 {
-      animation-delay: 4s;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(99, 102, 241, 0.4);
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(99, 102, 241, 0.6);
-    }
-  `
+}
+@keyframes bounceIn {
+  0 % { transform: scale(0.3); opacity: 0; }
+  50 % { transform: scale(1.05); }
+  70 % { transform: scale(0.9); }
+  100 % { transform: scale(1); opacity: 1; }
+}
+    .animate - fadeIn {
+  animation: fadeIn 0.5s ease - out;
+}
+    .animate - slideInUp {
+  animation: slideInUp 0.8s ease - out;
+}
+    .animate - slideInLeft {
+  animation: slideInLeft 0.8s ease - out;
+}
+    .animate - slideInRight {
+  animation: slideInRight 0.8s ease - out;
+}
+    .animate - bounceIn {
+  animation: bounceIn 0.8s ease - out;
+}
+    .animate - fadeInUp {
+  animation: fadeInUp 0.8s ease - out;
+}
+    .animation - delay - 200 {
+  animation - delay: 0.2s;
+}
+    .animation - delay - 400 {
+  animation - delay: 0.4s;
+}
+    .animation - delay - 300 {
+  animation - delay: 0.3s;
+}
+    .animation - delay - 1000 {
+  animation - delay: 1s;
+}
+    .animation - delay - 2000 {
+  animation - delay: 2s;
+}
+    .animation - delay - 3000 {
+  animation - delay: 3s;
+}
+    .animation - delay - 4000 {
+  animation - delay: 4s;
+}
+    .custom - scrollbar:: -webkit - scrollbar {
+  width: 6px;
+}
+    .custom - scrollbar:: -webkit - scrollbar - track {
+  background: rgba(255, 255, 255, 0.3);
+  border - radius: 10px;
+}
+    .custom - scrollbar:: -webkit - scrollbar - thumb {
+  background: rgba(99, 102, 241, 0.4);
+  border - radius: 10px;
+}
+    .custom - scrollbar:: -webkit - scrollbar - thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
+}
+`
 };
 
 // Add these to your existing assets/dummyStyles.js
@@ -1573,83 +1575,83 @@ export const animationDelaysH = {
 
 // Custom styles for CourseDetail
 export const courseDetailCustomStyles = `
-  @keyframes fadeIn {
+@keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideInUp {
+}
+@keyframes slideInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideInLeft {
+}
+@keyframes slideInLeft {
     from { opacity: 0; transform: translateX(-30px); }
     to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes slideInRight {
+}
+@keyframes slideInRight {
     from { opacity: 0; transform: translateX(30px); }
     to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes fadeInUp {
+}
+@keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes blob {
-    0% { transform: translate(0px, 0px) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0px, 0px) scale(1); }
-  }
+}
+@keyframes blob {
+  0 % { transform: translate(0px, 0px) scale(1); }
+  33 % { transform: translate(30px, -50px) scale(1.1); }
+  66 % { transform: translate(-20px, 20px) scale(0.9); }
+  100 % { transform: translate(0px, 0px) scale(1); }
+}
 
-  .animate-fadeIn {
-    animation: fadeIn 0.5s ease-out;
-  }
-  .animate-slideInUp {
-    animation: slideInUp 0.8s ease-out;
-  }
-  .animate-slideInLeft {
-    animation: slideInLeft 0.8s ease-out;
-  }
-  .animate-slideInRight {
-    animation: slideInRight 0.8s ease-out;
-  }
-  .animate-fadeInUp {
-    animation: fadeInUp 0.8s ease-out;
-  }
-  .animate-blob {
-    animation: blob 7s infinite;
-  }
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-  .animation-delay-300 {
-    animation-delay: 0.3s;
-  }
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-  .animation-delay-1000 {
-    animation-delay: 1s;
-  }
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(99, 102, 241, 0.4);
-    border-radius: 10px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(99, 102, 241, 0.6);
-  }
+  .animate - fadeIn {
+  animation: fadeIn 0.5s ease - out;
+}
+  .animate - slideInUp {
+  animation: slideInUp 0.8s ease - out;
+}
+  .animate - slideInLeft {
+  animation: slideInLeft 0.8s ease - out;
+}
+  .animate - slideInRight {
+  animation: slideInRight 0.8s ease - out;
+}
+  .animate - fadeInUp {
+  animation: fadeInUp 0.8s ease - out;
+}
+  .animate - blob {
+  animation: blob 7s infinite;
+}
+  .animation - delay - 200 {
+  animation - delay: 0.2s;
+}
+  .animation - delay - 300 {
+  animation - delay: 0.3s;
+}
+  .animation - delay - 400 {
+  animation - delay: 0.4s;
+}
+  .animation - delay - 1000 {
+  animation - delay: 1s;
+}
+  .animation - delay - 2000 {
+  animation - delay: 2s;
+}
+  .animation - delay - 4000 {
+  animation - delay: 4s;
+}
+  .custom - scrollbar:: -webkit - scrollbar {
+  width: 6px;
+}
+  .custom - scrollbar:: -webkit - scrollbar - track {
+  background: rgba(255, 255, 255, 0.3);
+  border - radius: 10px;
+}
+  .custom - scrollbar:: -webkit - scrollbar - thumb {
+  background: rgba(99, 102, 241, 0.4);
+  border - radius: 10px;
+}
+  .custom - scrollbar:: -webkit - scrollbar - thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
+}
 `;
 
 
@@ -1727,11 +1729,11 @@ export const loginIconColors = {
 
 // Custom styles for LoginPage
 export const loginPageCustomStyles = `
-  @keyframes fade-in-up {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  .animate-fade-in-up {
-    animation: fade-in-up 0.5s ease-out;
-  }
+@keyframes fade -in -up {
+  0 % { opacity: 0; transform: translateY(20px); }
+  100 % { opacity: 1; transform: translateY(0); }
+}
+  .animate - fade -in -up {
+  animation: fade -in -up 0.5s ease - out;
+}
 `;
