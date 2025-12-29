@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { User, Play, Star } from "lucide-react";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = "https://lms-smrid.vercel.app";
 
 const MyCourses = () => {
   const navigate = useNavigate();

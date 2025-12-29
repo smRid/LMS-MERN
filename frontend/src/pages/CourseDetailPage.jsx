@@ -18,7 +18,7 @@ import {
 import { useUser, useAuth } from "@clerk/clerk-react";
 import { courseDetailStyles } from "../assets/dummyStyles";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = "https://lms-smrid.vercel.app";
 
 const fmtMinutes = (mins) => {
   const h = Math.floor((mins || 0) / 60);

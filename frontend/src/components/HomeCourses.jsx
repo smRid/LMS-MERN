@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import { useAuth, useUser } from "@clerk/clerk-react";
 
-const API_BASE = 'http://localhost:4000';
+const API_BASE = 'https://lms-smrid.vercel.app';
 
 const HomeCourses = () => {
   const navigate = useNavigate();
@@ -230,8 +230,8 @@ const HomeCourses = () => {
                   setHoverRatings((s) => ({ ...s, [course.id]: 0 }))
                 }
                 className={`${homeCoursesStyles.starButton} ${filled
-                    ? homeCoursesStyles.starButtonActive
-                    : homeCoursesStyles.starButtonInactive
+                  ? homeCoursesStyles.starButtonActive
+                  : homeCoursesStyles.starButtonInactive
                   }`}
                 style={{ background: "transparent" }}
               >
