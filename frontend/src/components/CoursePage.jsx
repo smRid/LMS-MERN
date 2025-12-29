@@ -381,21 +381,48 @@ const CoursePage = () => {
     return "Free";
   };
 
-  // Skeleton loading component
-  const SkeletonCard = () => (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
-      <div className="h-48 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]" />
-      <div className="p-5">
-        <div className="h-5 bg-gray-200 rounded-full w-3/4 mb-3" />
-        <div className="h-4 bg-gray-200 rounded-full w-1/2 mb-4" />
-        <div className="flex items-center gap-1 mb-3">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="w-4 h-4 bg-gray-200 rounded-full" />
-          ))}
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="h-6 bg-gray-200 rounded-full w-16" />
-          <div className="h-8 bg-gray-200 rounded-full w-24" />
+  // Skeleton loading component - matches actual course card structure
+  const SkeletonCard = ({ delay = 0 }) => (
+    <div
+      className={coursePageStyles.courseCard}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className={coursePageStyles.courseCardInner}>
+        <div className={coursePageStyles.courseCardContent}>
+          {/* Image skeleton */}
+          <div className={coursePageStyles.courseImageContainer}>
+            <div
+              className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_infinite]"
+              style={{ minHeight: '160px' }}
+            />
+          </div>
+
+          {/* Content skeleton */}
+          <div className={coursePageStyles.courseInfo}>
+            {/* Title skeleton */}
+            <div className="h-5 bg-gray-200 rounded-lg w-4/5 mb-3 animate-pulse" />
+
+            {/* Teacher skeleton */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-4 h-4 bg-gray-200 rounded-full animate-pulse" />
+              <div className="h-4 bg-gray-200 rounded-lg w-24 animate-pulse" />
+            </div>
+
+            {/* Rating skeleton */}
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-gray-200 fill-gray-200" />
+                ))}
+              </div>
+              <div className="h-4 bg-gray-200 rounded-lg w-12 animate-pulse" />
+            </div>
+
+            {/* Price skeleton */}
+            <div className="flex items-center justify-between">
+              <div className="h-6 bg-gray-200 rounded-lg w-16 animate-pulse" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -422,15 +449,15 @@ const CoursePage = () => {
                 placeholder="Search courses by name, instructor, or category..."
                 disabled
                 className={coursePageStyles.searchInput}
-                style={{ opacity: 0.7 }}
+                style={{ opacity: 0.6, cursor: 'wait' }}
               />
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={coursePageStyles.coursesGrid}>
+          <div className={coursePageStyles.coursesGridContainer}>
             {[...Array(6)].map((_, i) => (
-              <SkeletonCard key={i} />
+              <SkeletonCard key={i} delay={i * 100} />
             ))}
           </div>
         </div>
