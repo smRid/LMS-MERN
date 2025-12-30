@@ -284,8 +284,8 @@ export const customStyles = `
 
 // src/assets/dummyStyles.js
 export const aboutUsStyles = {
-  // Layout & Container
-  container: "min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50",
+  // Layout & Container - dark mode transparent to show global gradient
+  container: "min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:bg-transparent",
 
   // Hero Section
   heroSection: "relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden",
@@ -310,77 +310,77 @@ export const aboutUsStyles = {
   statNumber: "text-2xl font-bold text-white drop-shadow-sm",
   statLabel: "text-blue-100 text-sm",
 
-  // Mission/Vision Sections
+  // Mission/Vision Sections - with dark mode card backgrounds
   sectionContainer: "py-20 px-4 sm:px-6 lg:px-8",
   sectionGrid: "max-w-7xl mx-auto",
   sectionContentGrid: "grid lg:grid-cols-2 md:grid-cols-2 gap-16 items-center",
   sectionImageContainer: "relative",
   sectionImage: "relative group",
   sectionContent: "",
-  sectionBadge: "inline-flex items-center px-4 py-2 rounded-full bg-white shadow-lg mb-6",
+  sectionBadge: "inline-flex items-center px-4 py-2 rounded-full bg-white dark:bg-slate-800/80 shadow-lg dark:shadow-indigo-500/10 mb-6 border dark:border-slate-700",
   sectionIcon: "w-5 h-5 mr-2 text-gradient bg-gradient-to-r",
-  sectionBadgeText: "font-semibold text-gray-700",
-  sectionTitle: "text-4xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-bold text-gray-900 mb-6 font-serif",
-  sectionDescription: "text-xl text-gray-600 mb-8 leading-relaxed",
+  sectionBadgeText: "font-semibold text-gray-700 dark:text-slate-200",
+  sectionTitle: "text-4xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-6 font-serif",
+  sectionDescription: "text-xl text-gray-600 dark:text-slate-300 mb-8 leading-relaxed",
   featuresContainer: "space-y-4 mb-8",
   featureItem: "flex items-center gap-4 group",
   featureIcon: "w-8 h-8 bg-gradient-to-r rounded-full flex items-center justify-center flex-shrink-0 transition-transform",
   featureIconSvg: "w-5 h-5 text-white",
-  featureText: "text-lg text-gray-700 font-medium",
+  featureText: "text-lg text-gray-700 dark:text-slate-300 font-medium",
 
-  // Values Section
-  valuesSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50",
+  // Values Section - with dark mode
+  valuesSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50 dark:bg-transparent",
   valuesHeader: "text-center mb-16",
-  valuesBadge: "inline-flex items-center px-6 py-3 rounded-full bg-white shadow-lg mb-6",
-  valuesBadgeIcon: "w-6 h-6 text-blue-600 mr-2",
-  valuesBadgeText: "font-semibold text-gray-700",
-  valuesTitle: "text-2xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-bold text-gray-900 mb-4 font-serif",
-  valuesSubtitle: "text-xl text-gray-600 max-w-2xl mx-auto",
+  valuesBadge: "inline-flex items-center px-6 py-3 rounded-full bg-white dark:bg-slate-800/80 shadow-lg dark:shadow-indigo-500/10 mb-6 border dark:border-slate-700",
+  valuesBadgeIcon: "w-6 h-6 text-blue-600 dark:text-indigo-400 mr-2",
+  valuesBadgeText: "font-semibold text-gray-700 dark:text-slate-200",
+  valuesTitle: "text-2xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-4 font-serif",
+  valuesSubtitle: "text-xl text-gray-600 dark:text-slate-400 max-w-2xl mx-auto",
   valuesGrid: "grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8",
-  valueCard: "bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 relative overflow-hidden",
+  valueCard: "bg-white dark:bg-slate-800/70 p-8 rounded-3xl shadow-2xl dark:shadow-indigo-500/5 hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100 dark:border-slate-700/60 relative overflow-hidden backdrop-blur-sm",
   valueGradient: "absolute inset-0 bg-gradient-to-br opacity-5 group-hover:opacity-10 transition-opacity duration-500",
-  valueCardTitle: "text-2xl font-bold font-[pacifico] text-gray-900 mb-4 relative z-10 truncate",
-  valueCardDescription: "text-gray-600 leading-relaxed mb-6 relative z-10",
+  valueCardTitle: "text-2xl font-bold font-[pacifico] text-gray-900 dark:text-white mb-4 relative z-10 truncate",
+  valueCardDescription: "text-gray-600 dark:text-slate-400 leading-relaxed mb-6 relative z-10",
   valueFeatures: "space-y-3 relative z-10",
-  valueFeatureItem: "flex items-center gap-3 text-gray-700",
+  valueFeatureItem: "flex items-center gap-3 text-gray-700 dark:text-slate-300",
   valueFeatureDot: "w-2 h-2 bg-gradient-to-r rounded-full",
   valueUnderline: "absolute bottom-0 left-0 w-0 group-hover:w-full h-1 bg-gradient-to-r transition-all duration-500",
 
-  // Team Section
-  teamSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-100",
+  // Team Section - with dark mode
+  teamSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-100 dark:bg-transparent",
   teamHeader: "text-center mb-16",
-  teamTitle: "text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-gray-900 mb-4 font-serif",
-  teamSubtitle: "text-xl text-gray-600 max-w-2xl mx-auto",
+  teamTitle: "text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-serif",
+  teamSubtitle: "text-xl text-gray-600 dark:text-slate-400 max-w-2xl mx-auto",
   teamGrid: "grid md:grid-cols-2 lg:grid-cols-4 gap-8",
-  teamMember: "text-center font-[pacifico] group cursor-pointer",
+  teamMember: "text-center font-[pacifico] group cursor-pointer bg-white/50 dark:bg-slate-800/50 p-6 rounded-3xl backdrop-blur-sm border border-white/60 dark:border-slate-700/50 hover:shadow-xl transition-all duration-300",
   teamImageContainer: "relative mb-6",
-  teamImage: "w-48 h-48 mx-auto rounded-full transform transition-all duration-500",
-  teamName: "text-2xl font-bold text-gray-900 mb-2 transition-colors",
-  teamRole: "text-blue-600 italic font-semibold mb-2",
-  teamBio: "text-gray-600 mb-4",
+  teamImage: "w-48 h-48 mx-auto rounded-full transform transition-all duration-500 border-4 border-white dark:border-slate-700 shadow-lg",
+  teamName: "text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors",
+  teamRole: "text-blue-600 dark:text-indigo-400 italic font-semibold mb-2",
+  teamBio: "text-gray-600 dark:text-slate-400 mb-4",
 
-  // Testimonials Section
-  testimonialsSection: "py-20 px-4 sm:px-6 lg:px-8 bg-white",
+  // Testimonials Section - with dark mode
+  testimonialsSection: "py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-transparent",
   testimonialsHeader: "text-center mb-16",
-  testimonialsTitle: "text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-gray-900 mb-4 font-serif",
-  testimonialsSubtitle: "text-xl text-gray-600 max-w-2xl mx-auto",
+  testimonialsTitle: "text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-serif",
+  testimonialsSubtitle: "text-xl text-gray-600 dark:text-slate-400 max-w-2xl mx-auto",
   testimonialsGrid: "grid md:grid-cols-3 gap-8",
-  testimonialCard: "bg-gray-50 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group border border-gray-100",
+  testimonialCard: "bg-gray-50 dark:bg-slate-800/70 p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group border border-gray-100 dark:border-slate-700/60 backdrop-blur-sm",
   testimonialStars: "flex items-center gap-2 mb-4",
   testimonialStar: "w-5 h-5 text-yellow-400 fill-current",
-  testimonialText: "text-gray-700 mb-6 leading-relaxed italic",
+  testimonialText: "text-gray-700 dark:text-slate-300 mb-6 leading-relaxed italic",
   testimonialAuthor: "flex items-center gap-4",
-  testimonialAvatar: "w-12 h-12 rounded-full object-cover",
-  testimonialAuthorName: "font-semibold text-gray-900",
-  testimonialAuthorRole: "text-gray-600 text-sm",
+  testimonialAvatar: "w-12 h-12 rounded-full object-cover border-2 border-white dark:border-slate-600",
+  testimonialAuthorName: "font-semibold text-gray-900 dark:text-white",
+  testimonialAuthorRole: "text-gray-600 dark:text-slate-400 text-sm",
 
-  // CTA Section
-  ctaSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-200 via-purple-500 to-indigo-300 relative overflow-hidden",
-  ctaOrb1: "absolute top-0 left-0 w-72 h-72 bg-white/50 rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse",
-  ctaOrb2: "absolute bottom-0 right-0 w-96 h-96 bg-white/50 rounded-full translate-x-1/2 translate-y-1/2 animate-pulse animation-delay-2000",
+  // CTA Section - enhanced for dark mode
+  ctaSection: "py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-200 via-purple-500 to-indigo-300 dark:from-indigo-900 dark:via-purple-900 dark:to-slate-900 relative overflow-hidden",
+  ctaOrb1: "absolute top-0 left-0 w-72 h-72 bg-white/50 dark:bg-indigo-500/30 rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse",
+  ctaOrb2: "absolute bottom-0 right-0 w-96 h-96 bg-white/50 dark:bg-purple-500/30 rounded-full translate-x-1/2 translate-y-1/2 animate-pulse animation-delay-2000",
   ctaContent: "relative max-w-4xl mx-auto text-center",
   ctaTitle: "text-5xl md:text-6xl font-bold text-white mb-6 font-serif",
-  ctaDescription: "text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed",
+  ctaDescription: "text-xl text-blue-100 dark:text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed",
   ctaButtons: "flex flex-col sm:flex-row gap-6 justify-center items-center mb-8",
   ctaButton: "group bg-transparent cursor-pointer border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all duration-300 flex items-center gap-3 backdrop-blur-sm hover:shadow-2xl",
   ctaButtonIcon: "w-5 h-5 group-hover:scale-110 transition-transform"
@@ -417,61 +417,61 @@ export const aboutUsAnimations = `
 
 // Add these to the existing dummyStyles.js file
 export const contactStyles = {
-  // Layout & Container
-  container: "min-h-screen bg-gradient-to-br from-white to-gray-50 py-10 px-4 sm:px-6 md:px-10 lg:px-12 overflow-x-hidden",
+  // Layout & Container - dark mode transparent
+  container: "min-h-screen bg-gradient-to-br from-white to-gray-50 dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-none py-10 px-4 sm:px-6 md:px-10 lg:px-12 overflow-x-hidden",
   mainContainer: "max-w-7xl mx-auto",
 
-  // Header
+  // Header - with dark mode
   header: "text-center mb-12 sm:mb-16",
-  title: "text-3xl sm:text-4xl md:text-5xl inline-flex items-center space-x-2 mt-15 rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-purple-100 font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent font-['Poppins']",
+  title: "text-3xl sm:text-4xl md:text-5xl inline-flex items-center space-x-2 mt-15 rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-purple-100 dark:border-indigo-500/50 font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent font-['Poppins'] dark:shadow-lg dark:shadow-indigo-500/20",
 
   // Main Section
   mainSection: "grid grid-cols-1 font-serif lg:grid-cols-2 md:grid-cols-2 md:gap-2 gap-10 lg:gap-12 items-center",
 
-  // Contact Form
+  // Contact Form - with dark mode glassmorphism
   formContainer: "relative order-2 lg:order-1",
-  formGlow1: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 rounded-2xl opacity-75 blur-sm animate-pulse",
-  formGlow2: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 rounded-2xl opacity-50 animate-pulse delay-75",
-  formGlow3: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 rounded-2xl opacity-25 animate-pulse delay-150",
-  form: "relative bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-100",
+  formGlow1: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 dark:from-indigo-600 dark:to-purple-600 rounded-2xl opacity-75 dark:opacity-40 blur-sm animate-pulse",
+  formGlow2: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 dark:from-indigo-600 dark:to-purple-600 rounded-2xl opacity-50 dark:opacity-25 animate-pulse delay-75",
+  formGlow3: "absolute -inset-1 bg-gradient-to-r from-purple-300 to-blue-500 dark:from-indigo-600 dark:to-purple-600 rounded-2xl opacity-25 dark:opacity-15 animate-pulse delay-150",
+  form: "relative bg-white dark:bg-slate-800/80 rounded-2xl shadow-lg dark:shadow-indigo-500/10 p-6 sm:p-8 border border-gray-100 dark:border-slate-700/60 dark:backdrop-blur-sm",
   formElements: "space-y-6",
 
   // Form Grid
   formGrid: "grid grid-cols-1 md:grid-cols-2 gap-6",
 
-  // Form Groups
+  // Form Groups - with dark mode
   formGroup: "group",
-  label: "block text-sm font-medium text-gray-700 mb-2 flex items-center",
+  label: "block text-sm font-medium text-gray-700 dark:text-slate-200 mb-2 flex items-center",
   labelIcon: "w-4 h-4 mr-2",
-  input: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white",
-  inputError: "border-red-500",
-  errorText: "mt-2 text-sm text-red-600",
-  textarea: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white group-hover:border-blue-400 resize-none",
-  select: "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white group-hover:border-purple-400",
+  input: "w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white dark:bg-slate-700/50 dark:text-white dark:placeholder-slate-400",
+  inputError: "border-red-500 dark:border-red-400",
+  errorText: "mt-2 text-sm text-red-600 dark:text-red-400",
+  textarea: "w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white dark:bg-slate-700/50 dark:text-white dark:placeholder-slate-400 group-hover:border-blue-400 dark:group-hover:border-indigo-500 resize-none",
+  select: "w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 focus:ring-2 focus:border-transparent transition-all duration-300 bg-white dark:bg-slate-700/50 dark:text-white group-hover:border-purple-400 dark:group-hover:border-purple-500",
 
-  // Colors for different form fields
+  // Colors for different form fields - with dark variants
   colors: {
     purple: {
-      icon: "text-purple-600",
-      focus: "focus:ring-purple-500",
-      hover: "group-hover:border-purple-400"
+      icon: "text-purple-600 dark:text-purple-400",
+      focus: "focus:ring-purple-500 dark:focus:ring-purple-400",
+      hover: "group-hover:border-purple-400 dark:group-hover:border-purple-500"
     },
     blue: {
-      icon: "text-blue-600",
-      focus: "focus:ring-blue-500",
-      hover: "group-hover:border-blue-400"
+      icon: "text-blue-600 dark:text-blue-400",
+      focus: "focus:ring-blue-500 dark:focus:ring-blue-400",
+      hover: "group-hover:border-blue-400 dark:group-hover:border-blue-500"
     },
     green: {
-      icon: "text-green-600",
-      focus: "focus:ring-green-500",
-      hover: "group-hover:border-green-400"
+      icon: "text-green-600 dark:text-green-400",
+      focus: "focus:ring-green-500 dark:focus:ring-green-400",
+      hover: "group-hover:border-green-400 dark:group-hover:border-green-500"
     }
   },
 
-  // Submit Button
+  // Submit Button - with dark mode
   submitButton: "w-full py-4 px-6 rounded-full font-bold text-white transition-all duration-300 flex items-center justify-center",
-  submitButtonEnabled: "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl",
-  submitButtonDisabled: "bg-gray-400 cursor-not-allowed",
+  submitButtonEnabled: "bg-gradient-to-r from-green-500 to-green-600 dark:from-emerald-500 dark:to-teal-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl",
+  submitButtonDisabled: "bg-gray-400 dark:bg-slate-600 cursor-not-allowed",
   spinner: "w-5 h-5 border-t-2 border-white rounded-full animate-spin mr-2",
   submitIcon: "w-5 h-5 mr-2",
 
@@ -479,11 +479,11 @@ export const contactStyles = {
   animationContainer: "relative order-1 xl:order-2 lg:order-2 w-full flex justify-center items-center",
   animationWrapper: "relative max-w-md sm:max-w-lg md:max-w-xl lg:max-w-full xl:max-w-full rounded-2xl overflow-hidden",
 
-  // Footer Info
+  // Footer Info - with dark mode
   footer: "mt-12 sm:mt-16 text-center",
-  footerBadge: "inline-flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-blue-50 rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-purple-100",
-  footerIcon: "w-5 h-5 text-purple-600",
-  footerText: "text-gray-700 text-sm sm:text-base"
+  footerBadge: "inline-flex items-center space-x-2 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-slate-800/80 dark:to-indigo-900/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-purple-100 dark:border-indigo-500/30",
+  footerIcon: "w-5 h-5 text-purple-600 dark:text-indigo-400",
+  footerText: "text-gray-700 dark:text-slate-300 text-sm sm:text-base"
 };
 
 // Add these to your existing assets/dummyStyles.js
@@ -641,57 +641,57 @@ export const coursePageCustomStyles = `
 
 // Add these to the existing dummyStyles.js file
 export const facultyStyles = {
-  // Layout & Container
-  container: "min-h-screen pt-12 sm:pt-16 bg-gradient-to-br from-blue-50 via-white to-purple-50",
+  // Layout & Container - dark mode transparent (no gradient)
+  container: "min-h-screen pt-12 sm:pt-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-none",
 
-  // Header Section
-  header: "relative py-12 sm:py-16 px-4 text-center bg-gradient-to-br from-blue-50 via-white to-purple-50",
+  // Header Section - with dark mode colors (no gradient)
+  header: "relative py-12 sm:py-16 px-4 text-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-none",
   headerContent: "relative z-10 max-w-4xl mx-auto",
-  title: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 mb-3 sm:mb-4 font-cinematic tracking-wide",
-  titleDivider: "w-20 sm:w-28 h-1 bg-gradient-to-r from-blue-200 to-sky-500 mx-auto mb-4 rounded-full",
-  subtitle: "text-base sm:text-lg md:text-xl text-blue-500 max-w-2xl mx-auto leading-relaxed",
+  title: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 dark:bg-gradient-to-r dark:from-indigo-300 dark:via-purple-300 dark:to-pink-300 dark:bg-clip-text dark:text-transparent mb-3 sm:mb-4 font-cinematic tracking-wide",
+  titleDivider: "w-20 sm:w-28 h-1 bg-gradient-to-r from-blue-400 to-sky-500 dark:from-indigo-400 dark:to-purple-400 mx-auto mb-4 rounded-full",
+  subtitle: "text-base sm:text-lg md:text-xl text-blue-600 dark:text-indigo-200 max-w-2xl mx-auto leading-relaxed",
 
   // Faculty Grid
   facultySection: "py-8 px-4 sm:px-6 lg:px-8",
   facultyContainer: "max-w-7xl mx-auto",
   facultyGrid: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-10",
 
-  // Teacher Card
+  // Teacher Card - with dark mode glassmorphism
   card: "group",
-  teacherCard: "bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 p-4 sm:p-6 border border-gray-100 hover:border-purple-300",
+  teacherCard: "bg-white dark:bg-slate-800/70 rounded-3xl shadow-xl dark:shadow-indigo-500/10 hover:shadow-2xl transition-all duration-500 p-4 sm:p-6 border border-gray-100 dark:border-slate-700/60 hover:border-purple-300 dark:hover:border-indigo-500/50 backdrop-blur-sm",
 
-  // Image Section
+  // Image Section - with dark mode backgrounds
   imageContainer: "relative mb-4 sm:mb-6",
-  imageWrapper: "w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden",
-  image: "w-full h-full rounded-full object-cover border-4 border-white shadow-inner",
+  imageWrapper: "w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden bg-blue-100 dark:bg-slate-700",
+  image: "w-full h-full rounded-full object-cover border-4 border-blue-200 dark:border-slate-600 bg-white dark:bg-slate-700",
 
   // Experience Badge
   experienceBadge: "absolute -bottom-3 left-1/2 transform -translate-x-1/2",
-  experienceBadgeContent: "bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-lg",
+  experienceBadgeContent: "bg-gradient-to-r from-green-500 to-emerald-600 dark:from-emerald-500 dark:to-teal-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-lg",
 
-  // Teacher Info
+  // Teacher Info - with dark mode text colors
   teacherInfo: "text-center mb-3 sm:mb-4 px-1",
-  teacherName: "text-lg sm:text-xl font-bold text-gray-800 mb-1 font-cinematic truncate",
-  teacherQualification: "text-sm sm:text-sm text-purple-600 font-semibold mb-2 truncate",
-  teacherBio: "text-xs sm:text-sm text-gray-600 leading-relaxed line-clamp-3",
+  teacherName: "text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-1 font-cinematic truncate",
+  teacherQualification: "text-sm sm:text-sm text-purple-600 dark:text-indigo-400 font-semibold mb-2 truncate",
+  teacherBio: "text-xs sm:text-sm text-gray-600 dark:text-slate-400 leading-relaxed line-clamp-3",
 
   // Rating Section (fixed for row layout)
   ratingContainer: "mb-4 flex justify-center",
-  starRating: "flex flex-row items-center space-x-2", // changed to row
-  starsContainer: "flex flex-row items-center space-x-1", // row layout for stars
-  starButton: "transition-all duration-200 transform hover:scale-125 p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-200",
+  starRating: "flex flex-row items-center space-x-2",
+  starsContainer: "flex flex-row items-center space-x-1",
+  starButton: "transition-all duration-200 transform hover:scale-125 p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-500",
   starButtonActive: "text-yellow-400 fill-current",
-  starButtonInactive: "text-gray-300",
+  starButtonInactive: "text-gray-300 dark:text-slate-600",
   starIcon: "w-5 h-5",
 
 
-  // Social Icons
+  // Social Icons - with dark mode variants
   socialContainer: "flex justify-center gap-3 sm:gap-4 mt-2",
   socialIcon: "transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 p-3 sm:p-3.5 rounded-2xl shadow-lg hover:shadow-xl",
-  socialIconEmail: "bg-gradient-to-br from-green-100 to-green-300",
-  socialIconLinkedin: "bg-gradient-to-br from-sky-100 to-blue-300",
-  socialIconInstagram: "bg-gradient-to-br from-purple-200 to-pink-600",
-  socialIconSvg: "w-4 h-4 sm:w-5 sm:h-5 text-gray-900",
+  socialIconEmail: "bg-gradient-to-br from-green-100 to-green-300 dark:from-emerald-900/50 dark:to-green-800/50 dark:border dark:border-emerald-700/50",
+  socialIconLinkedin: "bg-gradient-to-br from-sky-100 to-blue-300 dark:from-blue-900/50 dark:to-sky-800/50 dark:border dark:border-blue-700/50",
+  socialIconInstagram: "bg-gradient-to-br from-purple-200 to-pink-600 dark:from-purple-900/50 dark:to-pink-800/50 dark:border dark:border-purple-700/50",
+  socialIconSvg: "w-4 h-4 sm:w-5 sm:h-5 text-gray-900 dark:text-white",
 
   // CSS Animations and Utilities
   animations: `
@@ -798,40 +798,44 @@ export const iconColors = {
 
 // Custom styles for Footer
 export const footerCustomStyles = `
-  @keyframes float-1 {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-    33% { transform: translateY(-12px) rotate(3deg) scale(1.03); }
-    66% { transform: translateY(-6px) rotate(-2deg) scale(0.98); }
+@keyframes float - 1 {
+  0 %, 100 % { transform: translateY(0px) rotate(0deg) scale(1); }
+  33 % { transform: translateY(-12px) rotate(3deg) scale(1.03); }
+  66 % { transform: translateY(-6px) rotate(- 2deg) scale(0.98);
+}
   }
-  @keyframes float-2 {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-    25% { transform: translateY(-18px) rotate(-4deg) scale(1.06); }
-    75% { transform: translateY(-4px) rotate(2deg) scale(0.96); }
+@keyframes float - 2 {
+  0 %, 100 % { transform: translateY(0px) rotate(0deg) scale(1); }
+  25 % { transform: translateY(-18px) rotate(- 4deg) scale(1.06);
+}
+75 % { transform: translateY(-4px) rotate(2deg) scale(0.96); }
   }
-  @keyframes float-3 {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-    50% { transform: translateY(-10px) rotate(5deg) scale(1.02); }
+@keyframes float - 3 {
+  0 %, 100 % { transform: translateY(0px) rotate(0deg) scale(1); }
+  50 % { transform: translateY(-10px) rotate(5deg) scale(1.02); }
+}
+@keyframes float - 4 {
+  0 %, 100 % { transform: translateY(0px) rotate(0deg) scale(1); }
+  40 % { transform: translateY(-14px) rotate(- 3deg) scale(1.05);
+}
+80 % { transform: translateY(-5px) rotate(4deg) scale(0.98); }
   }
-  @keyframes float-4 {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-    40% { transform: translateY(-14px) rotate(-3deg) scale(1.05); }
-    80% { transform: translateY(-5px) rotate(4deg) scale(0.98); }
-  }
-  .animate-float-1 { animation: float-1 9s ease-in-out infinite; }
-  .animate-float-2 { animation: float-2 11s ease-in-out infinite; }
-  .animate-float-3 { animation: float-3 13s ease-in-out infinite; }
-  .animate-float-4 { animation: float-4 10s ease-in-out infinite; }
+  .animate - float - 1 { animation: float - 1 9s ease -in -out infinite; }
+  .animate - float - 2 { animation: float - 2 11s ease -in -out infinite; }
+  .animate - float - 3 { animation: float - 3 13s ease -in -out infinite; }
+  .animate - float - 4 { animation: float - 4 10s ease -in -out infinite; }
 
-  /* Keep transitions snappy but avoid heavy layout work on small screens */
-  @media (max-width: 640px) {
-    * { transition-duration: 180ms !important; }
+/* Keep transitions snappy but avoid heavy layout work on small screens */
+@media(max - width: 640px) {
+    * { transition- duration: 180ms!important;
+}
   }
 
-  /* Reduce motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-float-1, .animate-float-2, .animate-float-3, .animate-float-4 { animation: none !important; }
-    * { transition: none !important; }
-  }
+/* Reduce motion for users who prefer it */
+@media(prefers - reduced - motion: reduce) {
+    .animate - float - 1, .animate - float - 2, .animate - float - 3, .animate - float - 4 { animation: none!important; }
+    * { transition: none!important; }
+}
 `;
 
 // Add these to the existing dummyStyles.js file

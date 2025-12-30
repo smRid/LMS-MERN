@@ -94,6 +94,17 @@ html.dark .min-h-screen {
   background: transparent !important;
 }
 
+/* Add subtle border between sections in dark mode - doesn't affect spacing */
+html.dark section {
+  border-top: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+html.dark section:first-of-type,
+html.dark section.hero-section,
+html.dark section[class*="hero"] {
+  border-top: none;
+}
+
 /* Theme transition for all elements */
 *,
 *::before,
