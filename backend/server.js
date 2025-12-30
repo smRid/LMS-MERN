@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 app.use('/api/course', courseRouter);
 app.use('/api/booking', bookingRouter);
 
+
 //Database Connection
 connectDB();
 
