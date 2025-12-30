@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { clerkMiddleware } from '@clerk/express'
 import connectDB from './config/db.js';
 import courseRouter from './routes/courseRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
@@ -40,7 +39,18 @@ app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(clerkMiddleware());
+// Only use Clerk middleware if the secret key is available
+try {
+    const { clerkMiddleware } = await import('@clerk/express');
+    if (process.env.CLERK_SECRET_KEY) {
+        app.use(clerkMiddleware());
+        console.log('✅ Clerk middleware enabled');
+    } else {
+        console.log('⚠️ CLERK_SECRET_KEY not set, skipping Clerk middleware');
+    }
+} catch (err) {
+    console.log('⚠️ Clerk middleware not available:', err.message);
+}
 
 app.use('/uploads', express.static('uploads'));
 
@@ -50,14 +60,14 @@ app.use((req, res, next) => {
     next();
 });
 
-// ROUTES
-app.use('/api/course', courseRouter);
-app.use('/api/booking', bookingRouter);
-
-// Health check endpoint
+// Health check endpoint - placed BEFORE routes to ensure it always works
 app.get('/', (req, res) => {
     res.send('API WORKING');
 });
+
+// ROUTES
+app.use('/api/course', courseRouter);
+app.use('/api/booking', bookingRouter);
 
 // Global Error Handler - ensures CORS headers are sent even on errors
 app.use((err, req, res, next) => {
@@ -90,8 +100,12 @@ app.use((req, res) => {
     });
 });
 
-// Database Connection
-connectDB();
+// Database Connection - wrapped in try-catch
+try {
+    connectDB();
+} catch (err) {
+    console.error('Database connection error:', err);
+}
 
 // Only start the server if not in serverless environment (Vercel)
 if (process.env.NODE_ENV !== 'production') {
