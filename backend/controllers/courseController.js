@@ -20,19 +20,6 @@ const parseJSONSafe = (maybe) => {
   }
 }
 
-// Helper to make image URLs absolute (or return as-is if already absolute)
-const makeImageAbsolute = (imageUrl, req) => {
-  if (!imageUrl) return "";
-  // If already a full URL (cloudinary, etc), return as-is
-  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-    return imageUrl;
-  }
-  // Otherwise, construct absolute URL from request
-  const protocol = req.protocol || 'https';
-  const host = req.get('host') || 'localhost:4000';
-  return `${protocol}://${host}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
-}
-
 
 /**
  * Compute derived fields (lecture totals, course totalDuration, totalLectures)

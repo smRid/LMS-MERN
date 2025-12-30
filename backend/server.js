@@ -33,24 +33,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Handle preflight requests for all routes
-app.options('*', cors());
+// CORS middleware already handles preflight OPTIONS requests
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Only use Clerk middleware if the secret key is available
-try {
-    const { clerkMiddleware } = await import('@clerk/express');
-    if (process.env.CLERK_SECRET_KEY) {
-        app.use(clerkMiddleware());
-        console.log('✅ Clerk middleware enabled');
-    } else {
-        console.log('⚠️ CLERK_SECRET_KEY not set, skipping Clerk middleware');
-    }
-} catch (err) {
-    console.log('⚠️ Clerk middleware not available:', err.message);
-}
 
 app.use('/uploads', express.static('uploads'));
 
@@ -100,12 +86,8 @@ app.use((req, res) => {
     });
 });
 
-// Database Connection - wrapped in try-catch
-try {
-    connectDB();
-} catch (err) {
-    console.error('Database connection error:', err);
-}
+// Database Connection
+connectDB();
 
 // Only start the server if not in serverless environment (Vercel)
 if (process.env.NODE_ENV !== 'production') {
