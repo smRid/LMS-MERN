@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import { clerkMiddleware } from '@clerk/express';
 import connectDB from './config/db.js';
 import courseRouter from './routes/courseRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
@@ -37,6 +38,9 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Clerk auth middleware - required for authenticated routes
+app.use(clerkMiddleware());
 
 app.use('/uploads', express.static('uploads'));
 
