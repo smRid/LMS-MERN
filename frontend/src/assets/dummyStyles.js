@@ -1,8 +1,8 @@
 // assets/dummyStyles.js
 
 export const bannerStyles = {
-  // Layout and container styles - Enhanced with animated gradient
-  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] w-full pt-6 sm:pt-8 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 animate-gradient-shift rounded-3xl overflow-hidden",
+  // Layout and container styles - Enhanced with animated gradient + dark mode
+  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] w-full pt-6 sm:pt-8 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 animate-gradient-shift rounded-3xl overflow-hidden",
 
   // Floating icons wrapper - with padding to prevent clipping
   floatingIconsWrapper: "absolute inset-0 pointer-events-none z-0 px-8 py-8 md:px-12 md:py-12 lg:px-16 lg:py-16",
@@ -10,8 +10,8 @@ export const bannerStyles = {
   // Floating icon base styles - Enhanced with better glow
   floatingIcon: "absolute animate-float pointer-events-none drop-shadow-2xl glow-icon transform transition-transform duration-500 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 hover:scale-125",
 
-  // Main content - Premium glassmorphism (no hover glow)
-  mainContent: "max-w-6xl w-full mx-auto bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 relative z-10 p-6 sm:p-8 lg:p-12 animate-fade-in",
+  // Main content - Premium glassmorphism with dark mode
+  mainContent: "max-w-6xl w-full mx-auto bg-white/80 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/50 relative z-10 p-6 sm:p-8 lg:p-12 animate-fade-in",
 
   // Grid layout
   grid: "grid grid-cols-1 md:grid-cols-2 gap-8 items-center",
@@ -19,9 +19,9 @@ export const bannerStyles = {
   // Left content
   leftContent: "space-y-5 sm:space-y-6",
 
-  // Badge - Enhanced with shine effect
-  badge: "inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 text-indigo-600 rounded-full text-sm font-semibold animate-bounce-in font-cursive border border-indigo-200/50 shine-effect",
-  badgeIcon: "w-4 h-4 text-indigo-500 animate-spin-slow",
+  // Badge - Enhanced with shine effect + dark mode
+  badge: "inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 text-indigo-600 dark:text-indigo-300 rounded-full text-sm font-semibold animate-bounce-in font-cursive border border-indigo-200/50 dark:border-indigo-500/30 shine-effect",
+  badgeIcon: "w-4 h-4 text-indigo-500 dark:text-indigo-400 animate-spin-slow",
 
   // Heading - Rainbow shimmer effect
   heading: "text-3xl sm:text-4xl lg:text-5xl font-cursive font-heading uppercase tracking-wider leading-tight",
@@ -30,30 +30,30 @@ export const bannerStyles = {
 
   videoModal: {
     overlay: "fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md animate-fadeIn",
-    container: "relative w-[90%] max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20",
+    container: "relative w-[90%] max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 dark:border-slate-700",
     iframe: "w-full h-full",
-    closeButton: "absolute top-3 cursor-pointer right-3 bg-white/90 hover:bg-white text-black font-bold rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110",
+    closeButton: "absolute top-3 cursor-pointer right-3 bg-white/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-black dark:text-white font-bold rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110",
     closeIcon: "w-5 h-5"
   },
 
-  // Description
-  description: "text-lg sm:text-xl font-body italic font-[pacifico] font-semibold text-gray-700 leading-relaxed mt-2 sm:mt-4 animate-slide-in-up animation-delay-500",
+  // Description - with dark mode
+  description: "text-lg sm:text-xl font-body italic font-[pacifico] font-semibold text-gray-700 dark:text-slate-300 leading-relaxed mt-2 sm:mt-4 animate-slide-in-up animation-delay-500",
 
-  // Features - Staggered animation
+  // Features - Staggered animation + dark mode
   featuresGrid: "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-slide-in-up animation-delay-700",
-  featureItem: "flex items-center space-x-3 p-2 rounded-xl hover:bg-white/50 transition-all duration-300",
+  featureItem: "flex items-center space-x-3 p-2 rounded-xl hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all duration-300",
   featureIconContainer: "w-6 h-6 flex items-center justify-center shrink-0",
   featureIcon: "text-sm",
-  featureText: "text-gray-700 font-cursive text-sm sm:text-base",
+  featureText: "text-gray-700 dark:text-slate-300 font-cursive text-sm sm:text-base",
 
-  // Buttons - Premium glow effects
+  // Buttons - Premium glow effects + dark mode
   buttonsContainer: "flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 animate-slide-in-up animation-delay-900",
   buttonGetStarted: "px-6 py-3 sm:px-8 sm:py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform font-cursive text-sm sm:text-base text-center btn-premium animate-glow-pulse",
-  buttonViewDemo: "px-6 py-3 sm:px-8 sm:py-3 bg-white/80 backdrop-blur-sm cursor-pointer text-gray-700 font-semibold rounded-xl border-2 border-indigo-200 shadow-sm hover:shadow-xl hover:border-indigo-400 transition-all duration-300 transform hover:-translate-y-1 font-cursive text-sm sm:text-base text-center",
+  buttonViewDemo: "px-6 py-3 sm:px-8 sm:py-3 bg-white/80 dark:bg-slate-700/80 backdrop-blur-sm cursor-pointer text-gray-700 dark:text-slate-200 font-semibold rounded-xl border-2 border-indigo-200 dark:border-indigo-500/50 shadow-sm hover:shadow-xl hover:border-indigo-400 transition-all duration-300 transform hover:-translate-y-1 font-cursive text-sm sm:text-base text-center",
 
   // Image - 3D effect with glow
   imageContainer: "flex items-center justify-center animate-slide-in-right",
-  image: "w-full max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-sm h-auto rounded-2xl shadow-2xl border-4 border-white/70 animate-float image-shine"
+  image: "w-full max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-sm h-auto rounded-2xl shadow-2xl border-4 border-white/70 dark:border-slate-700/70 animate-float image-shine"
 };
 
 // Animation delays
@@ -719,8 +719,8 @@ export const facultyStyles = {
 // Add these to your existing assets/dummyStyles.js
 
 export const footerStyles = {
-  // Layout and container styles
-  footer: "relative bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/50 text-slate-800 overflow-hidden border-t border-slate-200/60",
+  // Layout and container styles - with dark mode
+  footer: "relative bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 text-slate-800 dark:text-slate-200 overflow-hidden border-t border-slate-200/60 dark:border-slate-700",
   container: "relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16",
 
   // Grid layout
@@ -728,36 +728,36 @@ export const footerStyles = {
   brandSection: "lg:col-span-1",
   brandTransform: "transform transition-transform duration-500",
   brandContainer: "relative mb-4 sm:mb-6 group",
-  brandGradient: "absolute -inset-3 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-2xl blur-lg opacity-12 sm:opacity-20 transition-all duration-500 pointer-events-none",
-  brandTitle: "text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-purple-600 py-1",
-  brandDescription: "text-slate-600 leading-relaxed mb-4 text-sm sm:text-sm",
+  brandGradient: "absolute -inset-3 bg-gradient-to-r from-cyan-400 to-purple-400 dark:from-cyan-500 dark:to-purple-500 rounded-2xl blur-lg opacity-12 sm:opacity-20 transition-all duration-500 pointer-events-none",
+  brandTitle: "text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-400 py-1",
+  brandDescription: "text-slate-600 dark:text-slate-400 leading-relaxed mb-4 text-sm sm:text-sm",
 
   // Section headers
-  sectionHeader: "text-lg font-semibold mb-4 text-slate-700 flex items-center gap-2",
+  sectionHeader: "text-lg font-semibold mb-4 text-slate-700 dark:text-slate-200 flex items-center gap-2",
   sectionIcon: "w-5 h-5",
 
   // Links
   linksList: "space-y-2",
-  linkItem: "text-slate-600 transition-all duration-300 transform hover:translate-x-2 flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 min-w-0",
+  linkItem: "text-slate-600 dark:text-slate-400 transition-all duration-300 transform hover:translate-x-2 flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 min-w-0",
   linkIcon: "w-4 h-4 flex-shrink-0",
 
   // Contact info
-  contactSpace: "space-y-3 text-slate-600",
+  contactSpace: "space-y-3 text-slate-600 dark:text-slate-400",
   contactItem: "flex items-center group transform transition-all duration-300 p-3 rounded-xl",
-  contactIconContainer: "flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mr-3 sm:mr-4 transform transition-transform duration-300 shadow-lg border border-white overflow-hidden",
+  contactIconContainer: "flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mr-3 sm:mr-4 transform transition-transform duration-300 shadow-lg border border-white dark:border-slate-600 overflow-hidden",
   contactIcon: "w-4 h-4",
   contactTextContainer: "min-w-0",
-  contactTextPrimary: "font-medium text-sm break-words xl:text-xs",
-  contactTextSecondary: "text-xs text-slate-500",
+  contactTextPrimary: "font-medium text-sm break-words xl:text-xs dark:text-slate-300",
+  contactTextSecondary: "text-xs text-slate-500 dark:text-slate-500",
 
   // Social section
-  socialSection: "border-t border-slate-200/60 pt-8",
+  socialSection: "border-t border-slate-200/60 dark:border-slate-700 pt-8",
   socialContainer: "flex flex-col lg:flex-row items-center justify-between gap-6",
   socialIconsContainer: "flex flex-wrap items-center gap-3 sm:gap-4 justify-center lg:justify-start",
   socialIconLink: "relative group transform transition-all duration-300 hover:scale-105",
-  socialIconContainer: "relative w-10 h-10 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border border-white/80 shadow-md backdrop-blur-sm overflow-hidden",
+  socialIconContainer: "relative w-10 h-10 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border border-white/80 dark:border-slate-600 shadow-md backdrop-blur-sm overflow-hidden",
   socialIconInner: "absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
-  socialIcon: "w-5 h-5 sm:w-6 sm:h-6 text-slate-700",
+  socialIcon: "w-5 h-5 sm:w-6 sm:h-6 text-slate-700 dark:text-slate-300",
   socialTooltip: "absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none hidden md:block",
   socialTooltipArrow: "absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45",
 
@@ -765,8 +765,8 @@ export const footerStyles = {
   designCredit: "text-center lg:text-right",
   designCreditContainer: "relative inline-block group",
   designCreditGradient: "absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-xl blur-lg opacity-10 group-hover:opacity-30 transition-all duration-500 pointer-events-none",
-  designCreditText: "relative font-[pacifico] text-slate-600 text-sm bg-white/80 backdrop-blur-sm rounded-lg px-4 sm:px-6 py-3 border border-white/80 shadow-sm inline-flex items-center gap-2",
-  designCreditLink: "ml-1 font-medium text-slate-700 hover:text-purple-600 transition-colors duration-300"
+  designCreditText: "relative font-[pacifico] text-slate-600 dark:text-slate-300 text-sm bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-lg px-4 sm:px-6 py-3 border border-white/80 dark:border-slate-600 shadow-sm inline-flex items-center gap-2",
+  designCreditLink: "ml-1 font-medium text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300"
 };
 
 // Background elements styles
@@ -836,29 +836,29 @@ export const footerCustomStyles = `
 
 // Add these to the existing dummyStyles.js file
 export const homeCoursesStyles = {
-  // Layout & Container - Enhanced animated gradient
-  container: "bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 animate-gradient-shift min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-12",
+  // Layout & Container - Enhanced animated gradient + dark mode
+  container: "bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 animate-gradient-shift min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-12",
   mainContainer: "max-w-7xl mx-auto",
 
   // Header Section - Enhanced with animations
   header: "flex flex-col items-center gap-6 animate-slide-in-up",
   title: "text-3xl sm:text-4xl md:text-5xl mb-0 text-center text-rainbow-shimmer drop-shadow-lg flex items-center justify-center gap-3 font-bold",
-  titleIcon: "w-7 h-7 md:w-8 md:h-8 animate-spin-slow text-indigo-500",
+  titleIcon: "w-7 h-7 md:w-8 md:h-8 animate-spin-slow text-indigo-500 dark:text-indigo-400",
 
   // Courses Grid
   coursesGrid: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10",
 
-  // Course Card - Clean styling without hover glow
-  coursesCard: "group relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/60 hover:border-indigo-200/60 overflow-hidden",
+  // Course Card - Clean styling with dark mode
+  coursesCard: "group relative bg-white/90 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/60 dark:border-slate-700/60 hover:border-indigo-200/60 dark:hover:border-indigo-500/40 overflow-hidden",
   imageContainer: "relative rounded-t-2xl overflow-hidden image-shine",
   courseImage: "w-full object-cover transition-all duration-700 group-hover:scale-110 h-48 sm:h-48 md:h-44 lg:h-48",
 
-  // Course Info - Enhanced styling
-  courseInfo: "p-4 bg-gradient-to-b from-white to-indigo-50/30 space-y-3",
-  courseName: "text-base sm:text-lg font-bold text-gray-800 line-clamp-1 group-hover:text-indigo-600 transition-colors duration-300",
-  teacherInfo: "flex items-center text-gray-500 text-sm",
-  teacherIcon: "mr-1.5 text-indigo-500",
-  teacherName: "font-medium text-gray-600 truncate",
+  // Course Info - Enhanced styling + dark mode
+  courseInfo: "p-4 bg-gradient-to-b from-white to-indigo-50/30 dark:from-slate-800 dark:to-indigo-950/30 space-y-3",
+  courseName: "text-base sm:text-lg font-bold text-gray-800 dark:text-slate-100 line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300",
+  teacherInfo: "flex items-center text-gray-500 dark:text-slate-400 text-sm",
+  teacherIcon: "mr-1.5 text-indigo-500 dark:text-indigo-400",
+  teacherName: "font-medium text-gray-600 dark:text-slate-400 truncate",
 
   // Rating Section - Enhanced styling
   ratingContainer: "flex items-center",
@@ -866,14 +866,14 @@ export const homeCoursesStyles = {
   interactiveStars: "flex",
   starButton: "p-0.5 focus:outline-none transform transition-all duration-200 hover:scale-150",
   starButtonActive: "text-yellow-400 drop-shadow-lg",
-  starButtonInactive: "text-gray-300 hover:text-yellow-400",
+  starButtonInactive: "text-gray-300 dark:text-slate-600 hover:text-yellow-400",
   starIcon: "size-4",
 
-  // Pricing Section - Enhanced with gradient
-  pricingContainer: "flex items-center mt-1 space-x-3 pt-2 border-t border-indigo-100",
-  freePrice: "text-lg sm:text-xl font-bold text-emerald-500 animate-bounce-in",
-  salePrice: "text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent",
-  originalPrice: "line-through text-gray-400 text-sm font-medium",
+  // Pricing Section - Enhanced with gradient + dark mode
+  pricingContainer: "flex items-center mt-1 space-x-3 pt-2 border-t border-indigo-100 dark:border-slate-700",
+  freePrice: "text-lg sm:text-xl font-bold text-emerald-500 dark:text-emerald-400 animate-bounce-in",
+  salePrice: "text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent",
+  originalPrice: "line-through text-gray-400 dark:text-slate-500 text-sm font-medium",
 
   // CTA Button - Premium glow effects
   ctaContainer: "flex justify-center mt-12",
@@ -897,12 +897,12 @@ export const homeCoursesStyles = {
 
 // Add these to the existing dummyStyles.js file
 export const navbarStyles = {
-  // Main Navbar
+  // Main Navbar - with dark mode
   navbar: "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
   navbarVisible: "translate-y-0 opacity-100",
   navbarHidden: "-translate-y-full opacity-0",
-  navbarScrolled: "bg-white/90 backdrop-blur-xl shadow-sm py-2 border-b border-gray-100",
-  navbarDefault: "bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-3 border-b border-blue-100",
+  navbarScrolled: "bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl shadow-sm py-2 border-b border-gray-100 dark:border-slate-700",
+  navbarDefault: "bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 py-3 border-b border-blue-100 dark:border-slate-700",
 
   // Container
   container: "max-w-6xl mx-auto px-4 sm:px-5 md:px-6 lg:px-8",
@@ -911,46 +911,46 @@ export const navbarStyles = {
   // Logo
   logo: "flex items-center space-x-3 group cursor-pointer flex-shrink-0",
   logoIconContainer: "relative",
-  logoIcon: "w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center transform  transition-all duration-300 shadow-sm",
-  logoIconGlow: "absolute -inset-1 bg-blue-200 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity duration-300",
-  logoText: "font-bold text-lg bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent",
+  logoIcon: "w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center transform transition-all duration-300 shadow-sm",
+  logoIconGlow: "absolute -inset-1 bg-blue-200 dark:bg-indigo-500 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity duration-300",
+  logoText: "font-bold text-lg bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent",
 
-  // Desktop Navigation
+  // Desktop Navigation - with dark mode
   desktopNav: "hidden lg:flex items-center justify-center flex-1 max-w-2xl",
-  desktopNavContainer: "flex items-center space-x-1 bg-white/80 backdrop-blur-sm rounded-2xl p-1.5 shadow-sm border border-gray-200",
+  desktopNavContainer: "flex items-center space-x-1 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-1.5 shadow-sm border border-gray-200 dark:border-slate-600",
   desktopNavItem: "group relative px-4 py-2 rounded-xl transition-all duration-300 flex items-center space-x-2",
-  desktopNavItemActive: "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 shadow-md",
-  desktopNavIcon: "text-gray-600 transition-colors duration-300 group-hover:text-blue-600",
-  desktopNavText: "text-sm font-medium text-gray-700 group-hover:text-blue-600",
+  desktopNavItemActive: "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-indigo-900/50 dark:to-purple-900/50 text-blue-600 dark:text-indigo-300 shadow-md",
+  desktopNavIcon: "text-gray-600 dark:text-slate-400 transition-colors duration-300 group-hover:text-blue-600 dark:group-hover:text-indigo-400",
+  desktopNavText: "text-sm font-medium text-gray-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-indigo-400",
 
-  // Auth Buttons
+  // Auth Buttons - with dark mode
   authContainer: "flex items-center space-x-3 flex-shrink-0",
-  loginButton: "hidden lg:flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-semibold shadow-sm hover:shadow-md transform transition-all duration-300 group",
-  logoutButton: "hidden lg:flex items-center space-x-2 px-4 py-2 rounded-xl bg-white text-sm font-semibold shadow-sm hover:shadow-md transform transition-all duration-300 group border border-gray-200",
+  loginButton: "hidden lg:flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-indigo-500 dark:to-purple-500 text-white text-sm font-semibold shadow-sm hover:shadow-md transform transition-all duration-300 group",
+  logoutButton: "hidden lg:flex items-center space-x-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-700 text-sm font-semibold shadow-sm hover:shadow-md transform transition-all duration-300 group border border-gray-200 dark:border-slate-600 dark:text-slate-200",
 
-  // Mobile Menu Button
-  mobileMenuButton: "lg:hidden p-2 rounded-xl bg-white shadow-sm border border-gray-200 text-gray-600 hover:text-blue-600 hover:shadow-md transition-all duration-300",
+  // Mobile Menu Button - with dark mode
+  mobileMenuButton: "lg:hidden p-2 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-indigo-400 hover:shadow-md transition-all duration-300",
 
-  // Mobile Menu
+  // Mobile Menu - with dark mode
   mobileMenu: "lg:hidden transition-all duration-500 overflow-hidden",
   mobileMenuOpen: "max-h-[500px] opacity-100 mt-3",
   mobileMenuClosed: "max-h-0 opacity-0",
-  mobileMenuContainer: "bg-white/90 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-gray-200",
+  mobileMenuContainer: "bg-white/90 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl p-4 shadow-lg border border-gray-200 dark:border-slate-600",
   mobileMenuItems: "space-y-2",
   mobileMenuItem: "flex items-center space-x-3 p-3 rounded-xl transition-all duration-300",
-  mobileMenuItemActive: "bg-blue-50",
-  mobileMenuItemHover: "hover:bg-blue-50",
-  mobileMenuIconContainer: "p-2 rounded-lg bg-blue-50 transition-colors duration-300",
-  mobileMenuIcon: "text-blue-600",
-  mobileMenuText: "font-medium text-gray-700",
+  mobileMenuItemActive: "bg-blue-50 dark:bg-indigo-900/40",
+  mobileMenuItemHover: "hover:bg-blue-50 dark:hover:bg-slate-700",
+  mobileMenuIconContainer: "p-2 rounded-lg bg-blue-50 dark:bg-indigo-900/50 transition-colors duration-300",
+  mobileMenuIcon: "text-blue-600 dark:text-indigo-400",
+  mobileMenuText: "font-medium text-gray-700 dark:text-slate-200",
 
-  // Mobile Auth Buttons
-  mobileLoginButton: "w-full flex items-center justify-center space-x-2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold shadow-sm hover:shadow-md transition-all duration-300 mt-2",
-  mobileLogoutButton: "w-full flex items-center justify-center space-x-2 p-3 rounded-xl bg-white text-gray-800 font-semibold shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 mt-2",
+  // Mobile Auth Buttons - with dark mode
+  mobileLoginButton: "w-full flex items-center justify-center space-x-2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-indigo-500 dark:to-purple-500 text-white font-semibold shadow-sm hover:shadow-md transition-all duration-300 mt-2",
+  mobileLogoutButton: "w-full flex items-center justify-center space-x-2 p-3 rounded-xl bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-200 font-semibold shadow-sm border border-gray-200 dark:border-slate-600 hover:shadow-md transition-all duration-300 mt-2",
 
   // Background Pattern
-  backgroundPattern: "absolute inset-0 -z-10 opacity-20",
-  pattern: "absolute inset-0 bg-[radial-gradient(#60a5fa_1px,transparent_1px)] [background-size:16px_16px]"
+  backgroundPattern: "absolute inset-0 -z-10 opacity-20 dark:opacity-10",
+  pattern: "absolute inset-0 bg-[radial-gradient(#60a5fa_1px,transparent_1px)] dark:bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:16px_16px]"
 };
 
 
@@ -1025,41 +1025,41 @@ export const signUpPageCustomStyles = `
 
 // Add these to the existing dummyStyles.js file
 export const testimonialStyles = {
-  // Main Section
-  section: "py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-br from-indigo-50 via-white to-purple-50",
+  // Main Section - with dark mode
+  section: "py-12 sm:py-16 px-4 sm:px-6 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950",
   container: "max-w-6xl mx-auto text-center mb-12 sm:mb-16",
 
   // Header
-  badge: "inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-100 mb-4 sm:mb-6",
+  badge: "inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-indigo-100 dark:border-slate-600 mb-4 sm:mb-6",
   badgeDot: "w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-pulse",
-  badgeText: "text-sm font-medium text-indigo-700",
+  badgeText: "text-sm font-medium text-indigo-700 dark:text-indigo-300",
   title: "text-3xl sm:text-4xl md:text-5xl font-bold font-[Montserrat] mb-3 sm:mb-6",
-  titleGradient: "bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600",
-  subtitle: "text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed",
+  titleGradient: "bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-600 dark:from-indigo-400 dark:via-pink-400 dark:to-purple-400",
+  subtitle: "text-base sm:text-lg text-gray-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed",
 
   // Testimonials Grid
   grid: "max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 px-2 sm:px-0",
 
   // Testimonial Card
   cardWrapper: "relative group",
-  glowBorder: "absolute -inset-2 rounded-3xl bg-gradient-to-r from-indigo-400/30 via-pink-400/20 to-purple-400/30 blur-xl opacity-60 transition-all duration-700 pointer-events-none",
-  backgroundPattern: "absolute inset-0 rounded-2xl bg-gradient-to-br from-white/85 to-indigo-50/30 backdrop-blur-sm border border-white/50 pointer-events-none",
+  glowBorder: "absolute -inset-2 rounded-3xl bg-gradient-to-r from-indigo-400/30 via-pink-400/20 to-purple-400/30 dark:from-indigo-500/20 dark:via-pink-500/15 dark:to-purple-500/20 blur-xl opacity-60 transition-all duration-700 pointer-events-none",
+  backgroundPattern: "absolute inset-0 rounded-2xl bg-gradient-to-br from-white/85 to-indigo-50/30 dark:from-slate-800/85 dark:to-indigo-950/30 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 pointer-events-none",
 
   // Floating Elements
-  floatingElement1: "absolute -left-4 -top-4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-200/40 to-purple-200/40 blur-xl animate-float-slow pointer-events-none hidden sm:block",
-  floatingElement2: "absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-gradient-to-br from-indigo-200/40 to-blue-200/40 blur-xl animate-float pointer-events-none hidden sm:block",
+  floatingElement1: "absolute -left-4 -top-4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-200/40 to-purple-200/40 dark:from-pink-500/20 dark:to-purple-500/20 blur-xl animate-float-slow pointer-events-none hidden sm:block",
+  floatingElement2: "absolute -right-6 -bottom-6 w-20 h-20 rounded-full bg-gradient-to-br from-indigo-200/40 to-blue-200/40 dark:from-indigo-500/20 dark:to-blue-500/20 blur-xl animate-float pointer-events-none hidden sm:block",
 
-  // Main Card
-  card: "relative z-10 bg-white/70 backdrop-blur-md rounded-2xl p-6 sm:p-8 transform transition-all duration-300 card-init hover:shadow-2xl will-change-transform border border-white/60 overflow-hidden",
+  // Main Card - with dark mode
+  card: "relative z-10 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md rounded-2xl p-6 sm:p-8 transform transition-all duration-300 card-init hover:shadow-2xl will-change-transform border border-white/60 dark:border-slate-700/60 overflow-hidden",
   cardShadow: "0 20px 60px rgba(16,24,40,0.08), 0 0 0 1px rgba(255,255,255,0.4)",
 
   // Course Badge
-  courseBadge: "course-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-200/50 mb-4 sm:mb-6",
+  courseBadge: "course-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-200/50 dark:border-indigo-500/30 mb-4 sm:mb-6",
   courseBadgeDot: "w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full",
-  courseBadgeText: "text-sm font-medium text-indigo-700 truncate",
+  courseBadgeText: "text-sm font-medium text-indigo-700 dark:text-indigo-300 truncate",
 
   // Quote Icon
-  quoteIcon: "quote-icon absolute top-4 right-4 text-indigo-200/60 transform transition-transform duration-500 hidden sm:block",
+  quoteIcon: "quote-icon absolute top-4 right-4 text-indigo-200/60 dark:text-indigo-500/30 transform transition-transform duration-500 hidden sm:block",
   quoteIconSvg: "w-10 h-10 sm:w-12 sm:h-12",
 
   // Content Layout
@@ -1069,26 +1069,26 @@ export const testimonialStyles = {
   avatarImage: "avatar-img w-full h-full object-cover object-center",
   avatarGlow: "absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-400/20 to-pink-400/20 blur-md -z-10 animate-pulse-slow",
 
-  // User Info
+  // User Info - with dark mode
   userInfo: "flex-1 min-w-0",
   userHeader: "flex flex-col md:flex-row items-start md:items-center justify-between mb-2 gap-2",
-  userName: "font-[Poppins] font-bold text-gray-900 text-base sm:text-lg md:text-lg leading-tight truncate",
-  userRole: "text-sm sm:text-sm text-purple-600 font-medium truncate",
+  userName: "font-[Poppins] font-bold text-gray-900 dark:text-slate-100 text-base sm:text-lg md:text-lg leading-tight truncate",
+  userRole: "text-sm sm:text-sm text-purple-600 dark:text-purple-400 font-medium truncate",
   ratingContainer: "flex flex-col items-start md:items-end gap-1 mt-2 md:mt-0",
   starsContainer: "flex items-center gap-1 whitespace-nowrap",
   star: "w-4 h-4",
   starActive: "text-yellow-400 fill-current",
-  starInactive: "text-gray-300",
+  starInactive: "text-gray-300 dark:text-slate-600",
 
   // Message
-  message: "text-gray-700 leading-relaxed mb-4 sm:mb-6 relative z-10 text-sm sm:text-base",
-  quoteMark: "text-indigo-400 font-serif text-xl leading-none",
+  message: "text-gray-700 dark:text-slate-300 leading-relaxed mb-4 sm:mb-6 relative z-10 text-sm sm:text-base",
+  quoteMark: "text-indigo-400 dark:text-indigo-500 font-serif text-xl leading-none",
 
   // Footer
-  footer: "flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100 text-xs sm:text-sm",
-  verified: "flex items-center gap-2 text-sm text-gray-500",
+  footer: "flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100 dark:border-slate-700 text-xs sm:text-sm",
+  verified: "flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400",
   verifiedIcon: "w-4 h-4 text-green-400",
-  date: "flex items-center gap-2 text-sm text-gray-500",
+  date: "flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400",
   dateIcon: "w-4 h-4 text-indigo-400",
 
   // Animations

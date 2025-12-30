@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { navbarStyles } from '../assets/dummyStyles';
 import Logo from '../assets/Logo.png';
-import { Home, BookOpen, BookMarked, Users, Contact, Menu, X, BookOpenText, } from 'lucide-react';
+import { Home, BookOpen, BookMarked, Users, Contact, Menu, X, BookOpenText, Sun, Moon } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth, useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { useTheme } from '../context/ThemeContext';
 
 const baseNav = [
   { name: "Home", icon: Home, href: "/" },
@@ -18,6 +19,9 @@ const Navbar = () => {
   const { openSignUp } = useClerk();
   const { isSignedIn, isLoaded } = useUser();
   const { getToken } = useAuth();
+
+  // for theme
+  const { isDark, toggleTheme } = useTheme();
 
   // for mobile toggle
   const [isOpen, setIsOpen] = useState(false);
@@ -149,6 +153,19 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className={navbarStyles.authContainer}>
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle-btn cursor-pointer flex items-center justify-center"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? (
+                <Sun size={18} className="theme-toggle-icon text-yellow-300" />
+              ) : (
+                <Moon size={18} className="theme-toggle-icon text-white" />
+              )}
+            </button>
+
             {!isLoaded ? (
               <div className="w-10"></div>
             ) : !isSignedIn ? (
@@ -163,7 +180,7 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* toggle */}
+            {/* Mobile Menu toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={navbarStyles.mobileMenuButton}

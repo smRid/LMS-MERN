@@ -1,6 +1,168 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap");
 @import "tailwindcss";
 
+/* Enable class-based dark mode in Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================
+   THEME VARIABLES - LIGHT MODE (DEFAULT)
+   ========================================== */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-gradient-from: #eef2ff;
+  --bg-gradient-via: #faf5ff;
+  --bg-gradient-to: #eff6ff;
+
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+
+  --accent-primary: #6366f1;
+  --accent-secondary: #8b5cf6;
+  --accent-tertiary: #ec4899;
+
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(255, 255, 255, 0.5);
+
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-bg-scrolled: rgba(255, 255, 255, 0.95);
+
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --glow-color: rgba(99, 102, 241, 0.3);
+}
+
+/* ==========================================
+   THEME VARIABLES - DARK MODE
+   ========================================== */
+html.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-gradient-from: #0f172a;
+  --bg-gradient-via: #1e1b4b;
+  --bg-gradient-to: #312e81;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-primary: #818cf8;
+  --accent-secondary: #a78bfa;
+  --accent-tertiary: #f472b6;
+
+  --border-primary: #334155;
+  --border-secondary: #475569;
+
+  --card-bg: rgba(30, 41, 59, 0.8);
+  --card-border: rgba(51, 65, 85, 0.5);
+
+  --nav-bg: rgba(15, 23, 42, 0.9);
+  --nav-bg-scrolled: rgba(15, 23, 42, 0.95);
+
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --glow-color: rgba(129, 140, 248, 0.4);
+}
+
+/* ==========================================
+   GLOBAL THEME TRANSITIONS
+   ========================================== */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global dark mode background - matches testimonials section gradient */
+html.dark,
+html.dark body,
+html.dark #root {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b, #1e1b4b) !important;
+  background-attachment: fixed !important;
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+/* Override any component-specific backgrounds in dark mode */
+html.dark section,
+html.dark main,
+html.dark .min-h-screen {
+  background: transparent !important;
+}
+
+/* Theme transition for all elements */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease, box-shadow 0.3s ease;
+}
+
+/* Disable transitions during theme load to prevent flash */
+html.theme-loading * {
+  transition: none !important;
+}
+
+/* ==========================================
+   THEME TOGGLE BUTTON ANIMATION
+   ========================================== */
+@keyframes theme-toggle-spin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.theme-toggle-icon {
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease;
+}
+
+.theme-toggle-icon:hover {
+  animation: theme-toggle-spin 0.6s ease-in-out;
+}
+
+.theme-toggle-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 50%;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--glow-color);
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px var(--glow-color);
+}
+
+.theme-toggle-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary), var(--accent-primary));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: gradient-shift 3s ease infinite;
+  background-size: 400% 400%;
+}
+
+.theme-toggle-btn:hover::before {
+  opacity: 1;
+}
+
 /* Dancing Script font */
 .font-cursive {
   font-family: "Dancing Script", cursive;
