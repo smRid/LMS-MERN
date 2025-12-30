@@ -1,17 +1,17 @@
 // assets/dummyStyles.js
 
 export const bannerStyles = {
-  // Layout and container styles
-  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] w-full pt-6 sm:pt-8 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient-bg rounded-3xl overflow-hidden",
+  // Layout and container styles - Enhanced with animated gradient
+  container: "relative md:pt-25 xl:pt-25 pt-21 sm:min-h-[520px] md:min-h-[560px] lg:min-h-[600px] w-full pt-6 sm:pt-8 lg:pt-25 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-8 bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 animate-gradient-shift rounded-3xl overflow-hidden",
 
   // Floating icons wrapper - with padding to prevent clipping
   floatingIconsWrapper: "absolute inset-0 pointer-events-none z-0 px-8 py-8 md:px-12 md:py-12 lg:px-16 lg:py-16",
 
-  // Floating icon base styles
-  floatingIcon: "absolute animate-float pointer-events-none drop-shadow-xl glow-icon transform transition-transform duration-300 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20",
+  // Floating icon base styles - Enhanced with better glow
+  floatingIcon: "absolute animate-float pointer-events-none drop-shadow-2xl glow-icon transform transition-transform duration-500 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 hover:scale-125",
 
-  // Main content
-  mainContent: "max-w-6xl w-full mx-auto bg-white/70 backdrop-blur-lg rounded-3xl shadow-xl border border-white/30 relative z-10 p-6 sm:p-8 lg:p-12 animate-fade-in",
+  // Main content - Premium glassmorphism (no hover glow)
+  mainContent: "max-w-6xl w-full mx-auto bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 relative z-10 p-6 sm:p-8 lg:p-12 animate-fade-in",
 
   // Grid layout
   grid: "grid grid-cols-1 md:grid-cols-2 gap-8 items-center",
@@ -19,41 +19,41 @@ export const bannerStyles = {
   // Left content
   leftContent: "space-y-5 sm:space-y-6",
 
-  // Badge
-  badge: "inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold animate-fade-in font-cursive",
-  badgeIcon: "w-4 h-4 text-blue-500",
+  // Badge - Enhanced with shine effect
+  badge: "inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 text-indigo-600 rounded-full text-sm font-semibold animate-bounce-in font-cursive border border-indigo-200/50 shine-effect",
+  badgeIcon: "w-4 h-4 text-indigo-500 animate-spin-slow",
 
-  // Heading
+  // Heading - Rainbow shimmer effect
   heading: "text-3xl sm:text-4xl lg:text-5xl font-cursive font-heading uppercase tracking-wider leading-tight",
-  headingSpan1: "block text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-text-gradient",
-  headingSpan2: "block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-text-gradient animation-delay-300",
+  headingSpan1: "block text-rainbow-shimmer font-bold",
+  headingSpan2: "block text-rainbow-shimmer font-bold animation-delay-300",
 
   videoModal: {
-    overlay: "fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fadeIn",
+    overlay: "fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md animate-fadeIn",
     container: "relative w-[90%] max-w-3xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20",
     iframe: "w-full h-full",
-    closeButton: "absolute top-3 cursor-pointer right-3 bg-white/90 hover:bg-white text-black font-bold rounded-full p-2 shadow-lg transition-all duration-200",
+    closeButton: "absolute top-3 cursor-pointer right-3 bg-white/90 hover:bg-white text-black font-bold rounded-full p-2 shadow-lg transition-all duration-200 hover:scale-110",
     closeIcon: "w-5 h-5"
   },
 
   // Description
-  description: "text-lg sm:text-xl font-body italic font-[pacifico] font-semibold text-gray-700 leading-relaxed mt-2 sm:mt-4",
+  description: "text-lg sm:text-xl font-body italic font-[pacifico] font-semibold text-gray-700 leading-relaxed mt-2 sm:mt-4 animate-slide-in-up animation-delay-500",
 
-  // Features
-  featuresGrid: "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-fade-in opacity-0 animation-delay-700",
-  featureItem: "flex items-center space-x-3",
+  // Features - Staggered animation
+  featuresGrid: "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-slide-in-up animation-delay-700",
+  featureItem: "flex items-center space-x-3 p-2 rounded-xl hover:bg-white/50 transition-all duration-300",
   featureIconContainer: "w-6 h-6 flex items-center justify-center shrink-0",
   featureIcon: "text-sm",
   featureText: "text-gray-700 font-cursive text-sm sm:text-base",
 
-  // Buttons
-  buttonsContainer: "flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 animate-fade-in opacity-0 animation-delay-900",
-  buttonGetStarted: "px-6 py-3 sm:px-8 sm:py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-200 transition-all duration-300 transform font-cursive text-sm sm:text-base text-center",
-  buttonViewDemo: "px-6 py-3 sm:px-8 sm:py-3 bg-white cursor-pointer text-gray-700 font-semibold rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 transform font-cursive text-sm sm:text-base text-center",
+  // Buttons - Premium glow effects
+  buttonsContainer: "flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 animate-slide-in-up animation-delay-900",
+  buttonGetStarted: "px-6 py-3 sm:px-8 sm:py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform font-cursive text-sm sm:text-base text-center btn-premium animate-glow-pulse",
+  buttonViewDemo: "px-6 py-3 sm:px-8 sm:py-3 bg-white/80 backdrop-blur-sm cursor-pointer text-gray-700 font-semibold rounded-xl border-2 border-indigo-200 shadow-sm hover:shadow-xl hover:border-indigo-400 transition-all duration-300 transform hover:-translate-y-1 font-cursive text-sm sm:text-base text-center",
 
-  // Image
-  imageContainer: "flex items-center justify-center",
-  image: "w-full max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-sm h-auto rounded-2xl shadow-2xl border border-white/70 animate-float"
+  // Image - 3D effect with glow
+  imageContainer: "flex items-center justify-center animate-slide-in-right",
+  image: "w-full max-w-[220px] sm:max-w-sm md:max-w-md lg:max-w-sm h-auto rounded-2xl shadow-2xl border-4 border-white/70 animate-float image-shine"
 };
 
 // Animation delays
@@ -836,50 +836,50 @@ export const footerCustomStyles = `
 
 // Add these to the existing dummyStyles.js file
 export const homeCoursesStyles = {
-  // Layout & Container
-  container: "bg-gradient-to-b from-indigo-50 to-pink-50 min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-12",
+  // Layout & Container - Enhanced animated gradient
+  container: "bg-gradient-to-br from-indigo-100 via-purple-50 via-pink-50 to-blue-100 animate-gradient-shift min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-12",
   mainContainer: "max-w-7xl mx-auto",
 
-  // Header Section
-  header: "flex flex-col items-center gap-6",
-  title: "text-3xl sm:text-4xl md:text-4xl mb-0 text-center bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-500 text-transparent bg-clip-text drop-shadow-lg flex items-center justify-center gap-3",
-  titleIcon: "w-7 h-7 md:w-8 md:h-8 animate-spin-slow text-indigo-400",
+  // Header Section - Enhanced with animations
+  header: "flex flex-col items-center gap-6 animate-slide-in-up",
+  title: "text-3xl sm:text-4xl md:text-5xl mb-0 text-center text-rainbow-shimmer drop-shadow-lg flex items-center justify-center gap-3 font-bold",
+  titleIcon: "w-7 h-7 md:w-8 md:h-8 animate-spin-slow text-indigo-500",
 
   // Courses Grid
   coursesGrid: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10",
 
-  // Course Card - Enhanced styling
-  coursesCard: "group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/60 hover:border-indigo-200/60 overflow-hidden",
-  imageContainer: "relative rounded-t-2xl overflow-hidden",
-  courseImage: "w-full object-cover transition-all duration-500 group-hover:scale-105 h-48 sm:h-48 md:h-44 lg:h-48",
+  // Course Card - Clean styling without hover glow
+  coursesCard: "group relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/60 hover:border-indigo-200/60 overflow-hidden",
+  imageContainer: "relative rounded-t-2xl overflow-hidden image-shine",
+  courseImage: "w-full object-cover transition-all duration-700 group-hover:scale-110 h-48 sm:h-48 md:h-44 lg:h-48",
 
   // Course Info - Enhanced styling
-  courseInfo: "p-4 bg-gradient-to-b from-white to-gray-50/50 space-y-3",
+  courseInfo: "p-4 bg-gradient-to-b from-white to-indigo-50/30 space-y-3",
   courseName: "text-base sm:text-lg font-bold text-gray-800 line-clamp-1 group-hover:text-indigo-600 transition-colors duration-300",
   teacherInfo: "flex items-center text-gray-500 text-sm",
-  teacherIcon: "mr-1.5 text-indigo-400",
+  teacherIcon: "mr-1.5 text-indigo-500",
   teacherName: "font-medium text-gray-600 truncate",
 
   // Rating Section - Enhanced styling
   ratingContainer: "flex items-center",
   starsContainer: "flex items-center gap-2",
   interactiveStars: "flex",
-  starButton: "p-0.5 focus:outline-none transform transition-all duration-200 hover:scale-125",
-  starButtonActive: "text-yellow-400 drop-shadow-sm",
-  starButtonInactive: "text-gray-300 hover:text-yellow-300",
+  starButton: "p-0.5 focus:outline-none transform transition-all duration-200 hover:scale-150",
+  starButtonActive: "text-yellow-400 drop-shadow-lg",
+  starButtonInactive: "text-gray-300 hover:text-yellow-400",
   starIcon: "size-4",
 
-  // Pricing Section - Enhanced styling
-  pricingContainer: "flex items-center mt-1 space-x-3 pt-2 border-t border-gray-100",
-  freePrice: "text-lg sm:text-xl font-bold text-emerald-600",
-  salePrice: "text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent",
+  // Pricing Section - Enhanced with gradient
+  pricingContainer: "flex items-center mt-1 space-x-3 pt-2 border-t border-indigo-100",
+  freePrice: "text-lg sm:text-xl font-bold text-emerald-500 animate-bounce-in",
+  salePrice: "text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent",
   originalPrice: "line-through text-gray-400 text-sm font-medium",
 
-  // CTA Button
+  // CTA Button - Premium glow effects
   ctaContainer: "flex justify-center mt-12",
   ctaWrapper: "relative inline-block group",
-  ctaGlow: "absolute -inset-1 rounded-full border-0 pointer-events-none border-anim",
-  ctaButton: "relative z-10 inline-flex items-center gap-4 px-12 py-4 text-xl font-bold rounded-3xl bg-white/10 backdrop-blur-md text-white shadow-2xl transform transition duration-300 cursor-pointer active:scale-95 focus:outline-none",
+  ctaGlow: "absolute -inset-1 rounded-full border-0 pointer-events-none animate-glow-pulse",
+  ctaButton: "relative z-10 inline-flex items-center gap-4 px-12 py-4 text-xl font-bold rounded-3xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 backdrop-blur-md text-white shadow-2xl transform transition duration-300 cursor-pointer active:scale-95 focus:outline-none btn-premium",
   ctaButtonContent: "relative flex items-center gap-3",
   ctaText: "relative z-10",
   ctaIcon: "w-5 h-5 z-10 transition-transform duration-300 group-hover:translate-x-2",
@@ -891,16 +891,8 @@ export const homeCoursesStyles = {
     detail: "font-[Poppins]"
   },
 
-  // Animations
-  animations: `
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .animate-spin-slow { 
-      animation: spin-slow 6s linear infinite; 
-    }
-  `
+  // Animations - now handled in global CSS
+  animations: ``
 };
 
 // Add these to the existing dummyStyles.js file

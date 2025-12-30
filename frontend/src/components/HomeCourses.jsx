@@ -438,8 +438,6 @@ const HomeCourses = () => {
         theme="dark"
         transition={Slide}
       />
-
-      <style jsx>{homeCoursesStyles.animations}</style>
     </div>
 
 
