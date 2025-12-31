@@ -489,67 +489,67 @@ export const contactStyles = {
 // Add these to your existing assets/dummyStyles.js
 
 export const coursePageStyles = {
-  // Layout and container styles
-  pageContainer: "min-h-screen pt-24 md:pt-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4 relative overflow-hidden",
+  // Layout and container styles - with dark mode
+  pageContainer: "min-h-screen pt-24 md:pt-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 py-8 px-4 relative overflow-hidden",
   headerContainer: "text-center mb-12 md:mb-16 relative z-10",
   headerTransform: "transform perspective-1000 mb-6",
-  headerTitle: "text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 tracking-tight font-[pacifico]",
-  headerSubtitle: "text-base sm:text-lg md:text-2xl text-gray-700 font-light mb-6 md:mb-8 tracking-wide",
+  headerTitle: "text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-purple-400 dark:to-pink-400 tracking-tight font-[pacifico]",
+  headerSubtitle: "text-base sm:text-lg md:text-2xl text-gray-700 dark:text-slate-300 font-light mb-6 md:mb-8 tracking-wide",
 
-  // Search bar
+  // Search bar - with dark mode
   searchContainer: "max-w-2xl mx-auto mb-8 md:mb-12 relative group px-2 sm:px-0",
-  searchGradient: "absolute -inset-1 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 rounded-3xl blur-lg opacity-20 group-hover:opacity-60 transition-opacity duration-700 animate-gradient-x",
-  searchInputContainer: "relative bg-white/80 backdrop-blur-lg border border-transparent group-hover:border-blue-400 rounded-3xl shadow-xl transition-all duration-500",
+  searchGradient: "absolute -inset-1 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 dark:from-cyan-500 dark:via-purple-500 dark:to-pink-500 rounded-3xl blur-lg opacity-20 group-hover:opacity-60 transition-opacity duration-700 animate-gradient-x",
+  searchInputContainer: "relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-lg border border-transparent dark:border-slate-700 group-hover:border-blue-400 dark:group-hover:border-indigo-500 rounded-3xl shadow-xl dark:shadow-indigo-500/10 transition-all duration-500",
   searchIconContainer: "absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none",
-  searchIcon: "w-5 h-5 text-blue-500 group-hover:text-indigo-600 transition-colors duration-500",
-  searchInput: "w-full pl-12 pr-10 py-3 rounded-3xl bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 font-medium text-sm sm:text-base",
-  clearButton: "absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center text-gray-400 hover:text-red-500 transition-colors duration-300",
+  searchIcon: "w-5 h-5 text-blue-500 dark:text-indigo-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors duration-500",
+  searchInput: "w-full pl-12 pr-10 py-3 rounded-3xl bg-transparent text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 focus:outline-none focus:ring-0 font-medium text-sm sm:text-base",
+  clearButton: "absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-300",
 
-  // Results count
-  resultsCount: "text-gray-600 text-sm sm:text-base",
+  // Results count - with dark mode
+  resultsCount: "text-gray-600 dark:text-slate-400 text-sm sm:text-base",
 
-  // No courses found
+  // No courses found - with dark mode
   noCoursesContainer: "text-center py-12",
-  noCoursesIcon: "w-16 h-16 mx-auto text-gray-400",
-  noCoursesTitle: "text-xl font-semibold text-gray-600 mb-2",
-  noCoursesButton: "mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors w-full sm:w-auto",
+  noCoursesIcon: "w-16 h-16 mx-auto text-gray-400 dark:text-slate-500",
+  noCoursesTitle: "text-xl font-semibold text-gray-600 dark:text-slate-300 mb-2",
+  noCoursesButton: "mt-4 px-6 py-3 bg-blue-500 dark:bg-indigo-600 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-indigo-500 transition-colors w-full sm:w-auto",
 
   // Courses grid
   coursesGrid: "max-w-7xl font-[pacifico] mx-auto relative z-10",
   coursesGridContainer: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-10",
 
-  // Course card
+  // Course card - with dark mode glassmorphism
   courseCard: "group perspective-1000 transform-style-3d transition-all duration-500 ease-out cursor-pointer",
   courseCardInner: "relative transform-style-3d group-hover:rotate-y-5 group-hover:rotate-x-5 transition-transform duration-500 ease-out h-full",
-  courseCardContent: "backdrop-blur-lg rounded-3xl shadow-2xl border border-white/40 transform translate-z-0 h-full flex flex-col bg-white/60 overflow-hidden",
+  courseCardContent: "backdrop-blur-lg rounded-3xl shadow-2xl dark:shadow-indigo-500/10 border border-white/40 dark:border-slate-700/60 transform translate-z-0 h-full flex flex-col bg-white/60 dark:bg-slate-800/70 overflow-hidden hover:shadow-3xl dark:hover:shadow-purple-500/20 transition-shadow duration-300",
 
   // Course image
   courseImageContainer: "relative overflow-hidden rounded-t-3xl h-48 pb-6 sm:h-44 md:h-48",
   courseImage: "w-full h-full object-cover object-center transform transition-transform duration-700",
 
-  // Course info
+  // Course info - with dark mode
   courseInfo: "p-4 sm:p-6 flex-1 flex flex-col",
-  courseName: "text-base sm:text-lg font-bold text-gray-900 leading-tight line-clamp-2 mb-2",
+  courseName: "text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-tight line-clamp-2 mb-2",
   teacherContainer: "flex items-center space-x-2 mb-3 text-sm sm:text-sm",
-  teacherIcon: "w-4 h-4 text-blue-500",
-  teacherName: "text-gray-600 font-medium truncate",
+  teacherIcon: "w-4 h-4 text-blue-500 dark:text-indigo-400",
+  teacherName: "text-gray-600 dark:text-slate-400 font-medium truncate",
 
-  // Rating
+  // Rating - with dark mode
   ratingContainer: "mb-3",
   ratingStars: "flex items-center space-x-2 mb-2",
   ratingStarsInner: "flex space-x-1",
   ratingStarButton: "p-2 sm:p-0.5 rounded-full focus:outline-none",
 
-  // Price
+  // Price - with dark mode
   priceContainer: "mt-auto flex items-center justify-between",
-  priceFree: "text-2xl font-bold text-green-600",
-  priceCurrent: "text-2xl font-bold text-green-600",
-  priceOriginal: "text-lg text-gray-500 line-through",
+  priceFree: "text-2xl font-bold text-green-600 dark:text-green-400",
+  priceCurrent: "text-2xl font-bold text-green-600 dark:text-green-400",
+  priceOriginal: "text-lg text-gray-500 dark:text-slate-500 line-through",
 
-  // Show more button
+  // Show more button - with dark mode
   showMoreContainer: "mt-8 flex justify-center px-2 sm:px-0",
-  showMoreButton: "px-5 py-3 rounded-full cursor-pointer bg-white/80 backdrop-blur-sm border border-gray-200 shadow hover:shadow-md transition-all duration-300 flex items-center space-x-3 w-full sm:w-auto justify-center",
-  showMoreText: "text-sm font-medium text-gray-800"
+  showMoreButton: "px-5 py-3 rounded-full cursor-pointer bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-gray-200 dark:border-slate-700 shadow dark:shadow-indigo-500/10 hover:shadow-md dark:hover:shadow-purple-500/20 transition-all duration-300 flex items-center space-x-3 w-full sm:w-auto justify-center",
+  showMoreText: "text-sm font-medium text-gray-800 dark:text-slate-200"
 };
 
 // Add these to your existing assets/dummyStyles.js
@@ -1150,46 +1150,46 @@ export const testimonialStyles = {
 
 // Add these to the existing dummyStyles.js file
 export const courseDetailStyles = {
-  // Layout & Container
-  container: "min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-8 px-4 relative overflow-hidden",
+  // Layout & Container - with dark mode
+  container: "min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 py-8 px-4 relative overflow-hidden",
   mainContainer: "max-w-7xl mx-auto space-y-8 relative z-10 transition-all duration-1000",
   containerVisible: "opacity-100 translate-y-0",
   containerHidden: "opacity-0 translate-y-8",
 
-  // Back Button
-  backButton: "inline-flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl bg-white/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 hover:border-white/80 animate-slideInLeft",
-  backIcon: "w-5 h-5",
-  backText: "font-medium",
+  // Back Button - with dark mode
+  backButton: "inline-flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 animate-slideInLeft",
+  backIcon: "w-5 h-5 dark:text-slate-300",
+  backText: "font-medium dark:text-slate-200",
 
-  // Course Header
+  // Course Header - with dark mode
   header: "text-center space-y-6 relative",
-  badge: "inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/60 backdrop-blur-sm shadow-lg border border-white/50 animate-bounceIn",
-  badgeIcon: "w-5 h-5",
-  badgeText: "text-sm font-medium bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent",
-  title: "text-4xl md:text-6xl font-[Montserrat] font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500 leading-tight animate-fadeInUp",
+  badge: "inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm shadow-lg border border-white/50 dark:border-slate-700 animate-bounceIn",
+  badgeIcon: "w-5 h-5 dark:text-purple-400",
+  badgeText: "text-sm font-medium bg-gradient-to-r from-indigo-600 to-pink-500 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent",
+  title: "text-4xl md:text-6xl font-[Montserrat] font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500 dark:from-cyan-400 dark:via-purple-400 dark:to-pink-400 leading-tight animate-fadeInUp",
 
-  // Course Overview
+  // Course Overview - with dark mode
   overviewContainer: "max-w-4xl mx-auto",
-  overview: "p-6 font-serif rounded-3xl bg-white/40 backdrop-blur-md shadow-xl border border-white/50 hover:border-white/80 transition-all duration-500 animate-slideInUp",
+  overview: "p-6 font-serif rounded-3xl bg-white/40 dark:bg-slate-800/60 backdrop-blur-md shadow-xl dark:shadow-indigo-500/10 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 transition-all duration-500 animate-slideInUp",
   overviewHeader: "flex items-center gap-3 mb-3",
-  overviewIcon: "w-5 h-5 text-indigo-600",
-  overviewTitle: "text-lg font-semibold text-gray-800",
-  overviewText: "text-gray-700 text-base leading-relaxed text-left",
+  overviewIcon: "w-5 h-5 text-indigo-600 dark:text-indigo-400",
+  overviewTitle: "text-lg font-semibold text-gray-800 dark:text-white",
+  overviewText: "text-gray-700 dark:text-slate-300 text-base leading-relaxed text-left",
 
-  // Course Stats
+  // Course Stats - with dark mode
   statsContainer: "flex items-center justify-center gap-8 flex-wrap animate-fadeInUp",
-  statItem: "flex items-center gap-3 text-gray-700 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50",
-  statIcon: "w-5 h-5 text-indigo-600",
-  statText: "font-medium",
-  teacherStat: "flex items-center gap-3 text-gray-700 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50 transition-all duration-1000",
-  teacherAnimating: "scale-110 bg-indigo-100/50",
+  statItem: "flex items-center gap-3 text-gray-700 dark:text-slate-300 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50 dark:border-slate-700",
+  statIcon: "w-5 h-5 text-indigo-600 dark:text-indigo-400",
+  statText: "font-medium dark:text-slate-200",
+  teacherStat: "flex items-center gap-3 text-gray-700 dark:text-slate-300 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50 dark:border-slate-700 transition-all duration-1000",
+  teacherAnimating: "scale-110 bg-indigo-100/50 dark:bg-indigo-900/50",
 
   // Main Grid
   mainGrid: "grid font-[pacifico] grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8",
 
-  // Video Player
+  // Video Player - with dark mode
   videoSection: "xl:col-span-2 space-y-6",
-  videoContainer: "rounded-3xl bg-white/70 backdrop-blur-md shadow-2xl overflow-hidden border border-white/50 hover:border-white/80 transition-all duration-500 animate-slideInRight",
+  videoContainer: "rounded-3xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-2xl dark:shadow-indigo-500/10 overflow-hidden border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 transition-all duration-500 animate-slideInRight",
   video: "w-full h-[500px] object-cover bg-black rounded-t-3xl",
   iframe: "w-full h-[500px] rounded-t-3xl",
   videoPlaceholder: "w-full h-[500px] flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden rounded-t-3xl",
@@ -1202,102 +1202,102 @@ export const courseDetailStyles = {
   videoPlaceholderText: "text-xl mb-2",
   videoPlaceholderSubtext: "text-lg text-gray-300",
 
-  // Video Info
+  // Video Info - with dark mode
   videoInfo: "p-6",
-  videoTitle: "text-2xl font-bold text-gray-800 mb-3",
-  videoDescription: "text-gray-600 leading-relaxed",
+  videoTitle: "text-2xl font-bold text-gray-800 dark:text-white mb-3",
+  videoDescription: "text-gray-600 dark:text-slate-400 leading-relaxed",
   videoMeta: "flex items-center gap-3 mt-4",
-  durationBadge: "flex items-center gap-2 text-gray-500 bg-gray-100/50 px-3 py-1 rounded-full",
+  durationBadge: "flex items-center gap-2 text-gray-500 dark:text-slate-400 bg-gray-100/50 dark:bg-slate-700/50 px-3 py-1 rounded-full",
   durationIcon: "w-4 h-4",
-  chapterBadge: "text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full border border-indigo-200/50",
+  chapterBadge: "text-sm bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full border border-indigo-200/50 dark:border-indigo-700/50",
 
-  // Completion Button
-  completionSection: "mt-6 pt-6 border-t border-gray-200/50",
+  // Completion Button - with dark mode
+  completionSection: "mt-6 pt-6 border-t border-gray-200/50 dark:border-slate-700",
   completionButton: "inline-flex cursor-pointer items-center gap-3 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 backdrop-blur-sm",
-  completionButtonCompleted: "bg-green-500/20 text-green-700 hover:bg-green-500/30 border border-green-300/50 hover:border-green-400/50",
-  completionButtonIncomplete: "bg-indigo-500/20 text-indigo-700 hover:bg-indigo-500/30 border border-indigo-300/50 hover:border-indigo-400/50",
+  completionButtonCompleted: "bg-green-500/20 text-green-700 dark:text-green-400 hover:bg-green-500/30 border border-green-300/50 dark:border-green-700/50 hover:border-green-400/50",
+  completionButtonIncomplete: "bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/30 border border-indigo-300/50 dark:border-indigo-700/50 hover:border-indigo-400/50",
   completionIcon: "w-5 h-5",
-  completionText: "text-sm text-gray-500 mt-2",
+  completionText: "text-sm text-gray-500 dark:text-slate-400 mt-2",
 
   // Sidebar
   sidebar: "space-y-6",
 
-  // Course Content
-  contentCard: "p-6 rounded-3xl bg-white/70 backdrop-blur-md shadow-2xl border border-white/50 hover:border-white/80 transition-all duration-500 animate-slideInLeft",
+  // Course Content - with dark mode
+  contentCard: "p-6 rounded-3xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-2xl dark:shadow-indigo-500/10 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 transition-all duration-500 animate-slideInLeft",
   contentHeader: "flex items-center justify-between mb-6",
-  contentTitle: "text-xl font-bold text-gray-800",
-  freeBadge: "text-sm text-green-600 font-semibold bg-green-100 px-3 py-1 rounded-full flex items-center gap-2",
+  contentTitle: "text-xl font-bold text-gray-800 dark:text-white",
+  freeBadge: "text-sm text-green-600 dark:text-green-400 font-semibold bg-green-100 dark:bg-green-900/50 px-3 py-1 rounded-full flex items-center gap-2",
   freeBadgeIcon: "w-4 h-4",
   contentList: "space-y-3 max-h-[600px] overflow-y-auto custom-scrollbar",
 
-  // Lecture Item
-  lectureItem: "rounded-2xl bg-white/50 backdrop-blur-sm shadow-lg border border-white/50 hover:border-white/80 transition-all duration-300 animate-fadeInUp",
+  // Lecture Item - with dark mode
+  lectureItem: "rounded-2xl bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm shadow-lg dark:shadow-indigo-500/5 border border-white/50 dark:border-slate-600 hover:border-white/80 dark:hover:border-slate-500 transition-all duration-300 animate-fadeInUp",
   lectureHeader: "p-4 cursor-pointer transition-all duration-300",
-  lectureHeaderExpanded: "bg-gradient-to-r from-indigo-50/50 to-purple-50/50 border-b border-white/50",
-  lectureHeaderCollapsed: "hover:bg-white/70",
+  lectureHeaderExpanded: "bg-gradient-to-r from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/30 dark:to-purple-900/30 border-b border-white/50 dark:border-slate-600",
+  lectureHeaderCollapsed: "hover:bg-white/70 dark:hover:bg-slate-600/50",
   lectureHeaderContent: "flex items-center justify-between",
   lectureLeftSection: "flex items-center gap-3",
   lectureChevron: "transform transition-transform duration-300",
-  lectureChevronExpanded: "rotate-180 text-indigo-600",
-  lectureChevronCollapsed: "text-gray-500",
+  lectureChevronExpanded: "rotate-180 text-indigo-600 dark:text-indigo-400",
+  lectureChevronCollapsed: "text-gray-500 dark:text-slate-400",
   lectureInfo: "",
-  lectureTitle: "font-semibold text-gray-800",
-  lectureMeta: "text-sm text-gray-500 flex items-center gap-3 mt-1",
+  lectureTitle: "font-semibold text-gray-800 dark:text-white",
+  lectureMeta: "text-sm text-gray-500 dark:text-slate-400 flex items-center gap-3 mt-1",
   lectureDuration: "flex items-center gap-1",
-  lectureChapterCount: "text-xs bg-gray-100/50 px-2 py-1 rounded-full border border-gray-200/50",
+  lectureChapterCount: "text-xs bg-gray-100/50 dark:bg-slate-600/50 px-2 py-1 rounded-full border border-gray-200/50 dark:border-slate-500",
 
-  // Chapter List
+  // Chapter List - with dark mode
   chapterList: "p-4 pt-0 space-y-2 animate-fadeIn",
   chapterItem: "p-3 rounded-xl cursor-pointer transition-all duration-300 group",
-  chapterSelected: "bg-gradient-to-r from-indigo-100/50 to-purple-100/50 border-2 border-indigo-200/50 shadow-md",
-  chapterNotSelected: "bg-white/30 hover:bg-white/50 border border-transparent hover:border-white/50",
+  chapterSelected: "bg-gradient-to-r from-indigo-100/50 to-purple-100/50 dark:from-indigo-900/50 dark:to-purple-900/50 border-2 border-indigo-200/50 dark:border-indigo-600/50 shadow-md",
+  chapterNotSelected: "bg-white/30 dark:bg-slate-700/30 hover:bg-white/50 dark:hover:bg-slate-600/50 border border-transparent hover:border-white/50 dark:hover:border-slate-500",
   chapterDisabled: "opacity-60",
   chapterContent: "flex items-center justify-between",
   chapterLeftSection: "flex items-center gap-3 flex-1",
   completionToggle: "flex-shrink-0 transition-all duration-300 hover:scale-110",
-  completionToggleCompleted: "text-green-500",
-  completionToggleIncomplete: "text-gray-400 group-hover:text-gray-600",
+  completionToggleCompleted: "text-green-500 dark:text-green-400",
+  completionToggleIncomplete: "text-gray-400 dark:text-slate-500 group-hover:text-gray-600 dark:group-hover:text-slate-400",
   completionIconSmall: "w-5 h-5",
   chapterText: "flex-1",
   chapterName: "font-medium transition-colors duration-300",
-  chapterNameSelected: "text-indigo-700",
-  chapterNameNotSelected: "text-gray-800",
-  chapterTopic: "text-sm text-gray-500",
-  chapterDuration: "text-sm text-gray-500 bg-white/50 px-2 py-1 rounded-full border border-white/50",
+  chapterNameSelected: "text-indigo-700 dark:text-indigo-300",
+  chapterNameNotSelected: "text-gray-800 dark:text-slate-200",
+  chapterTopic: "text-sm text-gray-500 dark:text-slate-400",
+  chapterDuration: "text-sm text-gray-500 dark:text-slate-400 bg-white/50 dark:bg-slate-700/50 px-2 py-1 rounded-full border border-white/50 dark:border-slate-600",
 
-  // Pricing Card
-  pricingCard: "p-6 rounded-3xl bg-white/70 backdrop-blur-md shadow-2xl border border-white/50 hover:border-white/80 transition-all duration-500 animate-slideInLeft",
+  // Pricing Card - with dark mode
+  pricingCard: "p-6 rounded-3xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-2xl dark:shadow-indigo-500/10 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 transition-all duration-500 animate-slideInLeft",
   pricingHeader: "flex items-center gap-2 mb-4",
-  pricingTitle: "font-bold text-lg text-gray-800",
+  pricingTitle: "font-bold text-lg text-gray-800 dark:text-white",
   pricingAmount: "flex items-baseline gap-3 mb-2",
-  price: "text-3xl font-bold bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent",
-  originalPrice: "text-sm text-gray-500 line-through",
-  discountBadge: "ml-auto text-sm bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 px-3 py-1 rounded-full border border-green-200/50",
-  pricingDescription: "text-sm text-gray-600 mb-6",
+  price: "text-3xl font-bold bg-gradient-to-r from-indigo-600 to-pink-500 dark:from-cyan-400 dark:to-purple-400 bg-clip-text text-transparent",
+  originalPrice: "text-sm text-gray-500 dark:text-slate-400 line-through",
+  discountBadge: "ml-auto text-sm bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50 text-green-700 dark:text-green-400 px-3 py-1 rounded-full border border-green-200/50 dark:border-green-700/50",
+  pricingDescription: "text-sm text-gray-600 dark:text-slate-400 mb-6",
 
-  // Enrollment Buttons
+  // Enrollment Buttons - with dark mode
   enrollButton: "w-full inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full cursor-pointer font-semibold shadow-lg hover:shadow-xl transform transition-all duration-300 group disabled:opacity-70 disabled:cursor-not-allowed",
   freeEnrolledButton: "bg-gradient-to-r from-green-500 to-emerald-500 text-white cursor-default",
-  enrollPaidButton: "bg-gradient-to-r from-indigo-400 to-pink-600 text-white",
-  enrolledButton: "bg-white border border-green-300 text-green-700 shadow-sm cursor-default",
+  enrollPaidButton: "bg-gradient-to-r from-indigo-400 to-pink-600 dark:from-indigo-500 dark:to-purple-500 text-white",
+  enrolledButton: "bg-white dark:bg-slate-700 border border-green-300 dark:border-green-600 text-green-700 dark:text-green-400 shadow-sm cursor-default",
   enrollSpinner: "w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin",
   enrollIcon: "w-5 h-5 transition-transform",
   enrollArrow: "ml-auto opacity-80 group-hover:opacity-100",
 
-  // Progress Card
-  progressCard: "p-6 rounded-3xl bg-white/70 backdrop-blur-md shadow-2xl border border-white/50 hover:border-white/80 transition-all duration-500 animate-slideInLeft",
+  // Progress Card - with dark mode
+  progressCard: "p-6 rounded-3xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-2xl dark:shadow-indigo-500/10 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 transition-all duration-500 animate-slideInLeft",
   progressHeader: "flex items-center gap-2 mb-4",
-  progressIcon: "w-5 h-5 text-indigo-600",
-  progressTitle: "font-semibold text-gray-800",
+  progressIcon: "w-5 h-5 text-indigo-600 dark:text-indigo-400",
+  progressTitle: "font-semibold text-gray-800 dark:text-white",
   progressContent: "space-y-4",
-  progressBar: "w-full bg-gray-200/50 rounded-full h-3 backdrop-blur-sm",
-  progressFill: "bg-gradient-to-r from-indigo-500 to-pink-500 h-3 rounded-full transition-all duration-1000 ease-out shadow-inner",
+  progressBar: "w-full bg-gray-200/50 dark:bg-slate-700/50 rounded-full h-3 backdrop-blur-sm",
+  progressFill: "bg-gradient-to-r from-indigo-500 to-pink-500 dark:from-cyan-500 dark:to-purple-500 h-3 rounded-full transition-all duration-1000 ease-out shadow-inner",
   progressStats: "grid grid-cols-2 gap-4 text-center",
-  progressStat: "p-4 rounded-xl bg-white/50 backdrop-blur-sm border border-white/50 hover:bg-white/70 transition-all duration-300",
-  progressStatValue: "text-2xl font-bold bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent",
-  progressStatLabel: "text-sm text-gray-600 mt-1",
+  progressStat: "p-4 rounded-xl bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm border border-white/50 dark:border-slate-600 hover:bg-white/70 dark:hover:bg-slate-600/50 transition-all duration-300",
+  progressStatValue: "text-2xl font-bold bg-gradient-to-r from-indigo-600 to-pink-500 dark:from-cyan-400 dark:to-purple-400 bg-clip-text text-transparent",
+  progressStatLabel: "text-sm text-gray-600 dark:text-slate-400 mt-1",
 
-  // Toast
+  // Toast - with dark mode
   toast: "fixed top-6 right-6 p-4 rounded-2xl shadow-2xl backdrop-blur-md transform transition-all duration-500 z-50 animate-slideInRight",
   toastError: "bg-red-500/90 text-white",
   toastInfo: "bg-indigo-500/90 text-white",
@@ -1305,12 +1305,12 @@ export const courseDetailStyles = {
   toastClose: "hover:scale-110 transition-transform",
   toastCloseIcon: "w-4 h-4",
 
-  // Not Found State
-  notFoundContainer: "min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 relative overflow-hidden",
+  // Not Found State - with dark mode
+  notFoundContainer: "min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 relative overflow-hidden",
   notFoundContent: "text-center relative z-10",
-  notFoundTitle: "text-2xl font-bold",
-  notFoundText: "mt-2 text-gray-500",
-  notFoundButton: "mt-4 cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg bg-white/10 backdrop-blur-md",
+  notFoundTitle: "text-2xl font-bold dark:text-white",
+  notFoundText: "mt-2 text-gray-500 dark:text-slate-400",
+  notFoundButton: "mt-4 cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-lg bg-white/10 dark:bg-slate-800/70 backdrop-blur-md dark:text-white dark:border dark:border-slate-700",
 
   // Animations
   animations: `
