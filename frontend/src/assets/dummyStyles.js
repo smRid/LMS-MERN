@@ -555,40 +555,40 @@ export const coursePageStyles = {
 // Add these to your existing assets/dummyStyles.js
 
 export const myCoursesStyles = {
-  // Layout and container styles
-  pageContainer: "min-h-screen pt-25 bg-gradient-to-br from-blue-50 to-indigo-100 py-8 font-[pacifico]",
+  // Layout and container styles - with dark mode animated gradient
+  pageContainer: "min-h-screen pt-25 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:via-purple-950 dark:to-indigo-950 py-8 font-[pacifico]",
   mainContainer: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
 
-  // Header
-  header: "text-4xl font-bold text-gray-800 mb-12 text-center",
-  emptyHeader: "text-4xl font-bold text-gray-800 mb-6",
-  emptyText: "text-gray-600 text-lg",
+  // Header - with beautiful gradient text in dark mode
+  header: "text-4xl font-bold text-gray-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-cyan-400 dark:via-purple-400 dark:to-pink-400 mb-12 text-center",
+  emptyHeader: "text-4xl font-bold text-gray-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-indigo-400 dark:to-purple-400 mb-6",
+  emptyText: "text-gray-600 dark:text-slate-300 text-lg",
 
   // Grid layout
   grid: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 gap-8",
 
-  // Course card
-  courseCard: "group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/50 cursor-pointer",
+  // Course card - with dark mode glassmorphism
+  courseCard: "group bg-white/80 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-lg dark:shadow-indigo-500/10 overflow-hidden hover:shadow-2xl dark:hover:shadow-purple-500/20 transition-all duration-500 transform hover:-translate-y-2 border border-white/50 dark:border-slate-700/60 cursor-pointer",
   imageContainer: "relative overflow-hidden",
   courseImage: "w-full h-48 object-contain pb-7.5 lg:pb-6 xl:pb-8.5 md:object-cover transition-transform duration-700",
   courseContent: "p-5",
 
-  // Course info
-  courseName: "text-lg font-bold text-gray-800 mb-3 line-clamp-2 transition-colors duration-300",
-  infoContainer: "flex flex flex-col gap-2   justify-between mb-4",
+  // Course info - with dark mode text colors
+  courseName: "text-lg font-bold text-gray-800 dark:text-white mb-3 line-clamp-2 transition-colors duration-300",
+  infoContainer: "flex flex flex-col gap-2 justify-between mb-4",
 
-  // Rating
-  ratingContainer: "flex  items-center space-x-1 bg-yellow-50 rounded-full px-3 py-1 border border-yellow-100",
+  // Rating - with dark mode styling
+  ratingContainer: "flex items-center space-x-1 bg-yellow-50 dark:bg-yellow-900/30 rounded-full px-3 py-1 border border-yellow-100 dark:border-yellow-700/50",
   ratingIcon: "w-4 h-4 text-yellow-500 fill-current",
-  ratingText: "text-sm font-semibold text-gray-800",
+  ratingText: "text-sm font-semibold text-gray-800 dark:text-yellow-200",
 
-  // Teacher
+  // Teacher - with dark mode colors
   teacherContainer: "flex items-center space-x-1 px-3 py-1",
-  teacherIcon: "w-4 h-4 text-blue-600",
-  teacherText: "text-sm font-medium text-gray-800 truncate max-w-[80px]",
+  teacherIcon: "w-4 h-4 text-blue-600 dark:text-indigo-400",
+  teacherText: "text-sm font-medium text-gray-800 dark:text-slate-300 truncate max-w-[80px]",
 
-  // Button
-  viewButton: "w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300 transform shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 cursor-pointer group/btn",
+  // Button - enhanced for dark mode
+  viewButton: "w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 dark:from-indigo-600 dark:to-purple-600 dark:hover:from-indigo-500 dark:hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300 transform shadow-lg hover:shadow-xl dark:shadow-indigo-500/25 flex items-center justify-center space-x-2 cursor-pointer group/btn",
   buttonIcon: "w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110",
   buttonText: ""
 };
