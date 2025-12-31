@@ -2,8 +2,6 @@ import A1 from "../assets/A1.png"
 import A2 from "../assets/A2.png"
 import A3 from "../assets/A3.png"
 import A4 from "../assets/A4.png"
-import AT1 from "../assets/AT1.png"
-import AT2 from "../assets/AT2.png"
 import AT3 from "../assets/AT3.png"
 
 import {
@@ -225,14 +223,14 @@ export const testimonials = [
   {
     name: "Alex Thompson",
     role: "Software Developer",
-    image: AT1,
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
     text: "ShikhoHub transformed my career. The courses are comprehensive and the support is exceptional.",
     rating: 5,
   },
   {
     name: "Maria Garcia",
     role: "Data Scientist",
-    image: AT2,
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
     text: "The quality of instruction and hands-on projects helped me land my dream job.",
     rating: 5,
   },

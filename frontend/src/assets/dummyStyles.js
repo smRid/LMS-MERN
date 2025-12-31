@@ -1156,10 +1156,10 @@ export const courseDetailStyles = {
   containerVisible: "opacity-100 translate-y-0",
   containerHidden: "opacity-0 translate-y-8",
 
-  // Back Button - with dark mode
-  backButton: "inline-flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl bg-white/70 dark:bg-slate-800/70 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-slate-700 hover:border-white/80 dark:hover:border-slate-600 animate-slideInLeft",
-  backIcon: "w-5 h-5 dark:text-slate-300",
-  backText: "font-medium dark:text-slate-200",
+  // Back Button - with dark mode (enhanced visibility)
+  backButton: "inline-flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl bg-white/70 dark:bg-slate-800/90 backdrop-blur-md shadow-lg dark:shadow-indigo-500/20 hover:shadow-xl transition-all duration-300 border border-white/50 dark:border-indigo-500/50 hover:border-white/80 dark:hover:border-indigo-400/70 animate-slideInLeft",
+  backIcon: "w-5 h-5 text-gray-700 dark:text-indigo-400",
+  backText: "font-medium text-gray-700 dark:text-indigo-300",
 
   // Course Header - with dark mode
   header: "text-center space-y-6 relative",
