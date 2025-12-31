@@ -1,4 +1,4 @@
-# 🎓 LMS-MERN – Modern Learning Management System
+# 🎓 ShikhoHub – Modern Learning Management System
 
 ShikhoHub is a comprehensive Learning Management System built on the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It offers a seamless experience for students to browse courses, while providing administrators with powerful tools for course management and user oversight.
 
