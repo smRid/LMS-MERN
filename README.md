@@ -1,6 +1,6 @@
 # 🎓 LMS-MERN – Modern Learning Management System
 
-LMS-MERN is a comprehensive Learning Management System built on the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It offers a seamless experience for students to browse courses and book sessions, while providing administrators with powerful tools for course management and user oversight.
+ShikhoHub is a comprehensive Learning Management System built on the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It offers a seamless experience for students to browse courses, while providing administrators with powerful tools for course management and user oversight.
 
 ---
 
@@ -12,7 +12,7 @@ LMS-MERN is a comprehensive Learning Management System built on the **MERN stack
 
 ---
 
-## 🔗 Live Demo : [Coming Soon](#)
+## 🔗 Live Demo : [ShikhoHub](https://shikhohub.vercel.app/)
 
 ---
 
@@ -25,8 +25,6 @@ LMS-MERN is a comprehensive Learning Management System built on the **MERN stack
 - 🔐 **Authentication** – Secure user and admin authentication via Clerk.
 - 🖼️ **Media Management** – Cloudinary integration for handling course image uploads.
 - 🛠️ **Admin Dashboard** – Dedicated admin interface for managing the platform.
-- 🌐 **Multi-language Support** – Frontend ready for internationalization with i18next.
-
 ---
 
 ## 🛠️ Tech Stack
