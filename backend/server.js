@@ -17,6 +17,7 @@ const allowedOrigins = [
     'https://skhub-admin.vercel.app'
 ];
 
+
 // CORS Configuration
 app.use(cors({
     origin: function (origin, callback) {

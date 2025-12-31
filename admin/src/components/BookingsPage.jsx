@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { bookingsStyles } from "../assets/dummyStyles";
 import { BookOpen, GraduationCap, HandCoins, Search, User } from "lucide-react";
 
+
 const API_BASE = "https://lms-smrid.vercel.app";
 
 const BookingsPage = () => {

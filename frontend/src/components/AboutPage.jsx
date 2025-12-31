@@ -24,6 +24,7 @@ const AboutPage = () => {
     support: 0,
   });
 
+
   // Animated counter effect using imported counterTargets
   useEffect(() => {
     const duration = 2000;
