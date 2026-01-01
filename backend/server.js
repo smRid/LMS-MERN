@@ -5,6 +5,7 @@ import { clerkMiddleware } from '@clerk/express';
 import connectDB from './config/db.js';
 import courseRouter from './routes/courseRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
+import paymentRouter from './routes/paymentRouter.js';
 
 const app = express();
 const port = 4000;
@@ -59,6 +60,7 @@ app.get('/', (req, res) => {
 // ROUTES
 app.use('/api/course', courseRouter);
 app.use('/api/booking', bookingRouter);
+app.use('/api/payment', paymentRouter);
 
 // Global Error Handler - ensures CORS headers are sent even on errors
 app.use((err, req, res, next) => {

@@ -34,10 +34,27 @@ const bookingSchema = new mongoose.Schema({
     },
     paymentMethod: { type: String, enum: ["Online"], default: "Online" },
 
+    // Payment gateway used
+    gateway: {
+        type: String,
+        enum: ['stripe', 'bkash', 'nagad', 'rocket', 'free'],
+        default: 'stripe'
+    },
+
+    // Detailed payment lifecycle status
+    paymentLifecycleStatus: {
+        type: String,
+        enum: ['CREATED', 'PENDING', 'SUCCESS', 'FAILED', 'CANCELLED'],
+        default: 'CREATED'
+    },
+
     // normalize to TitleCase if that's what your code expects
     paymentStatus: { type: String, enum: ["Unpaid", "Paid"], default: "Unpaid" },
     paymentIntentId: { type: String, default: null },
     sessionId: { type: String, default: null },
+
+    // Payment completion timestamp
+    paidAt: { type: Date, default: null },
 
     // make orderStatus values consistent + include "Confirmed"
     orderStatus: {

@@ -23,8 +23,9 @@ import {
 } from "../assets/dummyStyles";
 
 import { useUser, useAuth } from "@clerk/clerk-react";
+import PaymentMethodSelector from "../components/PaymentMethodSelector";
 
-const API_BASE = "https://lms-smrid.vercel.app";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const fmtMinutes = (mins) => {
   const h = Math.floor((mins || 0) / 60);
@@ -127,6 +128,10 @@ const CourseDetail = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [bookingInfo, setBookingInfo] = useState(null);
+
+  // Payment gateway selection state
+  const [showPaymentSelector, setShowPaymentSelector] = useState(false);
+  const [selectedGateway, setSelectedGateway] = useState(null);
 
   const [toast, setToast] = useState(null);
   const [expandedLectures, setExpandedLectures] = useState(new Set());
@@ -524,6 +529,32 @@ const CourseDetail = () => {
       return;
     }
 
+    const numericPrice =
+      salePrice != null
+        ? salePrice
+        : originalPrice != null
+          ? originalPrice
+          : 0;
+
+    // For FREE courses, enroll directly without payment gateway selection
+    if (numericPrice === 0) {
+      await enrollWithGateway('free');
+      return;
+    }
+
+    // For PAID courses, show the payment gateway selector
+    setShowPaymentSelector(true);
+  };
+
+  // Handle payment gateway selection from PaymentMethodSelector
+  const handlePaymentSelect = async (gateway) => {
+    setSelectedGateway(gateway);
+    setShowPaymentSelector(false);
+    await enrollWithGateway(gateway);
+  };
+
+  // Enroll with selected gateway
+  const enrollWithGateway = async (gateway) => {
     setIsEnrolling(true);
     try {
       const numericPrice =
@@ -536,6 +567,7 @@ const CourseDetail = () => {
       const email = studentEmailFromUser || "";
 
       const payload = {
+        gateway,
         courseId: course._id ?? course.id ?? courseId,
         courseName: course.name,
         teacherName: course.teacher || "",
@@ -568,7 +600,12 @@ const CourseDetail = () => {
         }
       }
 
-      const res = await fetch(`${API_BASE}/api/booking/create`, opts);
+      // Use the new payment initiate endpoint for paid courses
+      const endpoint = numericPrice === 0
+        ? `${API_BASE}/api/booking/create`
+        : `${API_BASE}/api/payment/initiate`;
+
+      const res = await fetch(endpoint, opts);
       const data = await res.json().catch(() => ({ success: false }));
 
       if (!res.ok || !data.success) {
@@ -622,7 +659,7 @@ const CourseDetail = () => {
         throw new Error(msg);
       }
 
-      // If checkout is required (Stripe) — redirect the user
+      // If checkout is required (Stripe/bKash) — redirect the user
       if (data.checkoutUrl) {
         // Keep bookingInfo if server returned booking
         if (data.booking) setBookingInfo(data.booking);
@@ -767,6 +804,17 @@ const CourseDetail = () => {
           onClose={() => setToast(null)}
         />
       )}
+
+      {/* Payment Gateway Selector Modal */}
+      <PaymentMethodSelector
+        isOpen={showPaymentSelector}
+        onClose={() => setShowPaymentSelector(false)}
+        onSelect={handlePaymentSelect}
+        amount={salePrice ?? originalPrice ?? 0}
+        currency="BDT"
+        courseName={course?.name || ''}
+        isLoading={isEnrolling}
+      />
 
       <div
         className={`${courseDetailStylesH.mainContainer} ${isPageLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -1291,7 +1339,7 @@ const CourseDetail = () => {
         </div>
       </div>
 
-      <style jsx>{courseDetailCustomStyles}</style>
+      <style>{courseDetailCustomStyles}</style>
     </div>
   );
 };

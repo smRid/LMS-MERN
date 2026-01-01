@@ -10,6 +10,7 @@ import CourseDetailPageHome from "./pages/CourseDetailPageHome";
 import CourseDetailPage from "./pages/CourseDetailPage";
 import VerifyPaymentPage from "./components/VerifyPaymentPage";
 import MyCoursePage from "./pages/MyCoursePage";
+import BkashCallback from "./pages/BkashCallback";
 
 const ScrollToTopOnRouteChange = () => {
   const location = useLocation();
@@ -36,17 +37,17 @@ const ScrollTopButton = ({ threshold = 200, showOnMount = false }) => {
   const [visible, setVisible] = useState(!!showOnMount);
 
   useEffect(() => {
-  const onScroll = () => {
-    setVisible(window.scrollY > threshold);
-  };
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  return () => window.removeEventListener("scroll", onScroll);
-}, [threshold]);
+    const onScroll = () => {
+      setVisible(window.scrollY > threshold);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
 
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   if (!visible) return null;
 
   return (
@@ -74,6 +75,7 @@ const App = () => {
         <Route path="/faculty" element={<Faculty />} />
         <Route path="/courses" element={<Course />} />
         <Route path="/mycourses" element={<MyCoursePage />} />
+        <Route path="/my-courses" element={<MyCoursePage />} />
 
         <Route
           path="/course/:id"
@@ -92,8 +94,11 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        {/* Payment routes */}
         <Route path="/booking/success" element={<VerifyPaymentPage />} />
         <Route path="/booking/cancel" element={<VerifyPaymentPage />} />
+        <Route path="/payment/bkash/callback" element={<BkashCallback />} />
       </Routes>
       <ScrollTopButton threshold={250} />
     </>
