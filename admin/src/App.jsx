@@ -6,7 +6,6 @@ import Bookings from "./pages/Bookings";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-
 const App = () => {
   return (
     <Routes>
