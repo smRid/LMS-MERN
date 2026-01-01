@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, XCircle, Loader2, AlertCircle } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+// API Base URL - Uses environment variable, or detects based on hostname
+const API_BASE = import.meta.env.VITE_API_BASE ||
+    (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:4000'
+        : 'https://lms-smrid.vercel.app');
 
 /**
  * BkashCallback Component

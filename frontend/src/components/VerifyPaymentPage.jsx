@@ -4,7 +4,11 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+// API Base URL - Uses environment variable, or detects based on hostname
+const API_BASE = import.meta.env.VITE_API_BASE ||
+  (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:4000'
+    : 'https://lms-smrid.vercel.app');
 
 const VerifyPaymentPage = () => {
   const location = useLocation();
