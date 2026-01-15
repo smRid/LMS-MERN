@@ -21,10 +21,33 @@ ShikhoHub is a comprehensive Learning Management System built on the **MERN stac
 - 📚 **Course Management** – Create, update, and delete courses with ease.
 - ⭐ **Ratings & Reviews** – Users can rate and review courses they have taken.
 - 📅 **Booking System** – Streamlined booking flow for users to enroll in courses.
-- 💳 **Secure Payments** – Integrated Stripe payment gateway for safe transactions.
+- 💳 **Multi-Payment Gateway** – Integrated **Stripe** and **bKash** payment gateways for flexible, secure transactions.
 - 🔐 **Authentication** – Secure user and admin authentication via Clerk.
 - 🖼️ **Media Management** – Cloudinary integration for handling course image uploads.
 - 🛠️ **Admin Dashboard** – Dedicated admin interface for managing the platform.
+
+---
+
+## 💳 Payment Gateway Integration
+
+ShikhoHub supports **multiple payment gateways** using a Strategy Pattern for extensibility:
+
+### Stripe Payment
+- **Type**: Card-based payments (Visa, Mastercard, etc.)
+- **Flow**: Modal-based checkout using Stripe Elements
+- **Region**: Global support
+
+### bKash Payment  
+- **Type**: Mobile Financial Services (MFS)
+- **Flow**: Redirect-based payment with callback handling
+- **Region**: Bangladesh
+- **Features**: 
+  - Tokenized payment creation
+  - Automatic callback verification
+  - Grant token management
+
+> 💡 **Note**: Users can select their preferred payment method during checkout.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -46,7 +69,8 @@ ShikhoHub is a comprehensive Learning Management System built on the **MERN stac
 - [Clerk Express](https://clerk.dev/docs/backend/express) – Clerk middleware for Express
 - [Multer](https://github.com/expressjs/multer) – Middleware for handling file uploads
 - [Cloudinary](https://cloudinary.com/) – Media storage and optimization
-- [Stripe](https://stripe.com/) – Payment processing platform
+- [Stripe](https://stripe.com/) – International card payment processing
+- [bKash Payment Gateway](https://developer.bka.sh/) – Bangladesh mobile payment integration
 - [Dotenv](https://www.npmjs.com/package/dotenv) – Environment variable management
 - [Cors](https://expressjs.com/en/resources/middleware/cors.html) – Cross-origin resource sharing middleware
 
