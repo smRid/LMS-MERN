@@ -24,7 +24,7 @@ export const bannerStyles = {
   badgeIcon: "w-4 h-4 text-indigo-500 dark:text-indigo-400 animate-spin-slow",
 
   // Heading - Rainbow shimmer effect
-  heading: "text-3xl sm:text-4xl lg:text-5xl font-cursive font-heading uppercase tracking-wider leading-tight",
+  heading: "text-3xl sm:text-4xl lg:text-5xl font-sans tracking-tight leading-tight",
   headingSpan1: "block text-rainbow-shimmer font-bold",
   headingSpan2: "block text-rainbow-shimmer font-bold animation-delay-300",
 
@@ -37,14 +37,14 @@ export const bannerStyles = {
   },
 
   // Description - with dark mode
-  description: "text-lg sm:text-xl font-body italic font-[pacifico] font-semibold text-gray-700 dark:text-slate-300 leading-relaxed mt-2 sm:mt-4 animate-slide-in-up animation-delay-500",
+  description: "text-lg sm:text-xl font-sans font-medium text-gray-700 dark:text-slate-300 leading-relaxed mt-2 sm:mt-4 animate-slide-in-up animation-delay-500",
 
   // Features - Staggered animation + dark mode
   featuresGrid: "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-slide-in-up animation-delay-700",
   featureItem: "flex items-center space-x-3 p-2 rounded-xl hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all duration-300",
   featureIconContainer: "w-6 h-6 flex items-center justify-center shrink-0",
   featureIcon: "text-sm",
-  featureText: "text-gray-700 dark:text-slate-300 font-cursive text-sm sm:text-base",
+  featureText: "text-gray-700 dark:text-slate-300 font-sans text-sm sm:text-base",
 
   // Buttons - Premium glow effects + dark mode
   buttonsContainer: "flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 animate-slide-in-up animation-delay-900",
@@ -66,10 +66,10 @@ export const animationDelays = {
 
 // Custom CSS styles as string (for the style jsx block)
 export const customStyles = `
-  @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
   .font-cursive {
-    font-family: "Dancing Script", cursive;
+    font-family: "Inter", sans-serif;
   }
 
   /* Fade in */
@@ -170,7 +170,7 @@ export const customStyles = `
     
 
   .font-cursive {
-    font-family: "Dancing Script", cursive;
+    font-family: "Inter", sans-serif;
   }
 
   /* Fade in */
