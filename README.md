@@ -7,7 +7,7 @@ ShikhoHub is a comprehensive Learning Management System built on the **MERN stac
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="frontend/public/preview.png" alt="LMS Dashboard Preview" width="800" />
+  <img src="frontend/public/preview1.png" alt="LMS Dashboard Preview" width="800" />
 </p>
 
 ---
